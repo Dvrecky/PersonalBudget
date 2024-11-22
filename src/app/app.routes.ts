@@ -7,6 +7,7 @@ import { AccountComponent } from './pages/account/account/account.component';
 // zdefiniowanie komponentów jakich Angular ma użyć dla podanych ścieżek
 export const routes: Routes = [
     {path: 'home', component: HomeComponent},
-    {path: 'transaction', component: AddTransactionComponent},
+    {path: 'transactions', component: AddTransactionComponent},
     {path: 'accounts', component: AccountComponent},
+    {path: '', component: HomeComponent},
 ];
