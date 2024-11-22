@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SizeNavBarComponent } from "./components/size-nav-bar/size-nav-bar.component";
+import { SizeNavBarComponent } from "./components/side-nav-bar/size-nav-bar.component";
 
 @Component({
   selector: 'app-root',
