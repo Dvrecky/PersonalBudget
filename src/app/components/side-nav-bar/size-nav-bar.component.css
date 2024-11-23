@@ -1,14 +1,27 @@
-mat-sidenav-container {
+.container {
   height: 100vh;
 }
 
-mat-sidenav {
-    width: 200px;
-    background-color: lightgreen;
-  }
+.sidenav {
+  width: 220px;
+  background-color: lightgreen;
+  border-radius: 5px;
+}
 
-  #header {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: fit-content;
-  }
+.nav-header {
+  font-size: 20px;
+  margin: 5px 5px;
+  padding: 15px 15px;
+  font-weight: bold;
+  background-color: rgb(126, 222, 106);
+  border-radius: 5px;
+}
+
+a.active {
+  color: #1976d2; /* Kolor aktywnego linku */
+  font-weight: bold;
+}
+
+.link-list{
+  margin-top: 50px;
+}
