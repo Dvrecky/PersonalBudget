@@ -1,12 +1,22 @@
-<p>size-nav-bar works!</p>
-<h1>Budget</h1>
-<nav>
-  <ul>
-    <li><a routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page">Home Page</a></li>
-    <li><a routerLink="/transactions" routerLinkActive="active" ariaCurrentWhenActive="page">Transactions</a></li>
-    <li><a routerLink="/accounts" routerLinkActive="active" ariaCurrentWhenActive="page">Accounts</a></li>
+<!-- <p>size-nav-bar works!</p> -->
+<mat-sidenav-container>
+  <mat-sidenav mode="side" position="start" opened>
+    <div id="header">
+      <h2>Budget App</h2>
+    </div>
+    <div >
+      <ul>
+        <li><a routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page">Home Page</a></li>
+        <li><a routerLink="/transactions" routerLinkActive="active" ariaCurrentWhenActive="page">Transactions</a></li>
+        <li><a routerLink="/accounts" routerLinkActive="active" ariaCurrentWhenActive="page">Accounts</a></li>
+      </ul>
+    </div>
+  </mat-sidenav>
 
-  </ul>
-</nav>
-<!-- The routed views render in the <router-outlet>-->
-<router-outlet></router-outlet>
+  <mat-sidenav-content>
+
+    <router-outlet></router-outlet>
+
+  </mat-sidenav-content>
+  
+</mat-sidenav-container>
