@@ -17,11 +17,11 @@
   border-radius: 5px;
 }
 
-a.active {
-  color: #1976d2; /* Kolor aktywnego linku */
-  font-weight: bold;
-}
-
 .link-list{
   margin-top: 50px;
+}
+
+.link-list a:hover{
+  border: rgb(126, 222, 106) 1px solid;
+  border-radius: 10px;
 }
