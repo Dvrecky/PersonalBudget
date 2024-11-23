@@ -1,0 +1,19 @@
+<div class="container">
+  <div>
+    <mat-form-field>
+      <mat-label>Konto</mat-label>
+      <mat-select [(value)]="selectedAccountId" (selectionChange)="onAccountChange($event.value)">
+        @for (account of accounts; track account) {
+          <mat-option [value]="account.id">{{account.name}}</mat-option>
+        }
+      </mat-select>
+    
+    </mat-form-field>
+  </div>
+
+
+  <div class="sum">
+    {{sum}}
+  </div>
+</div>
+
