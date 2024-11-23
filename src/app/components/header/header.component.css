@@ -1,0 +1,8 @@
+mat-toolbar {
+    background-color: rgb(206, 206, 206);
+    justify-content: center;
+}
+#header-title {
+    color: white;
+    font-family: monospace;
+}
