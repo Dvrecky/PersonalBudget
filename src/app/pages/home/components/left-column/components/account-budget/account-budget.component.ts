@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { Account } from '../../../../../../models/account.model';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import { CurrencyPipe } from '@angular/common';
+import { Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-account-budget',
@@ -13,27 +14,22 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class AccountBudgetComponent implements OnInit{
 
-  accounts: Account[] = [
-    { id: 1, name: "Konto główne", balance: 1000},
-    { id: 2, name: 'Oszczędnościowe', balance: 5000 },
-    { id: 3, name: 'Karta kredytowa', balance: 300 },
-  ];
+  // lista z kontami będzie przekazywana poprzez komponent rodzica
+  @Input() accounts: Account[] = [];
+  // wysyła wiadomośc do komponentu rodzica, że zmieniono typ konta
+  @Output() accountChange = new EventEmitter<number>();
+  
   selectedAccountId: number = 0;
   sum: number = 0;
 
   ngOnInit(): void {
-  
-    const total = this.accounts.reduce( (accumulator, currentIndex) => (accumulator + currentIndex.balance) , 0);
-    const accSum: Account = {id:0, name: "Suma", balance: total};
-    this.accounts.splice(0, 0, accSum);
-    this.sum = total;
+    this.sum = this.accounts[0].balance;
   }
 
   onAccountChange(accountId: number): void {
     console.log('Selected Account ID:', accountId);
     this.selectedAccountId = accountId;
-
     this.sum = this.accounts[this.selectedAccountId].balance;
-    
+    this.accountChange.emit(accountId);
   }
 }
