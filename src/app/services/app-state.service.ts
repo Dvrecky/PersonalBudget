@@ -12,6 +12,6 @@ export class AppStateService {
 
   // metoda ustawia wybrane konto
   setSelectedAccount(account: Account) {
-  this.selectedAccount.next(account);
+    this.selectedAccount.next(account);
   }
 }
