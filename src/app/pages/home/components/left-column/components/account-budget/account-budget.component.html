@@ -2,6 +2,12 @@
   <div>
     <mat-form-field>
       <mat-label>Konto</mat-label>
+      <!--[(value)]="selectedAccountId"-->
+      <!-- dwukierunkowe wiązanie danych, wartość selectedAccountId w komponencie będzie automatycznie akutalizowane przy wyborze jakiejś opcji z rozwijanego MENU-->
+      <!-- zmiana wartości selectedAccountId w komponencie spowoduje również, że wybrana opcja w menu będzie aktualizowana-->
+      <!--(selectionChange)="onAccountChange($event.value)"-->
+      <!-- jednokierunkowe wiązanie danych, uruchamia metodę onAccountChange za każdym razem, gdy użytkownik zmieni wybór-->
+      <!-- wartość wybranej opcji (czyli account.id) jest przekazywana do tej metody przez $event.value-->
       <mat-select [(value)]="selectedAccountId" (selectionChange)="onAccountChange($event.value)">
         @for (account of accounts; track account) {
           <mat-option [value]="account.id">{{account.name}}</mat-option>
@@ -13,7 +19,7 @@
 
 
   <div class="sum">
-    {{sum}}
+    {{ sum | currency:'PLN ':false}}
   </div>
 </div>
 

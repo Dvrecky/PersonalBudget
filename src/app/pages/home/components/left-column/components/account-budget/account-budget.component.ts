@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Account } from '../../../../../../models/account.model';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-account-budget',
   standalone: true,
-  imports: [MatFormFieldModule, MatSelectModule],
+  imports: [MatFormFieldModule, MatSelectModule, CurrencyPipe],
   templateUrl: './account-budget.component.html',
   styleUrl: './account-budget.component.css'
 })
@@ -22,14 +23,17 @@ export class AccountBudgetComponent implements OnInit{
 
   ngOnInit(): void {
   
-    if (this.accounts.length > 0) {
-      this.selectedAccountId = this.accounts[0].id; // Domyślnie ustawiamy pierwsze konto
-    }
+    const total = this.accounts.reduce( (accumulator, currentIndex) => (accumulator + currentIndex.balance) , 0);
+    const accSum: Account = {id:0, name: "Suma", balance: total};
+    this.accounts.splice(0, 0, accSum);
+    this.sum = total;
   }
 
   onAccountChange(accountId: number): void {
     console.log('Selected Account ID:', accountId);
     this.selectedAccountId = accountId;
-    this.sum = this.accounts[this.selectedAccountId-1].balance;
+
+    this.sum = this.accounts[this.selectedAccountId].balance;
+    
   }
 }
