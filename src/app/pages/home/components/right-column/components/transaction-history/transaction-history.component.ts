@@ -1,10 +1,11 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Account } from '../../../../../../models/account.model';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-transaction-history',
   standalone: true,
-  imports: [],
+  imports: [CurrencyPipe],
   templateUrl: './transaction-history.component.html',
   styleUrl: './transaction-history.component.css'
 })
