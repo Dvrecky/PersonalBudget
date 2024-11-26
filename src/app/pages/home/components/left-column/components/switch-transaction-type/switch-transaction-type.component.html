@@ -1,1 +1,9 @@
-<p>switch-transaction-type works!</p>
+<div>
+    <mat-radio-group aria-label="Select an option" (change)="onTransactionTypeChange($event.value)">
+        <mat-radio-button value="expenses">expenses</mat-radio-button>
+        <mat-radio-button value="incomes">incomes</mat-radio-button>
+    </mat-radio-group>
+</div>
+
+  
+  

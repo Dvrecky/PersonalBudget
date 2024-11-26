@@ -6,11 +6,12 @@ import { OnInit } from '@angular/core';
 import { response } from 'express';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AppStateService } from '../../../../services/app-state.service';
+import { SwitchTransactionTypeComponent } from "./components/switch-transaction-type/switch-transaction-type.component";
 
 @Component({
   selector: 'app-left-column',
   standalone: true,
-  imports: [AccountBudgetComponent],
+  imports: [AccountBudgetComponent, SwitchTransactionTypeComponent],
   templateUrl: './left-column.component.html',
   styleUrl: './left-column.component.css'
 })
