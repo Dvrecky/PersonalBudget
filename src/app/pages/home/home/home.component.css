@@ -1,0 +1,12 @@
+.container {
+    display: flex; /* Ustawia układ elastyczny */
+    width: 100%; /* Kontener zajmuje całą szerokość strony */
+  }
+  
+  .column {
+    flex: 1; /* Każda kolumna zajmuje równą część dostępnego miejsca */
+    border: 1px solid #ccc; /* Dodaje ramkę wokół kolumn (opcjonalnie) */
+    box-sizing: border-box; /* Uwzględnia padding i border w szerokości kolumn */
+    padding: 10px; /* Margines wewnętrzny w kolumnach */
+  }
+  

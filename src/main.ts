@@ -13,7 +13,9 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import { HttpClientModule } from '@angular/common/http';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -24,7 +26,10 @@ bootstrapApplication(AppComponent, {
       MatListModule,
       MatIconModule,
       MatButtonModule,
-      BrowserAnimationsModule
+      BrowserAnimationsModule,
+      MatFormFieldModule,
+      MatSelectModule,
+      HttpClientModule
     )
   ]
 })
