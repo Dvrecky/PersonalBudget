@@ -53,7 +53,51 @@ export class TransactionService {
           type: "income",
           accountId: 3,
           categoryId: 4
-      }
+      },
+      {
+          id: 5,
+          amount: 310,
+          date: new Date(2024, 11, 24),
+          description: "Zwrot podatku",
+          recurring: false,
+          recurringPeriod: "",
+          type: "income",
+          accountId: 1,
+          categoryId: 4
+      },
+      {
+          id: 6,
+          amount: 300,
+          date: new Date(2024, 11, 2),
+          description: "Zwrot podatku",
+          recurring: false,
+          recurringPeriod: "",
+          type: "income",
+          accountId: 1,
+          categoryId: 4
+      },
+    {
+        id: 7,
+        amount: 300,
+        date: new Date(2024, 5, 2),
+        description: "Zwrot podatku",
+        recurring: false,
+        recurringPeriod: "",
+        type: "income",
+        accountId: 1,
+        categoryId: 4
+    },
+    {
+        id: 8,
+        amount: 300,
+        date: new Date(2024, 9, 2),
+        description: "Zwrot podatku",
+        recurring: false,
+        recurringPeriod: "",
+        type: "income",
+        accountId: 1,
+        categoryId: 4
+    }
   ];
 
    getTransactions(): Transaction[] {
