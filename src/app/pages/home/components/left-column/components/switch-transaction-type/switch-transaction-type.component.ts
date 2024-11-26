@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output} from '@angular/core';
 import {MatRadioModule} from '@angular/material/radio';
+
 
 @Component({
   selector: 'app-switch-transaction-type',
@@ -8,7 +9,7 @@ import {MatRadioModule} from '@angular/material/radio';
   templateUrl: './switch-transaction-type.component.html',
   styleUrl: './switch-transaction-type.component.css'
 })
-export class SwitchTransactionTypeComponent {
+export class SwitchTransactionTypeComponent{
 
   // służy do powiadomienia rodzica o zmianie typu wydatków ('expenses' albo 'incomes')
   @Output() transactionTypeSwitch = new EventEmitter<'expenses' | 'incomes'>();

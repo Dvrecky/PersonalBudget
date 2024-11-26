@@ -22,8 +22,9 @@ export class LeftColumnComponent implements OnInit{
     { id: 2, name: 'Oszczędnościowe', balance: 5000 },
     { id: 3, name: 'Karta kredytowa', balance: 300 },
   ];
-
   selectedAccountId: number = 0;
+
+  selectedTransactionType: 'expenses' | 'incomes' = 'expenses';
 
   constructor(private accontService: AccountService, private appStateService: AppStateService) {
   }
@@ -43,6 +44,12 @@ export class LeftColumnComponent implements OnInit{
     if (account) {
       this.appStateService.setSelectedAccount(account); // Prześlij obiekt do AppStateService
     }
+  }
+
+  changeTransactionType(value: 'expenses' | 'incomes') {
+    console.log("Było: ", this.selectedTransactionType);
+    this.selectedTransactionType = value;
+    console.log("Jest: ", this.selectedTransactionType);
   }
 
   // loadAccounts(): void {

@@ -1,2 +1,2 @@
 <app-account-budget [accounts]="accountsList" (accountChange)="onAccountChange($event)"></app-account-budget>
-<app-switch-transaction-type></app-switch-transaction-type>
+<app-switch-transaction-type (transactionTypeSwitch)="changeTransactionType($event)"></app-switch-transaction-type>
