@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Account } from '../../../../models/account.model';
 import { AppStateService } from '../../../../services/app-state.service';
 import { TransactionHistoryComponent } from "./components/transaction-history/transaction-history.component";
-
+import { FinancialAnalysisComponent} from "./components/financial-analysis/financial-analysis.component";
 @Component({
   selector: 'app-right-column',
   standalone: true,
-  imports: [TransactionHistoryComponent],
+  imports: [TransactionHistoryComponent, FinancialAnalysisComponent],
   templateUrl: './right-column.component.html',
   styleUrl: './right-column.component.css'
 })

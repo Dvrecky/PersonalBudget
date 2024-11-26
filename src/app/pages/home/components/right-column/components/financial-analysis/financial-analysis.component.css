@@ -1,11 +1,12 @@
-
-.history-container {
-  padding: 16px;
+.financial-analysis-container {
+  padding: 24px;
   background-color: #f5f5f5;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
+  margin-bottom: 40px;
 }
-
 
 .title {
   font-size: 26px;
@@ -39,43 +40,52 @@
   color: white;
 }
 
-.transaction-container {
-  max-height: 300px;
-  overflow-y: auto;
-  background-color: white;
-  border-radius: 4px;
-  padding: 8px;
+.financial-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-
-.transaction-item {
+.summary-item {
   display: flex;
   justify-content: space-between;
-  padding: 8px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 6px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-
-.transaction-date {
-  flex: 1;
-  color: #757575;
+.summary-item:hover {
+  background-color: #D2F8D2;
 }
 
-.transaction-description {
-  flex: 2;
-  font-weight: 500;
-}
-
-.transaction-amount {
-  flex: 1;
-  text-align: right;
+.summary-title {
+  font-size: 18px;
   font-weight: bold;
-  color: #3f51b5;
+  color: #555;
 }
 
-.transaction-amount.expense {
-  color: red;
+.summary-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
 }
 
-.transaction-amount.income {
-  color: green;
+.income {
+  color: #4caf50;
+}
+
+.expense {
+  color: #f44336;
+}
+
+.balance {
+  color: #2196f3;
+}
+
+canvas {
+  max-width: 100%;
+  height: auto;
+  margin-top: 16px;
 }

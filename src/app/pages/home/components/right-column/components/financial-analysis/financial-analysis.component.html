@@ -1,0 +1,31 @@
+<div class="financial-analysis-container">
+  <div class="title">
+    Financial Analysis
+  </div>
+
+  <div class="filter-buttons">
+    <button mat-button color="primary" (click)="filterBy('day')">Dzień</button>
+    <button mat-button color="primary" (click)="filterBy('week')">Tydzień</button>
+    <button mat-button color="primary" (click)="filterBy('month')">Miesiąc</button>
+    <button mat-button color="primary" (click)="filterBy('year')">Rok</button>
+    <button mat-button color="primary" (click)="filterBy('custom')">Okres</button>
+  </div>
+
+  <div class="financial-summary">
+    <div class="summary-item">
+      <span class="summary-title">Income</span>
+      <span class="summary-value income">+5000 PLN</span> <!-- Example value -->
+    </div>
+    <div class="summary-item">
+      <span class="summary-title">Expense</span>
+      <span class="summary-value expense">-2000 PLN</span> <!-- Example value -->
+    </div>
+    <div class="summary-item">
+      <span class="summary-title">Balance Sheet</span>
+      <span class="summary-value balance">+3000 PLN</span> <!-- Example value -->
+    </div>
+  </div>
+
+  <canvas id="financialChart"></canvas>
+
+</div>
