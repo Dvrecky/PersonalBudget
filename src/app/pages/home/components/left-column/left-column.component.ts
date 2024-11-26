@@ -6,11 +6,12 @@ import { OnInit } from '@angular/core';
 import { response } from 'express';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AppStateService } from '../../../../services/app-state.service';
+import { SwitchTransactionTypeComponent } from "./components/switch-transaction-type/switch-transaction-type.component";
 
 @Component({
   selector: 'app-left-column',
   standalone: true,
-  imports: [AccountBudgetComponent],
+  imports: [AccountBudgetComponent, SwitchTransactionTypeComponent],
   templateUrl: './left-column.component.html',
   styleUrl: './left-column.component.css'
 })
@@ -21,8 +22,9 @@ export class LeftColumnComponent implements OnInit{
     { id: 2, name: 'Oszczędnościowe', balance: 5000 },
     { id: 3, name: 'Karta kredytowa', balance: 300 },
   ];
-
   selectedAccountId: number = 0;
+
+  selectedTransactionType: 'expenses' | 'incomes' = 'expenses';
 
   constructor(private accontService: AccountService, private appStateService: AppStateService) {
   }
@@ -42,6 +44,12 @@ export class LeftColumnComponent implements OnInit{
     if (account) {
       this.appStateService.setSelectedAccount(account); // Prześlij obiekt do AppStateService
     }
+  }
+
+  changeTransactionType(value: 'expenses' | 'incomes') {
+    console.log("Było: ", this.selectedTransactionType);
+    this.selectedTransactionType = value;
+    console.log("Jest: ", this.selectedTransactionType);
   }
 
   // loadAccounts(): void {
