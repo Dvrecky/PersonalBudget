@@ -1,6 +1,9 @@
+
 <app-account-budget [accounts]="accountsList" (accountChange)="onAccountChange($event)"></app-account-budget>
 <!-- (transactionTypeSwitch)="changeTransactionType($event)" reaguje na zdarzenie od dziecka i wywołuje daną metodę -->
 <!-- $event przekazuje wartość wyemitowaną przez EventEmitter w dziecku SwitchTransactionTypeComponent-->
 <!--wartość pochodzi z metody 'emit', w tym przypadku $event jest wartością 'expenses' lub 'incomes'-->
 <app-switch-transaction-type (transactionTypeSwitch)="changeTransactionType($event)"></app-switch-transaction-type>
+
 <app-category-chart></app-category-chart>
+
