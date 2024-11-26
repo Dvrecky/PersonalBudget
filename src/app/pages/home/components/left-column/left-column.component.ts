@@ -7,11 +7,12 @@ import { response } from 'express';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AppStateService } from '../../../../services/app-state.service';
 import { SwitchTransactionTypeComponent } from "./components/switch-transaction-type/switch-transaction-type.component";
+import { CategoryChartComponent } from "./components/category-chart/category-chart.component";
 
 @Component({
   selector: 'app-left-column',
   standalone: true,
-  imports: [AccountBudgetComponent, SwitchTransactionTypeComponent],
+  imports: [AccountBudgetComponent, SwitchTransactionTypeComponent, CategoryChartComponent],
   templateUrl: './left-column.component.html',
   styleUrl: './left-column.component.css'
 })
