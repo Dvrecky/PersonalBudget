@@ -1,1 +1,19 @@
-<p>transaction-type works!</p>
+<section class="transaction-type-container">
+  <mat-card>
+    <mat-card-content>
+      <h2 class="transaction-type-title">Transaction type</h2>
+  
+      <section class="transaction-type-checkboxs-section">
+        <mat-radio-group [(ngModel)]="transactionType">
+          <mat-radio-button class="transaction-type-checkboxs" value="expense">
+            Expense
+          </mat-radio-button>
+          <mat-radio-button class="transaction-type-checkboxs" value="income">
+            Income
+          </mat-radio-button>
+        </mat-radio-group>
+      </section>
+    </mat-card-content>
+  </mat-card>
+</section>
+

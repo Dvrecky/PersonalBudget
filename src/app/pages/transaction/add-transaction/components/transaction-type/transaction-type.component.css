@@ -1,0 +1,16 @@
+.transaction-type-container{
+  width: 800px;
+}
+
+mat-card-content {
+    text-align: center;
+}
+ 
+.transaction-type-checkboxs {
+    margin-right: 20px; /* Zwiększa odstęp po prawej stronie przycisku */
+  }
+  
+.transaction-type-checkboxs:nth-child(2) {
+  margin-left: 50px; /* Zwiększa odstęp po lewej stronie drugiego przycisku */
+}
+  

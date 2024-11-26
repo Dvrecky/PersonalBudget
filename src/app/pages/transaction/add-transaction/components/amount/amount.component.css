@@ -1,0 +1,19 @@
+.amount-container {
+  display: flex; 
+  align-items: center; 
+  gap: 20px; 
+}
+
+.amount-field {
+  display: flex; 
+  align-items: center; 
+}
+
+input[matInput] {
+  width: 150px; 
+  height: 35px;
+  text-align: right; 
+  padding: 5px;
+  font-size: 18px;
+}
+
