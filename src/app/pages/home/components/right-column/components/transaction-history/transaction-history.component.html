@@ -18,7 +18,7 @@
 
   <!-- Lista transakcji -->
   <mat-nav-list class="transaction-container">
-    <mat-list-item *ngFor="let transaction of transactions">
+    <mat-list-item *ngFor="let transaction of filteredTransactions">
       <div class="transaction-item">
         <span class="transaction-date">{{ transaction.date | date: 'dd-MM-yyyy' }}</span>
         <span class="transaction-description">{{ transaction.description }}</span>

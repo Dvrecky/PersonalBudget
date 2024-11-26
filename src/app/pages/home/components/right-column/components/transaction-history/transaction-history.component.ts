@@ -15,6 +15,7 @@ export class TransactionHistoryComponent implements OnChanges{
 
   @Input() selectedAccount: Account | null = null;
   @Input() transactions: Transaction[] = [];
+  filteredTransactions: Transaction[] = [];
 
   ngOnChanges(): void {
       if(this.selectedAccount) {
@@ -22,12 +23,45 @@ export class TransactionHistoryComponent implements OnChanges{
       } else {
         console.log("Jebło");
       }
+      if (this.transactions.length > 0) {
+            this.filteredTransactions = [...this.transactions];
+          }
     }
 
 
   filterBy(period: string) {
-    console.log(`Filtruj dla okresu: ${period}`);
-    // Logika filtrowania transakcji w zależności od wybranego okresu.
+    const now = new Date();
+    console.log(now);
+    switch(period) {
+      case 'day':
+         console.log(now.toDateString());
+
+        this.filteredTransactions = this.transactions.filter(transaction => {
+          return transaction.date.toDateString() === now.toDateString()});
+        break;
+      case 'week':
+        const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
+        const endOfWeek = new Date(startOfWeek);
+        endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+        this.filteredTransactions = this.transactions.filter(transaction => {
+          return transaction.date >= startOfWeek && transaction.date <= endOfWeek;
+          });
+        break;
+      case 'month':
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+        this.filteredTransactions = this.transactions.filter(transaction => {
+          return transaction.date >= startOfMonth && transaction.date <= endOfMonth;
+        });
+        break;
+      case 'year':
+        this.filteredTransactions = this.transactions.filter(transaction => {
+          return transaction.date.getFullYear() === now.getFullYear()
+          });
+        break;
+    }
   }
 
 }

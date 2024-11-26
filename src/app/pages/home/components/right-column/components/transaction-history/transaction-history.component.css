@@ -38,6 +38,10 @@
   background-color: rgb(126, 222, 106);
   color: white;
 }
+.filter-buttons button:active {
+  background-color: rgb(126, 222, 106);
+  color: white;
+}
 
 .transaction-container {
   max-height: 300px;
