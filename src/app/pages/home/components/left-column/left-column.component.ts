@@ -18,20 +18,22 @@ import { CategoryChartComponent } from "./components/category-chart/category-cha
 })
 export class LeftColumnComponent implements OnInit{
 
-  accountsList: Account[] = [
-    { id: 1, name: "Konto główne", balance: 1000},
-    { id: 2, name: 'Oszczędnościowe', balance: 5000 },
-    { id: 3, name: 'Karta kredytowa', balance: 300 },
-  ];
+  accountsList: Account[] = [];
+//   accountsList: Account[] = [
+//     { id: 1, name: "Konto główne", balance: 1000},
+//     { id: 2, name: 'Oszczędnościowe', balance: 5000 },
+//     { id: 3, name: 'Karta kredytowa', balance: 300 },
+//   ];
   selectedAccountId: number = 0;
 
   selectedTransactionType: 'expenses' | 'incomes' = 'expenses';
 
-  constructor(private accontService: AccountService, private appStateService: AppStateService) {
+  constructor(private accountService: AccountService, private appStateService: AppStateService) {
   }
 
   ngOnInit(): void {
     // this.loadAccounts();
+    this.accountsList = this.accountService.getAccounts();
     const total = this.accountsList.reduce( (accumulator, currentIndex) => (accumulator + currentIndex.balance) , 0);
     const accSum: Account = {id:0, name: "Suma", balance: total};
     this.accountsList.splice(0, 0, accSum);

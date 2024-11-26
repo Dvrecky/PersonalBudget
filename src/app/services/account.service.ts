@@ -8,15 +8,28 @@ import { Account } from '../models/account.model';
 })
 export class AccountService {
 
-  private apiUrl = "http://localhost:8080/api/accounts"
+  private accounts: Account[] = [
+      { id: 1, name: "Konto głowne", balance: 1000 },
+      { id: 2, name: "Konto oszczednosciowe", balance: 2056 },
+      { id: 3, name: "Konto 1", balance: 395 },
+  ];
 
-  constructor(private http: HttpClient) { }
+  private apiUrl = "http://localhost:8080/api/accounts";
 
-  getAccounts(): Observable<Account[]> {
-    return this.http.get<Account[]>(this.apiUrl);
+ // constructor(private http: HttpClient) { }
+  constructor() { }
+
+//   getAccounts(): Observable<Account[]> {
+//     return this.http.get<Account[]>(thiclears.apiUrl);
+//   }
+
+ getAccounts(): Account[] {
+    return this.accounts;
   }
 
-  addAccount(account: Account): Observable<Account> {
-    return this.http.post<Account>(this.apiUrl, account);
-  } 
+//   addAccount(account: Account): Observable<Account> {
+//     return this.http.post<Account>(this.apiUrl, account);
+//   }
+
 }
+
