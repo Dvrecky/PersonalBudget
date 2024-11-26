@@ -1,3 +1,32 @@
-<p>transaction-history works!</p>
 <div>{{selectedAccount?.name}}</div>
 <div>{{selectedAccount?.balance | currency:'PLN '}}</div>
+
+<div class="history-container">
+  <!-- Tytuł sekcji -->
+  <div class="title">
+    Historia
+  </div>
+
+  <!-- Przyciski filtrowania -->
+  <div class="filter-buttons">
+    <button mat-button color="primary" (click)="filterBy('day')">Dzień</button>
+    <button mat-button color="primary" (click)="filterBy('week')">Tydzień</button>
+    <button mat-button color="primary" (click)="filterBy('month')">Miesiąc</button>
+    <button mat-button color="primary" (click)="filterBy('year')">Rok</button>
+    <button mat-button color="primary" (click)="filterBy('custom')">Okres</button>
+  </div>
+
+  <!-- Lista transakcji -->
+  <mat-nav-list class="transaction-container">
+    <mat-list-item *ngFor="let transaction of transactions">
+      <div class="transaction-item">
+        <span class="transaction-date">{{ transaction.date }}</span>
+        <span class="transaction-description">{{ transaction.description }}</span>
+        <span class="transaction-amount" [ngClass]="{ 'expense': transaction.type === 'expense', 'income': transaction.type === 'income' }">
+          {{ transaction.type === 'expense' ? '-' : '' }}{{ transaction.amount | number:'1.2-2'}} PLN
+        </span>
+      </div>
+    </mat-list-item>
+  </mat-nav-list>
+</div>
+

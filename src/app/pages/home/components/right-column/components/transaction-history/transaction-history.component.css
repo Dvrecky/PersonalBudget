@@ -1,0 +1,71 @@
+
+.history-container {
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Tytuł sekcji */
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  padding: 8px;
+  margin-bottom: 16px;
+  background-color: rgb(126, 222, 106);
+  color: white;
+  border-radius: 4px;
+}
+
+
+.filter-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 16px;
+}
+
+button {
+  font-size: 15px;
+}
+
+.transaction-container {
+  max-height: 300px;
+  overflow-y: auto;
+  background-color: white;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+
+.transaction-date {
+  flex: 1;
+  color: #757575;
+}
+
+.transaction-description {
+  flex: 2;
+  font-weight: 500;
+}
+
+.transaction-amount {
+  flex: 1;
+  text-align: right;
+  font-weight: bold;
+  color: #3f51b5;
+}
+
+.transaction-amount.expense {
+  color: red;
+}
+
+.transaction-amount.income {
+  color: green;
+}
