@@ -19,10 +19,19 @@
   border-radius: 6px;
 }
 
+.callender-container {
+  display: flex;
+  width: 220px;
+  font-size: 12px;
+  align-items:center;
+  margin-top : 20px;
+}
+
 .filter-buttons {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
+  align-items:center;
 }
 
 .filter-buttons button {
@@ -33,9 +42,19 @@
   border-radius: 4px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
   transition: background-color 0.3s;
+  height: 40px;
 }
 
 .filter-buttons button:hover {
+  background-color: rgb(126, 222, 106);
+  color: white;
+}
+.filter-buttons button:active {
+  background-color: rgb(126, 222, 106);
+  color: white;
+}
+
+button.active {
   background-color: rgb(126, 222, 106);
   color: white;
 }
@@ -67,17 +86,18 @@
 }
 
 .summary-value {
-  font-size: 18px;
   font-weight: bold;
-  color: #333;
+  color: #3f51b5;
+  font-size: 16px;
+  font-family: "Gill Sans", sans-serif;
 }
 
 .income {
-  color: #4caf50;
+  color: green;
 }
 
 .expense {
-  color: #f44336;
+  color: red;
 }
 
 .balance {
