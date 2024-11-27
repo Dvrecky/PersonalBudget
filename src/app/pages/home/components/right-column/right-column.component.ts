@@ -27,7 +27,6 @@ export class RightColumnComponent implements OnInit{
 
       if(account) {
         this.transactions = this.transactionService.getTransactionsByAccount(account);
-        console.log(this.transactions);
       } else {
         this.transactions = [];
       }

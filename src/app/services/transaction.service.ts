@@ -97,6 +97,39 @@ export class TransactionService {
         type: "income",
         accountId: 1,
         categoryId: 4
+    },
+    {
+        id: 9,
+        amount: 310,
+        date: new Date(),
+        description: "Zwrot podatku",
+        recurring: false,
+        recurringPeriod: "",
+        type: "income",
+        accountId: 1,
+        categoryId: 4
+    },
+    {
+        id: 10,
+        amount: 1000,
+        date: new Date(),
+        description: "oddanie dlugu",
+        recurring: false,
+        recurringPeriod: "",
+        type: "expense",
+        accountId: 1,
+        categoryId: 4
+    },
+    {
+      id: 11,
+      amount: 210,
+      date: new Date(),
+      description: "Zakupy",
+      recurring: false,
+      recurringPeriod: "",
+      type: "expense",
+      accountId: 1,
+      categoryId: 4
     }
   ];
 

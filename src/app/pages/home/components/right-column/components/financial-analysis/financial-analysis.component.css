@@ -46,6 +46,11 @@
   gap: 12px;
 }
 
+button.active {
+  background-color: rgb(126, 222, 106);
+  color: white;
+}
+
 .summary-item {
   display: flex;
   justify-content: space-between;
