@@ -19,10 +19,7 @@ import { CategoryChartComponent } from "./components/category-chart/category-cha
 export class LeftColumnComponent implements OnInit{
 
   accountsList: Account[] = [];
-<<<<<<< HEAD
-=======
 
->>>>>>> b6bdff818f5b8036a13de8acc964bbaf7b1e7cc9
   selectedAccountId: number = 0;
 
   selectedTransactionType: 'expenses' | 'incomes' = 'expenses';

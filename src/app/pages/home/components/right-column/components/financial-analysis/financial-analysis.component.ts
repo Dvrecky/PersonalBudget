@@ -1,16 +1,19 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { Chart } from 'chart.js';
-<<<<<<< HEAD
-import { CurrencyPipe, CommonModule  } from '@angular/common';
+import { CurrencyPipe, CommonModule, JsonPipe } from '@angular/common';
 import { Transaction } from '../../../../../../models/transaction.model';
 import { Account } from '../../../../../../models/account.model';
-=======
->>>>>>> b6bdff818f5b8036a13de8acc964bbaf7b1e7cc9
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { NativeDateAdapter, MatNativeDateModule } from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @Component({
   selector: 'app-financial-analysis',
   standalone: true,
-  imports: [CurrencyPipe, CommonModule],
+  providers: [NativeDateAdapter],
+  imports: [CurrencyPipe, CommonModule,MatFormFieldModule,
+    MatDatepickerModule, FormsModule, ReactiveFormsModule, JsonPipe, MatNativeDateModule],
   templateUrl: './financial-analysis.component.html',
   styleUrl: './financial-analysis.component.css'
 })
@@ -25,17 +28,52 @@ export class FinancialAnalysisComponent implements OnChanges{
   expense: number = 0;
   balanceSheet: number = 0;
 
+  readonly range = new FormGroup({
+        start: new FormControl<Date | null>(null),
+        end: new FormControl<Date | null>(null),
+      });
+
+ ngOnInit(): void {
+     this.range.valueChanges.subscribe(value => {
+       if (value.start && value.end) {
+         this.activeFilter = "";
+         this.filterByDateRange(new Date(value.start), new Date(value.end));
+       }
+     });
+   }
+
  ngOnChanges(): void {
    console.log(this.transactions)
     if (this.transactions.length > 0) {
         this.filteredTransactions = [...this.transactions];
         this.filterBy(this.activeFilter);
     }
+
+  this.range.reset();
+       this.activeFilter = 'day';
+       this.range.valueChanges.subscribe(value => {
+            if (value.start && value.end) {
+              this.filterByDateRange(value.start, value.end);
+            }
+          });
  }
 
+  filterByDateRange(startDate: Date, endDate: Date) {
+        this.filteredTransactions = this.transactions.filter(transaction =>
+          transaction.date >= startDate && transaction.date <= endDate
+        );
+           this.income = this.filteredTransactions
+              .filter(transaction => transaction.type === "income")
+              .reduce((total, transaction) => total + transaction.amount, 0);
+
+            this.expense = this.filteredTransactions
+                    .filter(transaction => transaction.type === "expense")
+                    .reduce((total, transaction) => total + transaction.amount, 0);
+
+            this.balanceSheet = this.income - this.expense;
+      }
 
   filterBy(period: string) {
-    //console.log(this.filteredTransactions);
     this.activeFilter = period;
     const now = new Date();
     switch(period) {
@@ -80,10 +118,6 @@ export class FinancialAnalysisComponent implements OnChanges{
 
     this.balanceSheet = this.income - this.expense;
 
-   // console.log(this.filteredTransactions);
-    console.log(this.income);
-    console.log(this.expense);
-    console.log(this.balanceSheet);
   }
 
 //     ngOnInit(): void {
