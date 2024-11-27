@@ -88,8 +88,8 @@ button.active {
 .summary-value {
   font-weight: bold;
   color: #3f51b5;
-  font-size: 18px;
-
+  font-size: 16px;
+  font-family: "Gill Sans", sans-serif;
 }
 
 .income {

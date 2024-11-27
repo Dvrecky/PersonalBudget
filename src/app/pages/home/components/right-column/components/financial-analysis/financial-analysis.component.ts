@@ -62,15 +62,15 @@ export class FinancialAnalysisComponent implements OnChanges{
         this.filteredTransactions = this.transactions.filter(transaction =>
           transaction.date >= startDate && transaction.date <= endDate
         );
-           this.income = this.filteredTransactions
-              .filter(transaction => transaction.type === "income")
-              .reduce((total, transaction) => total + transaction.amount, 0);
+         this.income = this.filteredTransactions
+            .filter(transaction => transaction.type === "income")
+            .reduce((total, transaction) => total + transaction.amount, 0);
 
-            this.expense = this.filteredTransactions
-                    .filter(transaction => transaction.type === "expense")
-                    .reduce((total, transaction) => total + transaction.amount, 0);
+          this.expense = this.filteredTransactions
+                  .filter(transaction => transaction.type === "expense")
+                  .reduce((total, transaction) => total + transaction.amount, 0);
 
-            this.balanceSheet = this.income - this.expense;
+          this.balanceSheet = this.income - this.expense;
       }
 
   filterBy(period: string) {
@@ -120,36 +120,5 @@ export class FinancialAnalysisComponent implements OnChanges{
 
   }
 
-//     ngOnInit(): void {
-//         // Tworzenie wykresu po załadowaniu komponentu
-//         const ctx = document.getElementById('financialChart') as HTMLCanvasElement;
-//         new Chart(ctx, {
-//           type: 'bar', // Typ wykresu (słupkowy)
-//           data: {
-//             labels: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec'], // Oznaczenia osi X
-//             datasets: [{
-//               label: 'Przychody',
-//               data: [5000, 4000, 3500, 4600, 5200, 6000], // Przychody
-//               backgroundColor: 'rgba(76, 175, 80, 0.5)', // Kolor tła słupków
-//               borderColor: 'rgba(76, 175, 80, 1)', // Kolor granicy
-//               borderWidth: 1
-//             }, {
-//               label: 'Wydatki',
-//               data: [2000, 1500, 1800, 1700, 1600, 1900], // Wydatki
-//               backgroundColor: 'rgba(255, 87, 34, 0.5)', // Kolor tła słupków
-//               borderColor: 'rgba(255, 87, 34, 1)', // Kolor granicy
-//               borderWidth: 1
-//             }]
-//           },
-//           options: {
-//             responsive: true,  // Dopasowanie wykresu do rozmiaru ekranu
-//             scales: {
-//               y: {
-//                 beginAtZero: true // Skala Y zaczyna się od 0
-//               }
-//             }
-//           }
-//         });
-//       }
 
 }

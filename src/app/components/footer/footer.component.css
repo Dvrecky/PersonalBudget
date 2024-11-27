@@ -2,6 +2,7 @@ footer{
     background-color: rgb(206, 206, 206);
     color: white;
     text-align: center;
+    height: 80px;
 }
 * {
     margin: 0;
