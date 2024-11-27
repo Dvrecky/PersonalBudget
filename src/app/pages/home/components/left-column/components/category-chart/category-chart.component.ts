@@ -1,6 +1,7 @@
 import { Component, Output, Input, EventEmitter } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { CategoryChart } from '../../../../../../models/categoryChart.model';
 
 @Component({
   selector: 'app-category-chart',
@@ -12,7 +13,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 export class CategoryChartComponent {
 
   // gotowe dane do wyświetlenia wykresu, będą przekazywane z rodzica
-  @Input() categoryChartData: any;
+  @Input() categoryChartData: CategoryChart | undefined;
   // służy do emitowania zdarzenia do rodzica, informując go o zmianie okresu według, którego ma być wyświetlany wykres
   @Output() periodChange = new EventEmitter<"year" | "month" | "week" | "day">();
 

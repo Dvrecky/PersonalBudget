@@ -8,6 +8,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AppStateService } from '../../../../services/app-state.service';
 import { SwitchTransactionTypeComponent } from "./components/switch-transaction-type/switch-transaction-type.component";
 import { CategoryChartComponent } from "./components/category-chart/category-chart.component";
+import { CategoryChart } from '../../../../models/categoryChart.model';
+import { CategoryService } from '../../../../services/category.service';
+import { Category } from '../../../../models/category.model';
+import { TransactionService } from '../../../../services/transaction.service';
 
 @Component({
   selector: 'app-left-column',
@@ -18,13 +22,18 @@ import { CategoryChartComponent } from "./components/category-chart/category-cha
 })
 export class LeftColumnComponent implements OnInit{
 
+  // przekazuje listę kont komponentowi AccountBudgetComponent (dziecko)
   accountsList: Account[] = [];
 
+  // zmienna przechowuje id obecnie wybranego konta
   selectedAccountId: number = 0;
 
+  // zmienna przechowuje obecnie wybrany typ transakcji
   selectedTransactionType: 'expenses' | 'incomes' = 'expenses';
 
-  constructor(private accountService: AccountService, private appStateService: AppStateService) {
+  categoryChartData: CategoryChart | undefined;
+
+  constructor(private transactionService: TransactionService, private categoryService: CategoryService, private accountService: AccountService, private appStateService: AppStateService) {
   }
 
   ngOnInit(): void {
@@ -53,6 +62,11 @@ export class LeftColumnComponent implements OnInit{
 
   onPeriodChange(period: "year" | "month" | "week" | "day") {
       console.log(period);
+      this.updateDataChart(period, this.selectedAccountId);
+  }
+
+  updateDataChart(period: string, accountId: number) {
+    
   }
 
   // rodzic będzie odpowiedzialny za wygenerowanie poprawnych danych do wyświetlenia wykresu

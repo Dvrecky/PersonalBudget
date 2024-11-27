@@ -108,4 +108,7 @@ export class TransactionService {
   getTransactionsByAccount(account: Account): Transaction[] {
       return this.transactions.filter(transaction => transaction.accountId === account.id);
     }
+
+    
+
 }

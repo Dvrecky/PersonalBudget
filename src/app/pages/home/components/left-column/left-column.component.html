@@ -5,5 +5,5 @@
 <!--wartość pochodzi z metody 'emit', w tym przypadku $event jest wartością 'expenses' lub 'incomes'-->
 <app-switch-transaction-type (transactionTypeSwitch)="changeTransactionType($event)"></app-switch-transaction-type>
 
-<app-category-chart (periodChange)="onPeriodChange($event)"></app-category-chart>
+<app-category-chart [categoryChartData]="categoryChartData" (periodChange)="onPeriodChange($event)"></app-category-chart>
 
