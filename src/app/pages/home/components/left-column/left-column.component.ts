@@ -19,6 +19,10 @@ import { CategoryChartComponent } from "./components/category-chart/category-cha
 export class LeftColumnComponent implements OnInit{
 
   accountsList: Account[] = [];
+<<<<<<< HEAD
+=======
+
+>>>>>>> b6bdff818f5b8036a13de8acc964bbaf7b1e7cc9
   selectedAccountId: number = 0;
 
   selectedTransactionType: 'expenses' | 'incomes' = 'expenses';
@@ -49,6 +53,14 @@ export class LeftColumnComponent implements OnInit{
     this.selectedTransactionType = value;
     console.log("Jest: ", this.selectedTransactionType);
   }
+
+  onPeriodChange(period: "year" | "month" | "week" | "day") {
+      console.log(period);
+  }
+
+  // rodzic będzie odpowiedzialny za wygenerowanie poprawnych danych do wyświetlenia wykresu
+  // na podstawie danych przekazanych z CategoryChartCOmponent (okres) oraz SwitchTransactionComponent (typ transakcji)
+  // i za przekazanie ich do CategoryChartComponent, aby wyświetlić odpowiedni wykres
 
   // loadAccounts(): void {
   //   this.accontService.getAccounts().subscribe(

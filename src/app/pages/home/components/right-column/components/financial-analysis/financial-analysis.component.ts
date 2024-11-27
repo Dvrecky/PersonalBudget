@@ -1,8 +1,11 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { Chart } from 'chart.js';
+<<<<<<< HEAD
 import { CurrencyPipe, CommonModule  } from '@angular/common';
 import { Transaction } from '../../../../../../models/transaction.model';
 import { Account } from '../../../../../../models/account.model';
+=======
+>>>>>>> b6bdff818f5b8036a13de8acc964bbaf7b1e7cc9
 
 @Component({
   selector: 'app-financial-analysis',
