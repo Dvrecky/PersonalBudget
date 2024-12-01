@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit } from '@angular/core';
-import { Account } from '../../../../../../models/account.model';
 import { Transaction } from '../../../../../../models/transaction.model';
-import { CurrencyPipe, NgFor, CommonModule, DatePipe, JsonPipe} from '@angular/common';
+import { NgFor, CommonModule, DatePipe} from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NativeDateAdapter, MatNativeDateModule } from '@angular/material/core';
@@ -12,15 +11,14 @@ import {MatFormFieldModule} from '@angular/material/form-field';
   selector: 'app-transaction-history',
   standalone: true,
   providers: [NativeDateAdapter],
-  imports: [CurrencyPipe,NgFor,CommonModule, MatListModule, DatePipe, MatFormFieldModule,
-    MatDatepickerModule, FormsModule, ReactiveFormsModule, JsonPipe, MatNativeDateModule],
+  imports: [NgFor,CommonModule, MatListModule, DatePipe, MatFormFieldModule,
+    MatDatepickerModule, FormsModule, ReactiveFormsModule, MatNativeDateModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './transaction-history.component.html',
   styleUrl: './transaction-history.component.css'
 })
-export class TransactionHistoryComponent implements OnChanges {
+export class TransactionHistoryComponent implements OnChanges, OnInit {
 
- // @Input() selectedAccount: Account | null = null;
   @Input() transactions: Transaction[] = [];
   filteredTransactions: Transaction[] = [];
   activeFilter: string = 'day';

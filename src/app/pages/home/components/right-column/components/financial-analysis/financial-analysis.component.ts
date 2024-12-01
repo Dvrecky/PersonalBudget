@@ -71,83 +71,19 @@ export class FinancialAnalysisComponent implements OnChanges, OnInit {
  }
 
   filterByDateRange(startDate: Date, endDate: Date) {
+    let chartLabels: string[] = [];
     this.filteredTransactions = this.transactions.filter(transaction =>
       transaction.date.getDate() >= startDate.getDate() && transaction.date.getDate() <= endDate.getDate()
     );
+
+    for(let d = startDate; d<= endDate; d.setDate(d.getDate() + 1)){
+      chartLabels.push(new Date(d).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }));
+    }
     this.updateAnalysisData();
+    this.config.data.labels = chartLabels;
+    this.updateChart(startDate, endDate);
+    this.chart.update();
  }
-
-
-  updateChartDate(startDay: Date, endDay: Date) {
-
-    this.config.data.datasets.forEach(dataset => dataset.data = []);
-
-    if(startDay && !endDay) {
-      for (let m=0; m <12; m++) {
-        this.filteredTransactions.forEach(transaction => {
-          if(transaction.date.getFullYear() === startDay.getFullYear() && transaction.date.getMonth() === m) {
-
-            let transactionsForTheMonth: Transaction[] = this.filteredTransactions.filter(transaction => {
-              return transaction.date.getMonth() === m;
-            });
-
-            let incomeSum = 0;
-            let expenseSum = 0;
-            transactionsForTheMonth.forEach(transaction => {
-              if(transaction.type === "expense") {
-                expenseSum += transaction.amount;
-              }
-              if(transaction.type === "income") {
-                incomeSum += transaction.amount;
-              }
-            });
-            this.config.data.datasets[0].data.push(incomeSum);
-            this.config.data.datasets[1].data.push(expenseSum);
-            this.config.data.datasets[2].data.push(incomeSum - expenseSum);
-
-            m++;
-          }
-        })
-        this.config.data.datasets[0].data.push(0);
-        this.config.data.datasets[1].data.push(0);
-        this.config.data.datasets[2].data.push(0);
-      }
-    }
-    else {
-      startDay.setHours(0, 0, 0, 0);
-      endDay.setHours(0, 0, 0, 0)
-
-      for(let d = new Date(startDay); d <= endDay; d.setDate(d.getDate() + 1)) {
-        this.filteredTransactions.forEach(transaction => {
-          if(transaction.date.getDate() === d.getDate()) {
-
-            let transactionsForTheDay: Transaction[] = this.filteredTransactions.filter(transaction => {
-              return transaction.date.toDateString() === d.toDateString();
-            });
-
-            let incomeSum = 0;
-            let expenseSum = 0;
-            transactionsForTheDay.forEach(transaction => {
-              if(transaction.type === "expense") {
-                expenseSum += transaction.amount;
-              }
-              if(transaction.type === "income") {
-                incomeSum += transaction.amount;
-              }
-            });
-            this.config.data.datasets[0].data.push(incomeSum);
-            this.config.data.datasets[1].data.push(expenseSum);
-            this.config.data.datasets[2].data.push(incomeSum - expenseSum);
-
-            d.setDate(d.getDate() + 1)
-          }
-        })
-        this.config.data.datasets[0].data.push(0);
-        this.config.data.datasets[1].data.push(0);
-        this.config.data.datasets[2].data.push(0);
-      }
-    }
-  }
 
   filterBy(period: string) {
     this.range.reset();
@@ -156,6 +92,7 @@ export class FinancialAnalysisComponent implements OnChanges, OnInit {
     let startDate: Date;
     let endDate: Date;
     let chartLabels: string[] = [];
+    let year: Date;
 
     switch(period) {
       case 'day':
@@ -206,6 +143,7 @@ export class FinancialAnalysisComponent implements OnChanges, OnInit {
           return transaction.date.getFullYear() === now.getFullYear()
           });
         startDate = now;
+        year = now;
         chartLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         break;
     }
@@ -213,7 +151,7 @@ export class FinancialAnalysisComponent implements OnChanges, OnInit {
 
     this.config.data.labels = chartLabels;
     // @ts-ignore
-    this.updateChartDate(startDate, endDate);
+    this.updateChart(startDate, endDate, year);
     this.chart.update();
  }
 
@@ -246,6 +184,74 @@ export class FinancialAnalysisComponent implements OnChanges, OnInit {
     this.expensesRate = this.expense / this.income * 100;
   }
 
+  public updateChart(startDay: Date, endDay: Date, year?: Date) {
+    this.config.data.datasets.forEach(dataset => dataset.data = []);
+    let index=0;
+
+    if(year) {
+      for(let d = 0; d < 12; d++) {
+        this.filteredTransactions.forEach(transaction => {
+
+          if(transaction.date.getMonth() === d) {
+            let transactionsForPeriod: Transaction[] = this.filteredTransactions.filter(transaction => {
+              return transaction.date.getMonth() === d;
+            });
+
+            let incomeSum = 0;
+            let expenseSum = 0;
+            transactionsForPeriod.forEach(transaction => {
+              if(transaction.type === "expense") {
+                expenseSum += transaction.amount;
+              }
+              if(transaction.type === "income") {
+                incomeSum += transaction.amount;
+              }
+            });
+
+            console.log("suma dla msc" + d + " = " + incomeSum);
+            console.log(index);
+            this.config.data.datasets[0].data[index] = (incomeSum);
+            this.config.data.datasets[1].data[index] = (expenseSum);
+            this.config.data.datasets[2].data[index] = (incomeSum - expenseSum);
+          }
+        })
+        index++;
+      }
+    }
+    else {
+      startDay.setHours(0, 0, 0, 0);
+      endDay.setHours(0, 0, 0, 0);
+      for(let d = new Date(startDay); d <= endDay; d.setDate(d.getDate() + 1)) {
+        this.filteredTransactions.forEach(transaction => {
+          if(transaction.date.getDate() === d.getDate()) {
+            let transactionsForPeriod: Transaction[];
+
+            transactionsForPeriod = this.filteredTransactions.filter(transaction => {
+              return transaction.date.toDateString() === d.toDateString();
+            });
+
+            let incomeSum = 0;
+            let expenseSum = 0;
+            transactionsForPeriod.forEach(transaction => {
+              if(transaction.type === "expense") {
+                expenseSum += transaction.amount;
+              }
+              if(transaction.type === "income") {
+                incomeSum += transaction.amount;
+              }
+            });
+            this.config.data.datasets[0].data[index] = (incomeSum);
+            this.config.data.datasets[1].data[index] = (expenseSum);
+            this.config.data.datasets[2].data[index] = (incomeSum - expenseSum);
+
+            d.setDate(d.getDate() + 1);
+            index++;
+          }
+        })
+        index++;
+      }
+    }
+ }
 
   public config: ChartConfiguration<'bar'> = {
     type: 'bar',
