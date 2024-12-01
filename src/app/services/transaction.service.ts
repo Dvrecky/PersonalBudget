@@ -142,4 +142,9 @@ export class TransactionService {
       return this.transactions.filter(transaction => transaction.accountId === account.id);
     }
 
+<<<<<<< HEAD
+=======
+    
+
+>>>>>>> e5b8106f94d4f6d2220c501f8dae7015dae79d26
 }
