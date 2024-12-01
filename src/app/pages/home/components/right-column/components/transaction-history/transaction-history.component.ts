@@ -20,7 +20,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 })
 export class TransactionHistoryComponent implements OnChanges {
 
-  @Input() selectedAccount: Account | null = null;
+ // @Input() selectedAccount: Account | null = null;
   @Input() transactions: Transaction[] = [];
   filteredTransactions: Transaction[] = [];
   activeFilter: string = 'day';
@@ -31,6 +31,7 @@ export class TransactionHistoryComponent implements OnChanges {
     });
 
   ngOnInit(): void {
+    console.log(this.transactions);
     this.range.valueChanges.subscribe(value => {
       if (value.start && value.end) {
         this.activeFilter = "";
@@ -40,7 +41,6 @@ export class TransactionHistoryComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
-
       if (this.transactions.length > 0) {
           this.filteredTransactions = [...this.transactions];
           this.filterBy(this.activeFilter);
@@ -57,11 +57,12 @@ export class TransactionHistoryComponent implements OnChanges {
 
   filterByDateRange(startDate: Date, endDate: Date) {
       this.filteredTransactions = this.transactions.filter(transaction =>
-        transaction.date >= startDate && transaction.date <= endDate
+        transaction.date.getDate() >= startDate.getDate() && transaction.date.getDate() <= endDate.getDate()
       );
     }
 
   filterBy(period: string) {
+    this.range.reset();
     this.activeFilter = period;
     const now = new Date();
     switch(period) {
@@ -71,21 +72,24 @@ export class TransactionHistoryComponent implements OnChanges {
         break;
 
       case 'week':
-        const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
+        const startOfWeek = new Date(now);
+        const dayOfWeek = startOfWeek.getDay();
+        const diffToMonday = (dayOfWeek === 0 ? -6 : 1) - dayOfWeek;
+        startOfWeek.setDate(startOfWeek.getDate() + diffToMonday);
         const endOfWeek = new Date(startOfWeek);
         endOfWeek.setDate(startOfWeek.getDate() + 6);
 
         this.filteredTransactions = this.transactions.filter(transaction => {
-          return transaction.date >= startOfWeek && transaction.date <= endOfWeek;
+          return transaction.date >= startOfWeek && transaction.date < endOfWeek;
           });
         break;
 
       case 'month':
         const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-        const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+        const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
 
         this.filteredTransactions = this.transactions.filter(transaction => {
-          return transaction.date >= startOfMonth && transaction.date <= endOfMonth;
+          return transaction.date >= startOfMonth && transaction.date < endOfMonth;
         });
         break;
 

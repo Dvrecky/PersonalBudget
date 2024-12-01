@@ -34,11 +34,27 @@
       <span class="summary-value expense">-{{ expense | number:'1.2-2'}} PLN</span>
     </div>
     <div class="summary-item">
+      <span class="summary-title">Average income</span>
+      <span class="summary-value average-income">{{ averageIncome | number:'1.2-2'}} PLN</span>
+    </div>
+    <div class="summary-item">
+      <span class="summary-title">Average expenses</span>
+      <span class="summary-value average-expenses">{{ averageExpenses | number:'1.2-2'}} PLN</span>
+    </div>
+    <div class="summary-item">
       <span class="summary-title">Balance Sheet</span>
       <span class="summary-value balance">{{ balanceSheet | number:'1.2-2'}} PLN</span>
     </div>
+    <div class="summary-item">
+      <span class="summary-title">Savings rate</span>
+      <span class="summary-value saving-rate">{{ savingsRate | number:'1.2-2'}} %</span>
+    </div>
+    <div class="summary-item">
+      <span class="summary-title">Expenses rate</span>
+      <span class="summary-value expenses-rate">{{ expensesRate | number:'1.2-2'}} %</span>
+    </div>
   </div>
 
-<!--  <canvas id="financialChart"></canvas>-->
+  <canvas id="FinancialAnalysisChart"></canvas>
 
 </div>

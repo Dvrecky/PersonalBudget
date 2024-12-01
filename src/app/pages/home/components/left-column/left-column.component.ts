@@ -32,6 +32,8 @@ export class LeftColumnComponent implements OnInit{
     this.accountsList = this.accountService.getAccounts();
     const total = this.accountsList.reduce( (accumulator, currentIndex) => (accumulator + currentIndex.balance) , 0);
     const accSum: Account = {id:0, name: "Suma", balance: total};
+
+
     this.accountsList.splice(0, 0, accSum);
     this.appStateService.setSelectedAccount(this.accountsList[0]);
   }
