@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges,OnDestroy } from '@angular/core';
 import { Transaction } from '../../../../../../models/transaction.model';
 import { NgFor, CommonModule, DatePipe} from '@angular/common';
 import { MatListModule } from '@angular/material/list';
@@ -6,6 +6,7 @@ import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular
 import { NativeDateAdapter, MatNativeDateModule } from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-transaction-history',
@@ -17,52 +18,60 @@ import {MatFormFieldModule} from '@angular/material/form-field';
   templateUrl: './transaction-history.component.html',
   styleUrl: './transaction-history.component.css'
 })
-export class TransactionHistoryComponent implements OnChanges, OnInit {
+export class TransactionHistoryComponent implements OnChanges,OnDestroy {
 
   @Input() transactions: Transaction[] = [];
   filteredTransactions: Transaction[] = [];
   activeFilter: string = 'day';
+  private rangeSubscription: Subscription | undefined;
 
    readonly range = new FormGroup({
       start: new FormControl<Date | null>(null),
       end: new FormControl<Date | null>(null),
     });
 
-  ngOnInit(): void {
-    console.log(this.transactions);
-    this.range.valueChanges.subscribe(value => {
-      if (value.start && value.end) {
-        this.activeFilter = "";
-        this.filterByDateRange(new Date(value.start), new Date(value.end));
-      }
-    });
-  }
 
   ngOnChanges(): void {
-      if (this.transactions.length > 0) {
-          this.filteredTransactions = [...this.transactions];
-          this.filterBy(this.activeFilter);
-      }
-     this.range.reset();
-     this.activeFilter = 'day';
+    this.filteredTransactions = [];
+
+    //dodac oblsuge bledu
+    // if (!this.transactions || this.transactions.length === 0) {
+    //   return;
+    // }
+
+    this.activeFilter = 'day';
+    this.filteredTransactions = [...this.transactions];
+    this.filterBy(this.activeFilter);
+
      this.range.valueChanges.subscribe(value => {
-          if (value.start && value.end) {
-            this.filterByDateRange(value.start, value.end);
-          }
-        });
+        if (value.start && value.end) {
+          this.activeFilter = "";
+          this.filterByDateRange(new Date(value.start), new Date(value.end));
+        }
+     });
     }
 
+  ngOnDestroy(): void {
+    if (this.rangeSubscription) {
+      this.rangeSubscription.unsubscribe();
+    }
+  }
 
   filterByDateRange(startDate: Date, endDate: Date) {
-      this.filteredTransactions = this.transactions.filter(transaction =>
-        transaction.date.getDate() >= startDate.getDate() && transaction.date.getDate() <= endDate.getDate()
-      );
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(23, 59, 59, 999);
+
+    this.filteredTransactions = this.transactions.filter(transaction => {
+      const transactionDate = transaction.date;
+      return transactionDate >= startDate && transactionDate <= endDate;
+    });
     }
 
   filterBy(period: string) {
     this.range.reset();
     this.activeFilter = period;
     const now = new Date();
+    now.setHours(0,0,0,0);
     switch(period) {
       case 'day':
         this.filteredTransactions = this.transactions.filter(transaction => {
@@ -74,6 +83,7 @@ export class TransactionHistoryComponent implements OnChanges, OnInit {
         const dayOfWeek = startOfWeek.getDay();
         const diffToMonday = (dayOfWeek === 0 ? -6 : 1) - dayOfWeek;
         startOfWeek.setDate(startOfWeek.getDate() + diffToMonday);
+
         const endOfWeek = new Date(startOfWeek);
         endOfWeek.setDate(startOfWeek.getDate() + 6);
 

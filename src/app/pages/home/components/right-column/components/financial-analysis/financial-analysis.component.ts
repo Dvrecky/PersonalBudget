@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Transaction } from '../../../../../../models/transaction.model';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -6,6 +6,7 @@ import { NativeDateAdapter, MatNativeDateModule } from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {Chart, ChartConfiguration, registerables} from 'chart.js';
+import {Subscription} from 'rxjs';
 Chart.register(...registerables);
 
 @Component({
@@ -17,7 +18,7 @@ Chart.register(...registerables);
   templateUrl: './financial-analysis.component.html',
   styleUrl: './financial-analysis.component.css'
 })
-export class FinancialAnalysisComponent implements OnChanges, OnInit {
+export class FinancialAnalysisComponent implements OnChanges, OnDestroy  {
 
   @Input() transactions: Transaction[] = [];
   filteredTransactions: Transaction[] = [];
@@ -30,6 +31,7 @@ export class FinancialAnalysisComponent implements OnChanges, OnInit {
   averageExpenses: number = 0;
   savingsRate: number = 0;
   expensesRate: number = 0;
+  private rangeSubscription: Subscription | undefined;
 
   chart: any;
 
@@ -38,57 +40,61 @@ export class FinancialAnalysisComponent implements OnChanges, OnInit {
         end: new FormControl<Date | null>(null),
       });
 
- ngOnInit(): void {
-     this.range.valueChanges.subscribe(value => {
+
+ ngOnChanges(): void {
+   this.filteredTransactions = [];
+  //dodac oblsuge bledu
+   if (!this.transactions || this.transactions.length === 0) {
+     this.resetChartData();
+    // return;
+   }
+
+   if (!this.chart) {
+     this.chart = new Chart("FinancialAnalysisChart", this.config);
+   }
+   this.activeFilter = 'day';
+   this.filteredTransactions = [...this.transactions];
+   this.filterBy(this.activeFilter);
+
+   this.range.valueChanges.subscribe(value => {
        if (value.start && value.end) {
          this.activeFilter = "";
          this.filterByDateRange(new Date(value.start), new Date(value.end));
        }
-
-       if (!this.chart) {
-         this.chart = new Chart("FinancialAnalysisChart", this.config);
-       } else {
-         this.chart.update();
-       }
-
-     });
-   }
-
- ngOnChanges(): void {
-    if (this.transactions.length > 0) {
-        this.filteredTransactions = [...this.transactions];
-        this.filterBy(this.activeFilter);
-    }
-
-   this.range.reset();
-   this.activeFilter = 'day';
-   this.range.valueChanges.subscribe(value => {
-      if (value.start && value.end) {
-        this.filterByDateRange(value.start, value.end);
-      }
    });
-   this.chart.update();
  }
 
-  filterByDateRange(startDate: Date, endDate: Date) {
-    let chartLabels: string[] = [];
-    this.filteredTransactions = this.transactions.filter(transaction =>
-      transaction.date.getDate() >= startDate.getDate() && transaction.date.getDate() <= endDate.getDate()
-    );
+  ngOnDestroy(): void {
+    if (this.rangeSubscription) {
+      this.rangeSubscription.unsubscribe();
+    }
+  }
 
-    for(let d = startDate; d<= endDate; d.setDate(d.getDate() + 1)){
+  filterByDateRange(startDate: Date, endDate: Date) {
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(23, 59, 59, 999);
+
+    let chartLabels: string[] = [];
+    this.filteredTransactions = this.transactions.filter(transaction => {
+      const transactionDate = transaction.date;
+      return transactionDate >= startDate && transactionDate <= endDate;
+    });
+
+    for(let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)){
       chartLabels.push(new Date(d).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' }));
     }
-    this.updateAnalysisData();
-    this.config.data.labels = chartLabels;
-    this.updateChart(startDate, endDate);
-    this.chart.update();
+     this.updateAnalysisData();
+     this.config.data.labels = chartLabels;
+     this.updateChart(startDate, endDate);
+     this.chart.update();
  }
 
   filterBy(period: string) {
     this.range.reset();
     this.activeFilter = period;
     const now = new Date();
+    now.setHours(0,0,0,0);
+
     let startDate: Date;
     let endDate: Date;
     let chartLabels: string[] = [];
@@ -185,7 +191,7 @@ export class FinancialAnalysisComponent implements OnChanges, OnInit {
   }
 
   public updateChart(startDay: Date, endDay: Date, year?: Date) {
-    this.config.data.datasets.forEach(dataset => dataset.data = []);
+    this.resetChartData();
     let index=0;
 
     if(year) {
@@ -208,8 +214,6 @@ export class FinancialAnalysisComponent implements OnChanges, OnInit {
               }
             });
 
-            console.log("suma dla msc" + d + " = " + incomeSum);
-            console.log(index);
             this.config.data.datasets[0].data[index] = (incomeSum);
             this.config.data.datasets[1].data[index] = (expenseSum);
             this.config.data.datasets[2].data[index] = (incomeSum - expenseSum);
@@ -222,7 +226,7 @@ export class FinancialAnalysisComponent implements OnChanges, OnInit {
       startDay.setHours(0, 0, 0, 0);
       endDay.setHours(0, 0, 0, 0);
       for(let d = new Date(startDay); d <= endDay; d.setDate(d.getDate() + 1)) {
-        this.filteredTransactions.forEach(transaction => {
+          this.filteredTransactions.forEach(transaction => {
           if(transaction.date.getDate() === d.getDate()) {
             let transactionsForPeriod: Transaction[];
 
@@ -252,6 +256,10 @@ export class FinancialAnalysisComponent implements OnChanges, OnInit {
       }
     }
  }
+
+  private resetChartData(): void {
+    this.config.data.datasets.forEach(dataset => dataset.data = []);
+  }
 
   public config: ChartConfiguration<'bar'> = {
     type: 'bar',
