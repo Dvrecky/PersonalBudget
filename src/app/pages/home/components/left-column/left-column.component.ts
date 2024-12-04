@@ -13,6 +13,9 @@ import { CategoryService } from '../../../../services/category.service';
 import { Category } from '../../../../models/category.model';
 import { TransactionService } from '../../../../services/transaction.service';
 
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
+
 @Component({
   selector: 'app-left-column',
   standalone: true,
@@ -31,8 +34,54 @@ export class LeftColumnComponent implements OnInit{
   // zmienna przechowuje obecnie wybrany typ transakcji
   selectedTransactionType: 'expenses' | 'incomes' = 'expenses';
 
-  categoryChartData: CategoryChart | undefined;
+  categoryChartData: any |undefined;
 
+  // zmienne, które będą się zmieniać dla wykresu
+
+  // zmienna przechowuje nazwy kategorii
+  categoryNames: String[] = [];
+
+  // zmienna przechowuje całościową kwotę dla danej kategorii
+  amounts: number[] = [];
+
+  // zmienna przechowuje kolory dla kategorii
+  categoryColors: String[] = [];
+
+  // dane do wykresu
+  dane = {
+    // nazwy kategorii
+    // categoryNames
+    labels: [
+      'Red',
+      'Blue',
+      'Yellow'
+    ],
+    datasets: [{
+      label: 'My First Dataset',
+      // cała kwota dla danej kategorii
+      // amount
+      data: [300, 50, 100],
+      // kolory kategorii
+      // categoryColors
+      backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 205, 86)'
+      ],
+      hoverOffset: 4
+    }]
+  };
+
+  // konfiguracja wykresu (wykorzystuje dane)
+  config: any = {
+    type: 'doughnut',
+    data: this.dane,
+  };
+
+  onChartDataChange(accountId: number, selectedTransactionType: 'expenses' | 'incomes') {
+
+  }
+  
   constructor(private transactionService: TransactionService, private categoryService: CategoryService, private accountService: AccountService, private appStateService: AppStateService) {
   }
 
@@ -45,6 +94,8 @@ export class LeftColumnComponent implements OnInit{
 
     this.accountsList.splice(0, 0, accSum);
     this.appStateService.setSelectedAccount(this.accountsList[0]);
+
+    this.categoryChartData = new Chart('CategoryChart', this.config);
   }
 
   onAccountChange(accountId: number) {
