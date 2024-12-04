@@ -1,6 +1,6 @@
 export interface Category {
     id: number;
-    name: String;
-    type: "income" | "expenses";
+    name: string;
+    type: "incomes" | "expenses";
     color: string;
 }

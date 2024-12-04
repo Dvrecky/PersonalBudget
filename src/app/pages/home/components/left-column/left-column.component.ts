@@ -39,19 +39,20 @@ export class LeftColumnComponent implements OnInit{
   // zmienne, które będą się zmieniać dla wykresu
 
   // zmienna przechowuje nazwy kategorii
-  categoryNames: String[] = [];
+  categoryNames: string[] = [];
 
   // zmienna przechowuje całościową kwotę dla danej kategorii
   amounts: number[] = [];
 
   // zmienna przechowuje kolory dla kategorii
-  categoryColors: String[] = [];
+  categoryColors: string[] = [];
 
   // dane do wykresu
   dane = {
     // nazwy kategorii
     // categoryNames
-    labels: [
+    labels:
+    [
       'Red',
       'Blue',
       'Yellow'
@@ -60,7 +61,7 @@ export class LeftColumnComponent implements OnInit{
       label: 'My First Dataset',
       // cała kwota dla danej kategorii
       // amount
-      data: [300, 50, 100],
+      data: [300, 50, 100, 10, 20, 14],
       // kolory kategorii
       // categoryColors
       backgroundColor: [
@@ -78,7 +79,29 @@ export class LeftColumnComponent implements OnInit{
     data: this.dane,
   };
 
-  onChartDataChange(accountId: number, selectedTransactionType: 'expenses' | 'incomes') {
+  onChartDataChange(accId: number, transactionType: 'expenses' | 'incomes') {
+    const categories = this.categoryService.getAllCategories().filter((category) => category.type === transactionType);
+    this.categoryColors = categories.map( (category) => category.color );
+    this.categoryNames = categories.map((category) => category.name);
+    if(this.selectedAccountId === 0) {
+      
+
+    } else {
+
+      const transactions = this.transactionService.getTransactions().filter((transaction) => transaction.accountId === accId /*&& transaction.type === transactionType*/);
+      
+
+
+      this.dane.labels = this.categoryNames;
+      this.dane.datasets[0].backgroundColor = this.categoryColors;
+    }
+
+    console.log("Names: ", this.categoryNames);
+    console.log("Colors: ", this.categoryColors);
+
+    if (this.categoryChartData) {
+      this.categoryChartData.update();
+    }
 
   }
   
@@ -105,6 +128,8 @@ export class LeftColumnComponent implements OnInit{
     if (account) {
       this.appStateService.setSelectedAccount(account); // Prześlij obiekt do AppStateService
     }
+
+    this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
   }
 
   changeTransactionType(value: 'expenses' | 'incomes') {

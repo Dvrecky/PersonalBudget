@@ -10,25 +10,25 @@ export class CategoryService {
     {
       id: 1,
       name: "Salary",
-      type: "income",
+      type: "incomes",
       color: "#4CAF50"
     },
     {
       id: 2,
       name: "Freelancing",
-      type: "income",
+      type: "incomes",
       color: "#2196F3"
     },
     {
       id: 3,
       name: "Investments",
-      type: "income",
+      type: "incomes",
       color: "#FF9800"
     },
     {
       id: 4,
       name: "Gifts",
-      type: "income",
+      type: "incomes",
       color: "#9C27B0"
     },
     {
