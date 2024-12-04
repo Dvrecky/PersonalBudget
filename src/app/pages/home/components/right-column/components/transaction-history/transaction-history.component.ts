@@ -25,10 +25,10 @@ export class TransactionHistoryComponent implements OnChanges {
   filteredTransactions: Transaction[] = [];
   activeFilter: string = 'day';
 
-   readonly range = new FormGroup({
+  readonly range = new FormGroup({
       start: new FormControl<Date | null>(null),
       end: new FormControl<Date | null>(null),
-    });
+  });
 
   ngOnInit(): void {
     this.range.valueChanges.subscribe(value => {
