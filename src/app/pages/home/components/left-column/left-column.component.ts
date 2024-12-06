@@ -14,6 +14,8 @@ import { Category } from '../../../../models/category.model';
 import { TransactionService } from '../../../../services/transaction.service';
 
 import { Chart, registerables } from 'chart.js';
+import { transition } from '@angular/animations';
+import { withHttpTransferCacheOptions } from '@angular/platform-browser';
 Chart.register(...registerables);
 
 @Component({
@@ -80,31 +82,82 @@ export class LeftColumnComponent implements OnInit{
   };
 
   onChartDataChange(accId: number, transactionType: 'expense' | 'income') {
+
+    // wszystkie konta mają te same kategorie transakcji (dla wydatków i dla przychodów)
+    // więc można zwyczajnie pobrać wszystkie kategorie dla danego typu transakcji
+
+    // pobranie kategorii dla danego typu transakcji
     const categories = this.categoryService.getAllCategories().filter((category) => category.type === transactionType);
+
+    // pobranie kolorów kategorii
     this.categoryColors = categories.map( (category) => category.color );
+
+    // pobranie nazw kategorii
     this.categoryNames = categories.map((category) => category.name);
 
+    // zmienna przechowuje dane do wyświetlenia na wykresie
+    const categoryChart: CategoryChart[] = [];
+
     if(this.selectedAccountId === 0) {
-      
+
+      // const allTransactions = this.transactionService.getTransactions().filter( (transaction) => transaction.type === transactionType );
+
+      for(const category of categories) {
+        const categoryTransactions = this.transactionService.getTransactions().filter(
+          (transaction) =>
+            transaction.categoryId === category.id &&
+            transaction.type === transactionType
+        );
+
+        const sum = categoryTransactions.reduce( (acc, transaction) => acc + transaction.amount, 0);
+
+        categoryChart.push({
+          name: category.name,
+          color: category.color,
+          sum: sum,
+        });
+      }
+
+      console.log(categoryChart);
 
 
     } else {
 
-      const transactions = this.transactionService.getTransactions().filter((transaction) => transaction.accountId === accId /*&& transaction.type === transactionType*/);
+      // dla każdej kategorii pobierane są transkacje
+      for(const category of categories) {
+        const categoryTransactions = this.transactionService.getTransactions().filter(
+          (transaction) => 
+            transaction.categoryId === category.id &&
+            transaction.type === transactionType && 
+            transaction.accountId === accId
+        );
+
+        const sum = categoryTransactions.reduce( (acc, transaction) => acc + transaction.amount, 0);
+
+        categoryChart.push({
+          name: category.name,
+          color: category.color,
+          sum: sum,
+        });
+      }
+
+      console.log(categoryChart);
+
+      // const transactions = this.transactionService.getTransactions().filter((transaction) => transaction.accountId === accId && transaction.type === transactionType);
       
-
-
-      this.dane.labels = this.categoryNames;
-      this.dane.datasets[0].backgroundColor = this.categoryColors;
+      // this.dane.labels = this.categoryNames;
+      // this.dane.datasets[0].backgroundColor = this.categoryColors;
     }
 
-    console.log("Names: ", this.categoryNames);
-    console.log("Colors: ", this.categoryColors);
+    this.dane.labels = categoryChart.map((summary) => summary.name);
+    this.dane.datasets[0].data = categoryChart.map((summary) => summary.sum);
+    this.dane.datasets[0].backgroundColor = categoryChart.map( (summary) => summary.color);
+    // console.log("Names: ", this.categoryNames);
+    // console.log("Colors: ", this.categoryColors);
 
     if (this.categoryChartData) {
       this.categoryChartData.update();
     }
-
   }
   
   constructor(private transactionService: TransactionService, private categoryService: CategoryService, private accountService: AccountService, private appStateService: AppStateService) {
@@ -126,12 +179,15 @@ export class LeftColumnComponent implements OnInit{
     this.appStateService.setSelectedAccount(this.accountsList[0]);
 
     this.categoryChartData = new Chart('CategoryChart', this.config);
+
+    this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
   }
 
   onAccountChange(accountId: number) {
     this.selectedAccountId = accountId;
     console.log("Parent: ", accountId);
     const account = this.accountsList.find(acc => acc.id === accountId);
+
     if (account) {
       this.appStateService.setSelectedAccount(account); // Prześlij obiekt do AppStateService
     }
@@ -139,10 +195,11 @@ export class LeftColumnComponent implements OnInit{
     this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
   }
 
-  changeTransactionType(value: 'expense' | 'income') {
+  onChangeTransactionType(value: 'expense' | 'income') {
     console.log("Było: ", this.selectedTransactionType);
     this.selectedTransactionType = value;
     console.log("Jest: ", this.selectedTransactionType);
+    this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
   }
 
   onPeriodChange(period: "year" | "month" | "week" | "day") {

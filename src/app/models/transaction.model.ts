@@ -4,6 +4,7 @@ export interface Transaction {
     date: Date;
     description: string;
     recurring: boolean;
+    //reccuringPeriod: ReccuringPeriod,
     recurringPeriod: string;
     type: 'income' | 'expense';
     accountId: number;

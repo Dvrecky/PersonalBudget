@@ -11,128 +11,18 @@ export class TransactionService {
   }
 
   private transactions: Transaction[] = [
-    {
-      id: 1,
-      amount: 1500,
-      date: new Date(2024, 11, 25),
-      description: "Wynagrodzenie za pracę",
-      recurring: true,
-      recurringPeriod: "monthly",
-      type: "income",
-      accountId: 1,
-      categoryId: 1
-    },
-    {
-      id: 2,
-      amount: 200,
-      date: new Date(2024, 11, 2),
-      description: "Rachunek za prąd",
-      recurring: true,
-      recurringPeriod: "monthly",
-      type: "expense",
-      accountId: 1,
-      categoryId: 2
-    },
-    {
-      id: 3,
-      amount: 50,
-      date: new Date(2024, 11, 30),
-      description: "Zakupy spożywcze",
-      recurring: false,
-      recurringPeriod: "",
-      type: "expense",
-      accountId: 1,
-      categoryId: 3
-    },
-    {
-      id: 4,
-      amount: 300,
-      date: new Date(2024, 11, 10),
-      description: "Zwrot podatku",
-      recurring: false,
-      recurringPeriod: "",
-      type: "income",
-      accountId: 1,
-      categoryId: 4
-    },
-    {
-      id: 5,
-      amount: 310,
-      date: new Date(2024, 11, 21),
-      description: "Zwrot podatku",
-      recurring: false,
-      recurringPeriod: "",
-      type: "income",
-      accountId: 1,
-      categoryId: 4
-    },
-    {
-      id: 6,
-      amount: 120,
-      date: new Date(),
-      description: "Zwrot podatku",
-      recurring: false,
-      recurringPeriod: "",
-      type: "income",
-      accountId: 1,
-      categoryId: 4
-    },
-    {
-      id: 7,
-      amount: 300,
-      date: new Date(),
-      description: "Zwrot podatku",
-      recurring: false,
-      recurringPeriod: "",
-      type: "expense",
-      accountId: 1,
-      categoryId: 4
-    },
-    {
-      id: 8,
-      amount: 300,
-      date: new Date(2024, 9, 2),
-      description: "Zwrot podatku",
-      recurring: false,
-      recurringPeriod: "",
-      type: "income",
-      accountId: 1,
-      categoryId: 4
-    },
-    {
-      id: 9,
-      amount: 310,
-      date: new Date(2024, 1, 2),
-      description: "Zwrot podatku",
-      recurring: false,
-      recurringPeriod: "",
-      type: "income",
-      accountId: 1,
-      categoryId: 4
-    },
-    {
-      id: 10,
-      amount: 1000,
-      date: new Date(2024, 3, 2),
-      description: "oddanie dlugu",
-      recurring: false,
-      recurringPeriod: "",
-      type: "expense",
-      accountId: 1,
-      categoryId: 4
-    }
-    // {
-    //   id: 11,
-    //   amount: 210,
-    //   date: new Date(),
-    //   description: "Zakupy",
-    //   recurring: false,
-    //   recurringPeriod: "",
-    //   type: "expense",
-    //   accountId: 1,
-    //   categoryId: 4
-    // }
+    { id: 1, amount: 1500, date: new Date(2024, 11, 25), description: "Wynagrodzenie za pracę", recurring: true, recurringPeriod: "monthly", type: "income", accountId: 1, categoryId: 1 },
+    { id: 2, amount: 200, date: new Date(2024, 11, 2), description: "Rachunek za prąd", recurring: true, recurringPeriod: "monthly", type: "expense", accountId: 1, categoryId: 8 },
+    { id: 3, amount: 50, date: new Date(2024, 11, 30), description: "Zakupy spożywcze", recurring: false, recurringPeriod: "", type: "expense", accountId: 1, categoryId: 6 },
+    { id: 4, amount: 300, date: new Date(2024, 11, 10), description: "Prezent", recurring: false, recurringPeriod: "", type: "income", accountId: 1, categoryId: 4 },
+    { id: 5, amount: 310, date: new Date(2024, 11, 21), description: "Premia za freelancing", recurring: false, recurringPeriod: "", type: "income", accountId: 1, categoryId: 2 },
+    { id: 6, amount: 120, date: new Date(), description: "Prezent urodzinowy", recurring: false, recurringPeriod: "", type: "income", accountId: 1, categoryId: 4 },
+    { id: 7, amount: 300, date: new Date(), description: "Naprawa samochodu", recurring: false, recurringPeriod: "", type: "expense", accountId: 1, categoryId: 7 },
+    { id: 8, amount: 100, date: new Date(2024, 9, 2), description: "Zwrot podatku", recurring: false, recurringPeriod: "", type: "income", accountId: 2, categoryId: 3 },
+    { id: 9, amount: 400, date: new Date(2024, 1, 2), description: "Rachunek za gaz", recurring: false, recurringPeriod: "", type: "expense", accountId: 2, categoryId: 8 },
+    { id: 10, amount: 1000, date: new Date(2024, 3, 2), description: "Czynsz", recurring: false, recurringPeriod: "", type: "expense", accountId: 3, categoryId: 5 }
   ];
+  
 
   getTransactions(): Transaction[] {
     //return this.http.get<Account[]>(this.apiUrl);

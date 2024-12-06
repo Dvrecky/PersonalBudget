@@ -3,7 +3,7 @@
 <!-- (transactionTypeSwitch)="changeTransactionType($event)" reaguje na zdarzenie od dziecka i wywołuje daną metodę -->
 <!-- $event przekazuje wartość wyemitowaną przez EventEmitter w dziecku SwitchTransactionTypeComponent-->
 <!--wartość pochodzi z metody 'emit', w tym przypadku $event jest wartością 'expenses' lub 'incomes'-->
-<app-switch-transaction-type (transactionTypeSwitch)="changeTransactionType($event)"></app-switch-transaction-type>
+<app-switch-transaction-type (transactionTypeSwitch)="onChangeTransactionType($event)"></app-switch-transaction-type>
 
 <app-category-chart [categoryChartData]="categoryChartData" (periodChange)="onPeriodChange($event)"></app-category-chart>
 
