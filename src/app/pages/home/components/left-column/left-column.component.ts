@@ -83,7 +83,9 @@ export class LeftColumnComponent implements OnInit{
     const categories = this.categoryService.getAllCategories().filter((category) => category.type === transactionType);
     this.categoryColors = categories.map( (category) => category.color );
     this.categoryNames = categories.map((category) => category.name);
+
     if(this.selectedAccountId === 0) {
+      
       
 
     } else {
@@ -111,11 +113,16 @@ export class LeftColumnComponent implements OnInit{
   ngOnInit(): void {
     // this.loadAccounts();
     this.accountsList = this.accountService.getAccounts();
+
+    if (this.accountsList[0].id === 0) {
+      this.accountsList.splice(0, 1);
+    }
+
     const total = this.accountsList.reduce( (accumulator, currentIndex) => (accumulator + currentIndex.balance) , 0);
     const accSum: Account = {id:0, name: "Suma", balance: total};
 
-
     this.accountsList.splice(0, 0, accSum);
+
     this.appStateService.setSelectedAccount(this.accountsList[0]);
 
     this.categoryChartData = new Chart('CategoryChart', this.config);
