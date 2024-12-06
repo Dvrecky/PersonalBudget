@@ -2,9 +2,9 @@
     <!-- (change)="onTransactionTypeChange($event.value)" podczas zmiany w radio-button zostanie wywołana dana metoda 
      (przekazuje 'value' danego przycisku do metody), dalej metoda emituje zdarzenie do rodzica-->
      <!--value="expenses" określa domyślnie zaznaczoną wartość -->
-    <mat-radio-group aria-label="Select an option" (change)="onTransactionTypeChange($event.value)" value="expenses">
-        <mat-radio-button value="expenses">expenses</mat-radio-button>
-        <mat-radio-button value="incomes">incomes</mat-radio-button>
+    <mat-radio-group aria-label="Select an option" (change)="onTransactionTypeChange($event.value)" value="expense">
+        <mat-radio-button value="expense">expenses</mat-radio-button>
+        <mat-radio-button value="income">incomes</mat-radio-button>
     </mat-radio-group>
 </div>
 

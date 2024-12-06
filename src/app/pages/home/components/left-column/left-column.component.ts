@@ -32,7 +32,7 @@ export class LeftColumnComponent implements OnInit{
   selectedAccountId: number = 0;
 
   // zmienna przechowuje obecnie wybrany typ transakcji
-  selectedTransactionType: 'expenses' | 'incomes' = 'expenses';
+  selectedTransactionType: 'expense' | 'income' = 'expense';
 
   categoryChartData: any |undefined;
 
@@ -79,14 +79,14 @@ export class LeftColumnComponent implements OnInit{
     data: this.dane,
   };
 
-  onChartDataChange(accId: number, transactionType: 'expenses' | 'incomes') {
+  onChartDataChange(accId: number, transactionType: 'expense' | 'income') {
     const categories = this.categoryService.getAllCategories().filter((category) => category.type === transactionType);
     this.categoryColors = categories.map( (category) => category.color );
     this.categoryNames = categories.map((category) => category.name);
 
     if(this.selectedAccountId === 0) {
       
-      
+
 
     } else {
 
@@ -139,7 +139,7 @@ export class LeftColumnComponent implements OnInit{
     this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
   }
 
-  changeTransactionType(value: 'expenses' | 'incomes') {
+  changeTransactionType(value: 'expense' | 'income') {
     console.log("Było: ", this.selectedTransactionType);
     this.selectedTransactionType = value;
     console.log("Jest: ", this.selectedTransactionType);
