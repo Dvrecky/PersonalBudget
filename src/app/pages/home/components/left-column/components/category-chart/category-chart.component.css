@@ -2,4 +2,8 @@
     text-align: center;
     margin-top: 20px;
 }
+
+mat-card {
+    border-radius: 20px;
+}
   
