@@ -1,9 +1,19 @@
 <div class = "container">
     <mat-card appearance="outlined">
         <mat-card-content>
-            @for (category of categorySummary; track category.name) {
-                
-            }
+        
+            <mat-list>
+                @for (category of categorySummary; track category.name) {
+                    <mat-list-item>
+                        <div class="category-row">
+                            <span class="category-name">{{category.name}}</span>
+                            <span class="category-percentage">{{category.percentage}}%</span>
+                            <span class="category-amount">{{category.amount}}</span>
+                        </div>
+                    </mat-list-item>
+                }
+            </mat-list>
+           
         </mat-card-content>
     </mat-card>
 </div>

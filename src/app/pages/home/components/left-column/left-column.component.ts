@@ -39,7 +39,7 @@ export class LeftColumnComponent implements OnInit{
   selectedTransactionType: 'expense' | 'income' = 'expense';
 
   // zmienna przechowuje dane dla wyświetlenie przez CategorySummaryComponent
-  categorySummary: CategorySummary[] | undefined;
+  categorySummary: CategorySummary[] = [];
 
   // zmienna reprezentująca wykres
   categoryChartData: any |undefined;
@@ -96,10 +96,56 @@ export class LeftColumnComponent implements OnInit{
     this.categoryChartData = new Chart('CategoryChart', this.config);
 
     this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
+    this.updateCategorySummary(this.selectedAccountId, this.selectedTransactionType);
   }
 
-  updateCategorySummary() {
+  updateCategorySummary(accId: number, transactionType: "expense" | "income") {
     
+    this.categorySummary = [];
+    const categories = this.categoryService.getAllCategories().filter((category) => category.type === transactionType);
+
+    if(this.selectedAccountId === 0) {
+
+      for(const category of categories) {
+        const categoryTransactions = this.transactionService.getTransactions().filter(
+          (transaction) =>
+            transaction.categoryId === category.id &&
+            transaction.type === transactionType
+        );
+
+        const sum = categoryTransactions.reduce( (acc, transaction) => acc + transaction.amount, 0);
+
+        this.categorySummary.push({
+          name: category.name,
+          percentage: 0,
+          amount: sum
+        })
+      }
+
+      console.log(this.categorySummary);
+
+    } else {
+
+      for(const category of categories) {
+        const categoryTransactions = this.transactionService.getTransactions().filter(
+          (transaction) =>
+            transaction.categoryId === category.id &&
+            transaction.type === transactionType && 
+            transaction.accountId === accId
+        );
+
+        const sum = categoryTransactions.reduce( (acc, transaction) => acc + transaction.amount, 0);
+
+        this.categorySummary.push({
+          name: category.name,
+          percentage: 0,
+          amount: sum
+        })
+      }
+
+      console.log(this.categorySummary);
+
+    }
   }
 
   onChartDataChange(accId: number, transactionType: 'expense' | 'income') {
@@ -194,6 +240,7 @@ export class LeftColumnComponent implements OnInit{
     }
 
     this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
+    this.updateCategorySummary(this.selectedAccountId, this.selectedTransactionType);
   }
 
   onChangeTransactionType(value: 'expense' | 'income') {
@@ -201,6 +248,7 @@ export class LeftColumnComponent implements OnInit{
     this.selectedTransactionType = value;
     console.log("Jest: ", this.selectedTransactionType);
     this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
+    this.updateCategorySummary(this.selectedAccountId, this.selectedTransactionType);
   }
 
   onPeriodChange(period: "year" | "month" | "week" | "day") {
