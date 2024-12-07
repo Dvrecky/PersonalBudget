@@ -1,0 +1,7 @@
+.container{
+    margin-top: 20px;
+}
+
+.container mat-card {
+    border-radius: 20px;
+}

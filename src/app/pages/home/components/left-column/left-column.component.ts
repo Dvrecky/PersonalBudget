@@ -15,13 +15,15 @@ import { TransactionService } from '../../../../services/transaction.service';
 
 import { Chart, registerables } from 'chart.js';
 import { CategoryChartDataStructure } from '../../../../models/CategoryChartDataStructure.model';
+import { CategorySummaryComponent } from './components/category-summary/category-summary.component';
+import { CategorySummary } from '../../../../models/categorySummary.model';
 
 Chart.register(...registerables);
 
 @Component({
   selector: 'app-left-column',
   standalone: true,
-  imports: [AccountBudgetComponent, SwitchTransactionTypeComponent, CategoryChartComponent],
+  imports: [AccountBudgetComponent, SwitchTransactionTypeComponent, CategoryChartComponent, CategorySummaryComponent],
   templateUrl: './left-column.component.html',
   styleUrl: './left-column.component.css'
 })
@@ -35,6 +37,9 @@ export class LeftColumnComponent implements OnInit{
 
   // zmienna przechowuje obecnie wybrany typ transakcji
   selectedTransactionType: 'expense' | 'income' = 'expense';
+
+  // zmienna przechowuje dane dla wyświetlenie przez CategorySummaryComponent
+  categorySummary: CategorySummary[] | undefined;
 
   // zmienna reprezentująca wykres
   categoryChartData: any |undefined;
@@ -91,6 +96,10 @@ export class LeftColumnComponent implements OnInit{
     this.categoryChartData = new Chart('CategoryChart', this.config);
 
     this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
+  }
+
+  updateCategorySummary() {
+    
   }
 
   onChartDataChange(accId: number, transactionType: 'expense' | 'income') {
