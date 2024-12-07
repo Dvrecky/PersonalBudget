@@ -23,7 +23,6 @@ export class RightColumnComponent implements OnInit{
   ngOnInit(): void {
       this.appStateService.selectedAccount$.subscribe(account => {
       this.selectedAccount = account;
-      console.log("Selected component in RightColumnComponent", account);
 
       if(account) {
         this.transactions = this.transactionService.getTransactionsByAccount(account);

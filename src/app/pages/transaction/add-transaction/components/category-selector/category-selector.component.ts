@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {MatRadioModule} from '@angular/material/radio';
+import {Category} from '../../../../../models/category.model';
 
 @Component({
   selector: 'app-category-selector',
@@ -10,4 +11,9 @@ import {MatRadioModule} from '@angular/material/radio';
 })
 export class CategorySelectorComponent {
 
+  @Input() categories: Category[] = [];
+
+  ngOnInit() {
+    console.log(this.categories);
+  }
 }

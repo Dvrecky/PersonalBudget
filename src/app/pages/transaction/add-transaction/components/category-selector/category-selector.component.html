@@ -1,14 +1,14 @@
-<!-- <p>category-selector works!</p> -->
-<mat-radio-group aria-label="Select an option">
-    <mat-radio-button value="1">kat 1</mat-radio-button>
-    <mat-radio-button value="2">kat 2</mat-radio-button>
-    <mat-radio-button value="3">kat 3</mat-radio-button>
-    <mat-radio-button value="4">kat 4</mat-radio-button>
-    <mat-radio-button value="5">kat 5</mat-radio-button>
 
-    <mat-radio-button value="1">kat 6</mat-radio-button>
-    <mat-radio-button value="2">kat 7</mat-radio-button>
-    <mat-radio-button value="3">kat 8</mat-radio-button>
-    <mat-radio-button value="4">kat 9</mat-radio-button>
-    <mat-radio-button value="5">kat 10</mat-radio-button>
-  </mat-radio-group>
+<div>
+  @for ( category of categories; track category.id) {
+    <li>
+      {{category.name}}
+      <img [src]="category.iconPath" alt="{{category.name}} icon" width="50px" height="50px" style="background-color: {{category.color}}"/>
+    </li>
+  }@empty {
+    <li>No categories available</li>
+  }
+
+</div>
+
+

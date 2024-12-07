@@ -1,12 +1,12 @@
 <section class="add-transaction-container">
   <h2 class="add-transaction-header">Add Transaction</h2>
   <app-transaction-type></app-transaction-type>
-  <div class="amount-account-container">
-       <!--  AccountSelectorComponent -->
-       <app-account-selector></app-account-selector>
-      <!--  AmountComponent -->
-      <app-amount></app-amount>
-  </div>
-  <app-category-selector></app-category-selector>
+<!--  <div class="amount-account-container">-->
+<!--       &lt;!&ndash;  AccountSelectorComponent &ndash;&gt;-->
+<!--       <app-account-selector></app-account-selector>-->
+<!--      &lt;!&ndash;  AmountComponent &ndash;&gt;-->
+<!--      <app-amount></app-amount>-->
+<!--  </div>-->
+  <app-category-selector [categories]="categories"></app-category-selector>
 </section>
 
