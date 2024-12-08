@@ -34,7 +34,8 @@ export class AccountsListComponent{
   openDialogWithAddAccountForm(enterAnimationDuration: string, exitAnimationDuration: string): void {
 
     this.dialog.open(AddAccountDialogComponent, {
-      width: '400px',
+      autoFocus: false,
+      width: '500px',
       enterAnimationDuration,
       exitAnimationDuration,
     });
