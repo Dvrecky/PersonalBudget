@@ -1,0 +1,15 @@
+.container{
+    display: flex;
+    flex-direction: column; /* Ustaw elementy w kolumnie */
+    justify-content: center; /* Wyśrodkowanie pionowe */
+    align-items: center; /* Wyśrodkowanie poziome */
+    height: 100px; /* Opcjonalne - ustaw wysokość kontenera */
+    text-align: center; /* Ustawienie tekstu w środku */
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.para{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
