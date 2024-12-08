@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class = "container">
     <mat-card-content>
            <mat-list>
                 @for( acc of accountsList; track acc.name) {
@@ -6,4 +6,11 @@
                 }
            </mat-list> 
     </mat-card-content>
+    <mat-action-list>
+        <div class="example-button-container">
+            <button mat-fab (click)="openDialogWithAddAccountForm('250ms', '250ms')">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+    </mat-action-list>
 </mat-card>
