@@ -1,0 +1,38 @@
+.container{
+    margin-top: 20px;
+}
+
+.container mat-card {
+    border-radius: 20px;
+}
+
+.category-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc; /* linia oddzielająca kategorie */
+}
+
+.category-name {
+    flex: 1; /* Szerokość dynamiczna, aby zajmować więcej miejsca */
+    text-align: left;
+}
+
+.category-percentage {
+    flex: 0.5; /* Zajmuje mniej miejsca niż nazwa */
+    text-align: center;
+}
+
+.category-amount {
+    flex: 1; /* Dynamiczna szerokość */
+    text-align: right;
+}
+
+mat-list-item {
+    display: block; /* Zapewnienie przestrzeni między kategoriami */
+}
+
+mat-card-content {
+    padding: 16px;
+}

@@ -1,0 +1,12 @@
+.toolbar {
+    background-color: rgb(212, 235, 190);
+    display: flex;
+    justify-content: center; /* Wyśrodkowanie poziome */
+    align-items: center;    /* Wyśrodkowanie pionowe */
+    height: 64px;           /* Możesz dostosować wysokość */
+    width: 70%;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 30px;
+}
