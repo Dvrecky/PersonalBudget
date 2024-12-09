@@ -1,23 +1,31 @@
 <h2 mat-dialog-title class = "header">Add Account</h2>
 <mat-dialog-content>
     <div class = "form">
-        <form [formGroup]="addAccountForm">
+        <form [formGroup]="addAccountForm" (ngSubmit)="handleSubmit()">
             <div>
-                <mat-form-field formControlName="name">
+                <mat-form-field>
                     <mat-label>Account name</mat-label>
-                    <input matInput placeholder="Account">
+                    <input matInput formControlName = "name" placeholder="Account">
+                </mat-form-field>
+            </div>
+            
+            <div>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Balance</mat-label>
+                    <input matInput formControlName="balance" placeholder="Initial account balance" value="0">
                 </mat-form-field>
             </div>
 
 
-            
-            <!-- <div>
-                <mat-form-field class="example-full-width">
-                    <mat-label>Postal Code</mat-label>
-                    <input matInput #postalCode maxlength="5" placeholder="Ex. 94105" value="94043">
-                    <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
-                </mat-form-field>
-            </div> -->
+            <div class = "buttons">
+                <div>
+                    <button mat-raised-button type="submit" [disabled]="!addAccountForm.valid">Submit</button>
+                </div>
+
+                <div>
+                    <button type="button" mat-raised-button (click)="closeDialog()">Close</button>
+                </div>
+            </div>
 
         </form>
     </div>

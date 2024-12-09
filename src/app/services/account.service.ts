@@ -31,5 +31,12 @@ export class AccountService {
 //     return this.http.post<Account>(this.apiUrl, account);
 //   }
 
+  // addAccount(accountName: string, balance: number): void {
+  //   this.accounts.push({
+  //       name: accountName,
+  //       balance: balance
+  //   });
+  // }
+
 }
 
