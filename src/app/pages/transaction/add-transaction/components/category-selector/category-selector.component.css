@@ -1,0 +1,31 @@
+.categories-container{
+  padding: 20px;
+}
+
+mat-radio-group{
+  display: flex;
+  flex-wrap: wrap;
+  width: 800px;
+  gap: 50px;
+  justify-content: center;
+}
+
+
+input[type="radio"] {
+  position: absolute;
+  opacity: 0; /* Ukrywa przycisk radiowy */
+  pointer-events: none; /* Ignoruje kliknięcie bezpośrednio w input */
+}
+
+.category-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  width: 80px;
+}
+
+input[type="radio"]:checked + .category-content {
+  background-color: white;
+}

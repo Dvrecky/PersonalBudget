@@ -1,19 +1,23 @@
 .amount-container {
-  display: flex; 
-  align-items: center; 
-  gap: 20px; 
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .amount-field {
-  display: flex; 
-  align-items: center; 
+  display: flex;
+  align-items: center;
 }
 
-input[matInput] {
-  width: 150px; 
-  height: 35px;
-  text-align: right; 
-  padding: 5px;
-  font-size: 18px;
+.amount-field input {
+  width: 200px; /* Zwiększa szerokość pola */
+  height: 35px; /* Zwiększa wysokość pola */
+  font-size: 18px; /* Zwiększa rozmiar czcionki */
+  padding: 10px; /* Dodatkowa przestrzeń wewnątrz pola */
+  border: none;
+  border-bottom: black solid 1px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background-color: #f6f6f6;
 }
 

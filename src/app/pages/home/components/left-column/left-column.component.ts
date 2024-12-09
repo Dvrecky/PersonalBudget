@@ -100,7 +100,7 @@ export class LeftColumnComponent implements OnInit{
   }
 
   updateCategorySummary(accId: number, transactionType: "expense" | "income") {
-    
+
     this.categorySummary = [];
     const categories = this.categoryService.getAllCategories().filter((category) => category.type === transactionType);
 
@@ -130,7 +130,7 @@ export class LeftColumnComponent implements OnInit{
         const categoryTransactions = this.transactionService.getTransactions().filter(
           (transaction) =>
             transaction.categoryId === category.id &&
-            transaction.type === transactionType && 
+            transaction.type === transactionType &&
             transaction.accountId === accId
         );
 
@@ -191,12 +191,12 @@ export class LeftColumnComponent implements OnInit{
     } else {
 
       // dla danego konta
-      
+
       for(const category of categories) {
         const categoryTransactions = this.transactionService.getTransactions().filter(
-          (transaction) => 
+          (transaction) =>
             transaction.categoryId === category.id &&
-            transaction.type === transactionType && 
+            transaction.type === transactionType &&
             transaction.accountId === accId
         );
 
@@ -224,7 +224,7 @@ export class LeftColumnComponent implements OnInit{
       this.categoryChartData.update();
     }
   }
-  
+
   constructor(private transactionService: TransactionService, private categoryService: CategoryService, private accountService: AccountService, private appStateService: AppStateService) {
   }
 
@@ -257,7 +257,7 @@ export class LeftColumnComponent implements OnInit{
   }
 
   updateDataChart(period: string, accountId: number) {
-    
+
   }
 
   // rodzic będzie odpowiedzialny za wygenerowanie poprawnych danych do wyświetlenia wykresu
