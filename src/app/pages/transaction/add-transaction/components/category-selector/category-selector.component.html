@@ -2,10 +2,10 @@
 <div class="categories-container">
   <mat-radio-group aria-label="Select a category">
     @for (category of categories; track category.id) {
-      <label class="category" style="background-color: {{category.color}}" for="category-{{category.id}}">
+      <label class="category">
         <input type="radio" id="category-{{category.id}}" name="categories" [value]="category.id" />
-        <div class="category-content">
-          <img [src]="category.iconPath" alt="{{category.name}} icon" width="50px" height="50px" />
+        <div class="category-content" style="background-color: {{category.color}}">
+          <img [src]="category.iconPath" alt="{{category.name}} icon" width="35px" height="35px" />
           <span>{{category.name}}</span>
         </div>
       </label>
