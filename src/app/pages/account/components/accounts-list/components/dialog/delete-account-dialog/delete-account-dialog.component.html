@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Delete Account</h2>
+<mat-dialog-content>
+    <div>
+        <p>Are you sure you want to delete account?</p>
+        <p><strong>Account name:</strong> {{data.name}}</p>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close (click)="deleteAccount(data.id)">Yes</button>
+    <button mat-button mat-dialog-close cdkFocusInitial>Cancel</button>
+</mat-dialog-actions>

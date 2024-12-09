@@ -13,7 +13,7 @@
         </button>
        
           <mat-menu #menu="matMenu">
-            <button mat-menu-item>
+            <button mat-menu-item (click)="openDeleteAccountDialog('250ms', '250ms')">
               <mat-icon>delete</mat-icon>
               <span>Delete</span>
             </button>

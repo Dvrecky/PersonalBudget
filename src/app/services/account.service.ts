@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Account } from '../models/account.model';
+import { TransactionService } from './transaction.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class AccountService {
   private apiUrl = "http://localhost:8080/api/accounts";
 
  // constructor(private http: HttpClient) { }
-  constructor() { }
+  constructor(private transactionService: TransactionService) { }
 
 //   getAccounts(): Observable<Account[]> {
 //     return this.http.get<Account[]>(thiclears.apiUrl);
@@ -37,6 +38,15 @@ export class AccountService {
   //       balance: balance
   //   });
   // }
+
+  deleteAccount(accId: number): void {
+    const index = this.accounts.findIndex((acc)=> acc.id === accId);
+    if(index) {
+      this.accounts.splice(index,1);
+      this.transactionService.deleteTransactionForGivenAccount(accId);
+    }
+
+  }
 
 }
 

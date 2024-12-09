@@ -23,7 +23,6 @@ export class TransactionService {
     { id: 10, amount: 1000, date: new Date(2024, 3, 2), description: "Czynsz", recurring: false, recurringPeriod: "", type: "expense", accountId: 3, categoryId: 5 }
   ];
   
-
   getTransactions(): Transaction[] {
     //return this.http.get<Account[]>(this.apiUrl);
     return this.transactions;
@@ -31,5 +30,16 @@ export class TransactionService {
 
   getTransactionsByAccount(account: Account): Transaction[] {
     return this.transactions.filter(transaction => transaction.accountId === account.id);
+  }
+
+  deleteTransactionForGivenAccount(accId: number): void {
+    console.log(this.transactions);
+    
+    for (let i = this.transactions.length - 1; i >= 0; i--) {
+      if (this.transactions[i].id === accId) {
+        this.transactions.splice(i, 1);
+      }
+    }
+    console.log(this.transactions);
   }
 }
