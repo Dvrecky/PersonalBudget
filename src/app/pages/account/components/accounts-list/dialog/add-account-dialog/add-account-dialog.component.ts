@@ -8,22 +8,40 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
+import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { inject } from '@angular/core';
+import { Account } from '../../../../../../models/account.model';
+import { AccountService } from '../../../../../../services/account.service';
 
 @Component({
   selector: 'app-add-account-dialog',
   standalone: true,
-  imports: [ MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIconModule],
   templateUrl: './add-account-dialog.component.html',
   styleUrl: './add-account-dialog.component.css'
 })
 export class AddAccountDialogComponent {
 
+  readonly dialogRef = inject(MatDialogRef<AddAccountDialogComponent>)
+
+  constructor(private accountService: AccountService){
+
+  }
+
   addAccountForm = new FormGroup({
-    name: new FormControl(''),
-    balance: new FormControl('')
+    name: new FormControl('', [Validators.required]),
+    balance: new FormControl('', [Validators.required])
   });
 
+  handleSubmit(): void {
+    console.log(`Acccount name: ${this.addAccountForm.value.name}, Initial balance: ${this.addAccountForm.value.balance}`);
+    this.closeDialog();
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
 }
