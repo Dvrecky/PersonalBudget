@@ -44,7 +44,7 @@ export class AddAccountDialogComponent {
     if(this.addAccountForm.valid) {
       const newAccountData: CreateAccount = {
         name: this.addAccountForm.value.name!,
-        balance: this.addAccountForm.value.balance!
+        balance: Number(this.addAccountForm.value.balance!)
       };
       this.accountService.addAccount(newAccountData);
     }
