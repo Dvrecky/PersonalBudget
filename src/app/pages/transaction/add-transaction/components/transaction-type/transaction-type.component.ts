@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatRadioModule} from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
@@ -11,6 +11,9 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './transaction-type.component.css'
 })
 export class TransactionTypeComponent {
-  transactionType: string | null = null;
+  @Output() transactionTypeChange = new EventEmitter();
 
+  onTransactionTypeChange(selectedType: string): void {
+    this.transactionTypeChange.emit(selectedType);
+  }
 }

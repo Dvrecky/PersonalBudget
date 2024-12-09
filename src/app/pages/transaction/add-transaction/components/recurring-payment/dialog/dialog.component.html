@@ -1,0 +1,15 @@
+<mat-dialog-content>
+  <p>Set the transaction frequency:</p>
+  <mat-radio-group [(ngModel)]="selectedFrequency">
+
+  <mat-radio-button value="weekly">Weekly</mat-radio-button>
+  <mat-radio-button value="monthly">Monthly</mat-radio-button>
+  <mat-radio-button value="annual">Annual</mat-radio-button>
+    <mat-radio-button value="">None</mat-radio-button>
+  </mat-radio-group>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Go back</button>
+  <button mat-button  (click)="onConfirm()">Ok</button>
+</mat-dialog-actions>
