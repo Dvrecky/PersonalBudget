@@ -16,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
+import { MatDialogModule } from '@angular/material/dialog';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -29,7 +30,8 @@ bootstrapApplication(AppComponent, {
       BrowserAnimationsModule,
       MatFormFieldModule,
       MatSelectModule,
-      HttpClientModule
+      HttpClientModule,
+      MatDialogModule
     )
   ]
 })

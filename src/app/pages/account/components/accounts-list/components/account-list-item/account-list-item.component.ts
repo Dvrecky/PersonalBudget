@@ -1,9 +1,19 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Account } from '../../../../../../models/account.model';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CurrencyPipe } from '@angular/common';
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { DeleteAccountDialogComponent } from '../dialog/delete-account-dialog/delete-account-dialog.component';
+
 
 @Component({
   selector: 'app-account-list-item',
@@ -14,6 +24,18 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class AccountListItemComponent {
 
+  readonly dialog = inject(MatDialog);
+
   @Input() account: Account | undefined;
+
+  openDeleteAccountDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(DeleteAccountDialogComponent, {
+      autoFocus: false,
+      width: '400px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: this.account
+    })
+  }
 
 }

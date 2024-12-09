@@ -21,3 +21,8 @@
 .example-button-container button:hover {
     background-color: #ffff99;
 }
+
+mat-list-item{
+    margin: 10px auto;
+    border-radius: 15px;
+}

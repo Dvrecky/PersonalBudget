@@ -14,11 +14,12 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { AddAccountDialogComponent } from './dialog/add-account-dialog/add-account-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-accounts-list',
   standalone: true,
-  imports: [MatCardModule, AccountListItemComponent, MatListModule, MatButtonModule, MatIconModule],
+  imports: [MatCardModule, AccountListItemComponent, MatListModule, MatButtonModule, MatIconModule, MatDialogModule],
   templateUrl: './accounts-list.component.html',
   styleUrl: './accounts-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
