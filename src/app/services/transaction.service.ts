@@ -22,7 +22,7 @@ export class TransactionService {
     { id: 9, amount: 400, date: new Date(2024, 1, 2), description: "Rachunek za gaz", recurring: false, recurringPeriod: "", type: "expense", accountId: 2, categoryId: 8 },
     { id: 10, amount: 1000, date: new Date(2024, 3, 2), description: "Czynsz", recurring: false, recurringPeriod: "", type: "expense", accountId: 3, categoryId: 5 }
   ];
-  
+
   getTransactions(): Transaction[] {
     //return this.http.get<Account[]>(this.apiUrl);
     return this.transactions;
@@ -34,7 +34,7 @@ export class TransactionService {
 
   deleteTransactionForGivenAccount(accId: number): void {
     console.log(this.transactions);
-    
+
     for (let i = this.transactions.length - 1; i >= 0; i--) {
       if (this.transactions[i].id === accId) {
         this.transactions.splice(i, 1);
@@ -42,4 +42,8 @@ export class TransactionService {
     }
     console.log(this.transactions);
   }
+
+  // addTransaction(transactionData: Transaction)Observable<Transaction> {
+  //   return this.http.post<Transaction>(this.apiUrl, transaction);
+  // }
 }

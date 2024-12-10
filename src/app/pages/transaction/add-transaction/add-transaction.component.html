@@ -1,23 +1,61 @@
 <section class="add-transaction-container">
   <h2 class="add-transaction-header">Add Transaction</h2>
 
+  <form [formGroup]="transactionForm" (ngSubmit)="onTransactionConfirmed()">
+    <app-transaction-type (transactionTypeChange)="onTransactionTypeChange($event)"></app-transaction-type>
 
-  <app-transaction-type (transactionTypeChange)="handleTransactionsTypeChange($event)"></app-transaction-type>
-  <div class="amount-account-container">
-    <!--  AccountSelectorComponent -->
-    <app-account-selector [accounts]="accounts" (accountChange)="handleAccountChange($event)"></app-account-selector>
-    <!--  AmountComponent -->
-    <app-amount (amountChange)="handleAmountChange($event)"></app-amount>
-  </div>
+    <div class="amount-account-container">
 
-  <app-category-selector [categories]="categories" (categoryChange)="handleCategoryChange($event)"></app-category-selector>
+      <app-account-selector
+        [accounts]="accounts"
+        [selectedAccountId]="transactionForm.get('account')?.value"
+        (accountChange)="onAccountSelected($event)">
+      </app-account-selector>
 
-  <div class="amount-account-container">
-    <app-date (dateChange)="handleDateChange($event)"></app-date>
-    <app-recurring-payment (frequencyChange)="handleRecurringChange($event)"></app-recurring-payment>
-  </div>
+      <section class="amount-container">
+        <img class="money-icon" src="/icons/money.png" alt="Money Icon" width="60px" height="50px">
 
-  <app-submit-button (transactionConfirmed)="onTransactionConfirmed()"></app-submit-button>
+        <mat-form-field class="amount-form">
+          <mat-label>Amount</mat-label>
+          <input
+            matInput
+            type="number"
+            class="example-right-align"
+            placeholder="0"
+            min="0.01"
+            step="0.01"
+            formControlName="amount"
+          />    <span matTextSuffix>PLN</span>
+        </mat-form-field>
+      </section>
+    </div>
 
+    <app-category-selector [categories]="categories" (categoryChange)="onCategoryChange($event)"></app-category-selector>
+
+    <div class="amount-account-container">
+
+      <div class="date-selector-container">
+        <mat-form-field>
+          <mat-label>Choose a date</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="date">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+
+      <app-recurring-payment (frequencyChange)="onRecurringChange($event)"></app-recurring-payment>
+    </div>
+
+
+    <div class="submit-button-container">
+      <button mat-fab class="submit-button">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+
+  </form>
 </section>
+
 

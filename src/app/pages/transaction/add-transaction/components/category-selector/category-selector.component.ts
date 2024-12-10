@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MatRadioModule} from '@angular/material/radio';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { MatRadioModule} from '@angular/material/radio';
 import {Category} from '../../../../../models/category.model';
 import {FormsModule} from '@angular/forms';
 
@@ -10,17 +10,14 @@ import {FormsModule} from '@angular/forms';
   templateUrl: './category-selector.component.html',
   styleUrl: './category-selector.component.css'
 })
-export class CategorySelectorComponent implements OnInit {
-
+export class CategorySelectorComponent{
   @Input() categories: Category[] = [];
   @Output() categoryChange = new EventEmitter();
 
 
-  ngOnInit() {
-    console.log(this.categories);
-  }
-
-  onCategoryChange(selectedCategoryId: number): void {
+  onCategoryChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const selectedCategoryId = parseInt(inputElement.value, 10);
     this.categoryChange.emit(selectedCategoryId);
   }
 }

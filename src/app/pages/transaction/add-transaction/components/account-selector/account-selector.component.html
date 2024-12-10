@@ -3,7 +3,7 @@
 
    <mat-form-field>
         <mat-label>Account</mat-label>
-        <mat-select [(ngModel)]="selectedAccountId" (ngModelChange)="onAccountChange()">
+        <mat-select [value]="selectedAccountId" (selectionChange)="onAccountChange($event)">
           @for(account of accounts; track account.id) {
             <mat-option value='{{ account.id }}' >{{ account.name }}</mat-option>
           }

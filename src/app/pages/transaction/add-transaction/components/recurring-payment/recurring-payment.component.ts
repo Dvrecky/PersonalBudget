@@ -22,7 +22,6 @@ export class RecurringPaymentComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       if (result !== undefined) {
         this.selectedFrequency = result;
         this.frequencyChange.emit(this.selectedFrequency);
