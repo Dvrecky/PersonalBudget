@@ -9,12 +9,13 @@ import {DateComponent} from './components/date/date.component';
 import {RecurringPaymentComponent} from './components/recurring-payment/recurring-payment.component';
 import {Account} from '../../../models/account.model';
 import {AccountService} from '../../../services/account.service';
+import {SubmitButtonComponent} from './components/submit-button/submit-button.component';
 
 
 @Component({
   selector: 'app-add-transaction',
   standalone: true,
-  imports: [TransactionTypeComponent, AmountComponent, AccountSelectorComponent, CategorySelectorComponent, DateComponent, RecurringPaymentComponent],
+  imports: [TransactionTypeComponent, AmountComponent, AccountSelectorComponent, CategorySelectorComponent, DateComponent, RecurringPaymentComponent, SubmitButtonComponent],
   templateUrl: './add-transaction.component.html',
   styleUrl: './add-transaction.component.css'
 })
@@ -51,5 +52,9 @@ export class AddTransactionComponent implements OnInit {
 
   handleRecurringChange($event: any) {
     console.log($event)
+  }
+
+  onTransactionConfirmed() {
+    console.log("dodaj transakcje")
   }
 }

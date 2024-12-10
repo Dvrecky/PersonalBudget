@@ -5,12 +5,11 @@
 mat-card-content {
     text-align: center;
 }
- 
+
 .transaction-type-checkboxs {
-    margin-right: 20px; /* Zwiększa odstęp po prawej stronie przycisku */
+    margin-right: 20px;
   }
-  
+
 .transaction-type-checkboxs:nth-child(2) {
-  margin-left: 50px; /* Zwiększa odstęp po lewej stronie drugiego przycisku */
+  margin-left: 50px;
 }
-  

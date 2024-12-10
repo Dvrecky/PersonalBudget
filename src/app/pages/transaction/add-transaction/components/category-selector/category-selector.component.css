@@ -11,7 +11,6 @@ mat-radio-group{
   justify-content: center;
 }
 
-
 input[type="radio"] {
   position: absolute;
   opacity: 0;
@@ -28,6 +27,7 @@ input[type="radio"] {
   width: 80px;
   border: 1px solid white;
   margin: 20px;
+
 }
 
 input[type="radio"]:checked + .category-content {
