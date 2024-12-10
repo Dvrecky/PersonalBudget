@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Account } from '../../../../../../models/account.model';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
@@ -12,7 +12,14 @@ import { Input, Output } from '@angular/core';
   templateUrl: './account-budget.component.html',
   styleUrl: './account-budget.component.css'
 })
-export class AccountBudgetComponent implements OnInit{
+export class AccountBudgetComponent implements OnInit, OnChanges{
+
+ ngOnChanges(changes: SimpleChanges): void {
+    if (changes['accounts'] && this.accounts.length > 0) {
+      // Aktualizacja sumy po otrzymaniu nowych danych
+      this.sum = this.accounts[0]?.balance || 0;
+    }
+  }
 
   // lista z kontami będzie przekazywana poprzez komponent rodzica
   @Input() accounts: Account[] = [];
