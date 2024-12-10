@@ -2,9 +2,9 @@
   <mat-card>
     <mat-card-content>
       <h2 class="transaction-type-title">Transaction type</h2>
-  
+
       <section class="transaction-type-checkboxs-section">
-        <mat-radio-group [(ngModel)]="transactionType">
+        <mat-radio-group (change)="onTransactionTypeChange($event.value)">
           <mat-radio-button class="transaction-type-checkboxs" value="expense">
             Expense
           </mat-radio-button>
