@@ -80,23 +80,26 @@ export class LeftColumnComponent implements OnInit{
 
   ngOnInit(): void {
     // this.loadAccounts();
-    this.accountsList = this.accountService.getAccounts();
+    // this.accountsList = this.accountService.getAccounts();
+    this.loadAccounts();
+    console.log(this.accountsList);
 
-    if (this.accountsList[0].id === 0) {
-      this.accountsList.splice(0, 1);
-    }
+    // if (this.accountsList[0].id === 0) {
+    //   this.accountsList.splice(0, 1);
+    // }
 
-    const total = this.accountsList.reduce( (accumulator, currentIndex) => (accumulator + currentIndex.balance) , 0);
-    const accSum: Account = {id:0, name: "Suma", balance: total};
+    // const total = this.accountsList.reduce( (accumulator, currentIndex) => (accumulator + currentIndex.balance) , 0);
+    // console.log(total);
+    // const accSum: Account = {id:0, name: "Suma", balance: total};
 
-    this.accountsList.splice(0, 0, accSum);
+    // this.accountsList.splice(0, 0, accSum);
 
-    this.appStateService.setSelectedAccount(this.accountsList[0]);
+    // this.appStateService.setSelectedAccount(this.accountsList[0]);
 
-    this.categoryChartData = new Chart('CategoryChart', this.config);
+    // this.categoryChartData = new Chart('CategoryChart', this.config);
 
-    this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
-    this.updateCategorySummary(this.selectedAccountId, this.selectedTransactionType);
+    // this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
+    // this.updateCategorySummary(this.selectedAccountId, this.selectedTransactionType);
   }
 
   updateCategorySummary(accId: number, transactionType: "expense" | "income") {
@@ -264,14 +267,35 @@ export class LeftColumnComponent implements OnInit{
   // na podstawie danych przekazanych z CategoryChartCOmponent (okres) oraz SwitchTransactionComponent (typ transakcji)
   // i za przekazanie ich do CategoryChartComponent, aby wyświetlić odpowiedni wykres
 
-  // loadAccounts(): void {
-  //   this.accontService.getAccounts().subscribe(
-  //     (response: Account[]) => {
-  //       this.accountsList = response;
-  //     },
-  //     (error: HttpErrorResponse) => {
-  //       alert(error.message);
-  //     }
-  //   );
-  // }
+  loadAccounts(): void {
+    this.accountService.getThoseAccounts().subscribe(
+      (response: Account[]) => {
+        this.accountsList = response;
+
+        // Oblicz sumę po pobraniu kont
+        this.calculateTotalBalance();
+
+        this.appStateService.setSelectedAccount(this.accountsList[0]);
+
+        this.categoryChartData = new Chart('CategoryChart', this.config);
+    
+        this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
+        this.updateCategorySummary(this.selectedAccountId, this.selectedTransactionType);
+
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  calculateTotalBalance(): void {
+    const total = this.accountsList.reduce((accumulator, currentIndex) => accumulator + currentIndex.balance, 0);
+    console.log('Total Balance:', total);
+  
+    const accSum: Account = { id: 0, name: "Suma", balance: total };
+  
+    // Dodanie konta "Suma" na początku listy kont
+    this.accountsList.splice(0, 0, accSum);
+  }
 }

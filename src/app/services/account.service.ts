@@ -10,20 +10,15 @@ import { CreateAccount } from '../models/createAccount.model';
 })
 export class AccountService {
 
-  private accounts: Account[] = [
-      { id: 1, name: "Konto głowne", balance: 1000 },
-      { id: 2, name: "Konto oszczednosciowe", balance: 2056 },
-      { id: 3, name: "Konto 1", balance: 395 },
-  ];
+  private accounts: Account[] = [];
 
   private readonly apiUrl = "http://localhost:8080/api/accounts";
 
-//  constructor(private http: HttpClient) { }
-  constructor(private transactionService: TransactionService) { }
+  constructor(private http: HttpClient, private transactionService: TransactionService) { }
 
-//   getAccounts(): Observable<Account[]> {
-//     return this.http.get<Account[]>(thiclears.apiUrl);
-//   }
+  getThoseAccounts(): Observable<Account[]> {
+    return this.http.get<Account[]>(this.apiUrl);
+  }
 
  getAccounts(): Account[] {
     return this.accounts;
