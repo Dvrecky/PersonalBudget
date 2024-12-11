@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.SpringBootProjects.BudgetApp.dto.CreateAccountDTO;
 import pl.SpringBootProjects.BudgetApp.entity.Account;
 import pl.SpringBootProjects.BudgetApp.service.AccountServiceImpl;
 
