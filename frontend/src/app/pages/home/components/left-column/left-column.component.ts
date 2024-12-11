@@ -95,12 +95,17 @@ export class LeftColumnComponent implements OnInit{
       const categories = await this.categoryService.getAllCategoriesAsync();
       const transactions = await this.transactionService.getTransactionsAsync();
       console.log(categories);
-      console.log(transactions)
+      console.log(transactions);
   
       // Filtrowanie kategorii według typu transakcji
       const filteredCategories = categories.filter(category => category.type === transactionType);
   
       if (this.selectedAccountId === 0) {
+
+        const totalAmount = transactions
+                .filter(transaction => transaction.type === transactionType)
+                .reduce((sum, transaction) => sum + transaction.amount, 0);
+        
         // Dla wszystkich kont
         for (const category of filteredCategories) {
           const categoryTransactions = transactions.filter(
@@ -113,13 +118,18 @@ export class LeftColumnComponent implements OnInit{
   
           this.categorySummary.push({
             name: category.name,
-            percentage: 0,
+            percentage: totalAmount > 0 ? (sum / totalAmount) * 100 : 0,
             amount: sum,
             iconPath: category.iconPath,
             color: category.color
           });
         }
       } else {
+
+        const totalAmount = transactions
+                .filter(transaction => transaction.type === transactionType && transaction.accountId === accId)
+                .reduce((sum, transaction) => sum + transaction.amount, 0);
+
         // Dla wybranego konta
         for (const category of filteredCategories) {
           const categoryTransactions = transactions.filter(
@@ -133,7 +143,7 @@ export class LeftColumnComponent implements OnInit{
   
           this.categorySummary.push({
             name: category.name,
-            percentage: 0,
+            percentage: totalAmount > 0 ? (sum / totalAmount) * 100 : 0,
             amount: sum,
             iconPath: category.iconPath,
             color: category.color

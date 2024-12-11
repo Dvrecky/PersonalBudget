@@ -19,7 +19,6 @@ import { CreateAccount } from '../../../../../../models/createAccount.model';
 import { response } from 'express';
 import { HttpErrorResponse } from '@angular/common/http';
 
-
 @Component({
   selector: 'app-add-account-dialog',
   standalone: true,
@@ -33,11 +32,11 @@ export class AddAccountDialogComponent {
 
   private formBuilder = inject(FormBuilder);
 
-  constructor(private accountService: AccountService){}
+  private accountService = inject(AccountService);
 
   addAccountForm = this.formBuilder.group({
-    name: ['', [Validators.required, Validators.minLength(3)]],
-    balance: [0, [Validators.required, Validators.min(0)]]
+    name: ['', [Validators.required, Validators.minLength(3), Validators.pattern('.*[a-zA-Z]+.*')]],
+    balance: [0, [Validators.required, Validators.min(0), Validators.pattern("^[0-9]+$")]]
   });
 
   handleSubmit(): void {
