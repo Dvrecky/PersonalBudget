@@ -21,6 +21,10 @@ public class TransactionServiceImpl {
         return transactionRepository.findAll();
     }
 
+    public List<Transaction> getTransactionsByAccountId(int id) {
+        return transactionRepository.findByAccountId(id);
+    }
+
     public Transaction addTransaction(Transaction transaction) { return transactionRepository.save(transaction);}
 
     public void deleteTransaction(Transaction transaction) {

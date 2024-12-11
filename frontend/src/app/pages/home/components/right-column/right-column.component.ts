@@ -29,10 +29,14 @@ export class RightColumnComponent implements OnInit{
       if(account) {
 
         if(account?.id === 0) { //account === suma
-          this.transactions = this.transactionService.getTransactions();
+          this.transactionService.getTransactions().subscribe(transactions => {
+            this.transactions = transactions;
+          });
         }
         else {
-          this.transactions = this.transactionService.getTransactionsByAccount(account);
+          this.transactionService.getTransactionsByAccount(account).subscribe(transactions => {
+            this.transactions = transactions;
+          });
         }
       } else {
         this.transactions = [];
