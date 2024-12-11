@@ -58,7 +58,10 @@ export class AddTransactionComponent implements OnInit {
 
 
   ngOnInit() {
-    this.categories = this.categoryService.getAllCategories();
+    this.categoryService.getAllCategories().subscribe(categories => {
+      this.categories = categories;
+    })
+
     // this.accounts = this.accountService.getAccounts();
     this.loadAccounts();
 

@@ -4,16 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.SpringBootProjects.BudgetApp.entity.Transaction;
 import pl.SpringBootProjects.BudgetApp.service.TransactionServiceImpl;
 
 import java.util.List;
 
-@Repository
+@RestController
 @RequestMapping("/api/transactions")
 public class TransactionController {
 

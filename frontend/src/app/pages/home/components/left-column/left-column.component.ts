@@ -83,135 +83,139 @@ export class LeftColumnComponent implements OnInit{
     console.log(this.accountsList);
   }
 
-  updateCategorySummary(accId: number, transactionType: "expense" | "income") {
-
-    this.categorySummary = [];
-    const categories = this.categoryService.getAllCategories().filter((category) => category.type === transactionType);
-
-    if(this.selectedAccountId === 0) {
-
-      for(const category of categories) {
-        const categoryTransactions = this.transactionService.getTransactions().filter(
-          (transaction) =>
-            transaction.categoryId === category.id &&
-            transaction.type === transactionType
-        );
-
-        const sum = categoryTransactions.reduce( (acc, transaction) => acc + transaction.amount, 0);
-
-        this.categorySummary.push({
-          name: category.name,
-          percentage: 0,
-          amount: sum,
-          iconPath: category.iconPath,
-          color: category.color
-        })
-      }
-
-      console.log(this.categorySummary);
-
-    } else {
-
-      for(const category of categories) {
-        const categoryTransactions = this.transactionService.getTransactions().filter(
-          (transaction) =>
-            transaction.categoryId === category.id &&
-            transaction.type === transactionType &&
-            transaction.accountId === accId
-        );
-
-        const sum = categoryTransactions.reduce( (acc, transaction) => acc + transaction.amount, 0);
-
-        this.categorySummary.push({
-          name: category.name,
-          percentage: 0,
-          amount: sum,
-          iconPath: category.iconPath,
-          color: category.color
-        })
-      }
-
-      console.log(this.categorySummary);
-
-    }
-  }
-
-  onChartDataChange(accId: number, transactionType: 'expense' | 'income') {
-
-    // wszystkie konta mają te same kategorie transakcji (dla wydatków i dla przychodów)
-    // więc można zwyczajnie pobrać wszystkie kategorie dla danego typu transakcji
-
-    // pobranie kategorii dla danego typu transakcji
-    const categories = this.categoryService.getAllCategories().filter((category) => category.type === transactionType);
-
-    // zmienna przechowuje dane do wyświetlenia na wykresie
-    //   export interface CategoryChart {
-    //     name: string;
-    //     color: string;
-    //     sum: number;
-    // }
-    const categoryChart: CategoryChart[] = [];
-
-    // jeśli została wybrana SUMA
-    if(this.selectedAccountId === 0) {
-
-      // dla każdej kategorii (danego typu: "expense" lub "income") pobierane są wszystkie transakcje danego typu ("expense" lub "income")
-      for(const category of categories) {
-        const categoryTransactions = this.transactionService.getTransactions().filter(
-          (transaction) =>
-            transaction.categoryId === category.id &&
-            transaction.type === transactionType
-        );
-
-        // następnie dla listy transakcji danej kategorii obliczana jest łączna suma
-        const sum = categoryTransactions.reduce( (acc, transaction) => acc + transaction.amount, 0);
-
-        // dodanie danych do wyświetlenia dla danej transakcji
-        categoryChart.push({
-          name: category.name,
-          color: category.color,
-          sum: sum,
-        });
-      }
-
-      console.log(categoryChart);
-
-    } else {
-
-      // dla danego konta
-
-      for(const category of categories) {
-        const categoryTransactions = this.transactionService.getTransactions().filter(
-          (transaction) =>
-            transaction.categoryId === category.id &&
-            transaction.type === transactionType &&
-            transaction.accountId === accId
-        );
-
-        const sum = categoryTransactions.reduce( (acc, transaction) => acc + transaction.amount, 0);
-
-        categoryChart.push({
-          name: category.name,
-          color: category.color,
-          sum: sum,
-        });
-      }
-
-      console.log(categoryChart);
-    }
-
-    // przypisanie nazw kategorii z categoryChart
-    this.dane.labels = categoryChart.map((summary) => summary.name);
-    // przypisanie sumy dla danej kategorii z categoryChart
-    this.dane.datasets[0].data = categoryChart.map((summary) => summary.sum);
-    // przypisanie kolorów kategorii z categoryChart
-    this.dane.datasets[0].backgroundColor = categoryChart.map( (summary) => summary.color);
-
-    // aktualizacja wykresu
-    if (this.categoryChartData) {
-      this.categoryChartData.update();
-    }
-  }
+  // updateCategorySummary(accId: number, transactionType: "expense" | "income") {
+  //
+  //   this.categorySummary = [];
+  //
+  //   this.categoryService.getAllCategories().subscribe(categories => {
+  //       this.categories = categories.filter(category => category.type === transactionType);
+  //   })
+  //  // const categories = this.categoryService.getAllCategories().filter((category) => category.type === transactionType);
+  //
+  //   if(this.selectedAccountId === 0) {
+  //
+  //     for(const category of categories) {
+  //       const categoryTransactions = this.transactionService.getTransactions().filter(
+  //         (transaction) =>
+  //           transaction.categoryId === category.id &&
+  //           transaction.type === transactionType
+  //       );
+  //
+  //       const sum = categoryTransactions.reduce( (acc, transaction) => acc + transaction.amount, 0);
+  //
+  //       this.categorySummary.push({
+  //         name: category.name,
+  //         percentage: 0,
+  //         amount: sum,
+  //         iconPath: category.iconPath,
+  //         color: category.color
+  //       })
+  //     }
+  //
+  //     console.log(this.categorySummary);
+  //
+  //   } else {
+  //
+  //     for(const category of categories) {
+  //       const categoryTransactions = this.transactionService.getTransactions().filter(
+  //         (transaction) =>
+  //           transaction.categoryId === category.id &&
+  //           transaction.type === transactionType &&
+  //           transaction.accountId === accId
+  //       );
+  //
+  //       const sum = categoryTransactions.reduce( (acc, transaction) => acc + transaction.amount, 0);
+  //
+  //       this.categorySummary.push({
+  //         name: category.name,
+  //         percentage: 0,
+  //         amount: sum,
+  //         iconPath: category.iconPath,
+  //         color: category.color
+  //       })
+  //     }
+  //
+  //     console.log(this.categorySummary);
+  //
+  //   }
+  // }
+  //
+  // onChartDataChange(accId: number, transactionType: 'expense' | 'income') {
+  //
+  //   // wszystkie konta mają te same kategorie transakcji (dla wydatków i dla przychodów)
+  //   // więc można zwyczajnie pobrać wszystkie kategorie dla danego typu transakcji
+  //
+  //   // pobranie kategorii dla danego typu transakcji
+  //   const categories = this.categoryService.getAllCategories().filter((category) => category.type === transactionType);
+  //
+  //   // zmienna przechowuje dane do wyświetlenia na wykresie
+  //   //   export interface CategoryChart {
+  //   //     name: string;
+  //   //     color: string;
+  //   //     sum: number;
+  //   // }
+  //   const categoryChart: CategoryChart[] = [];
+  //
+  //   // jeśli została wybrana SUMA
+  //   if(this.selectedAccountId === 0) {
+  //
+  //     // dla każdej kategorii (danego typu: "expense" lub "income") pobierane są wszystkie transakcje danego typu ("expense" lub "income")
+  //     for(const category of categories) {
+  //       const categoryTransactions = this.transactionService.getTransactions().filter(
+  //         (transaction) =>
+  //           transaction.categoryId === category.id &&
+  //           transaction.type === transactionType
+  //       );
+  //
+  //       // następnie dla listy transakcji danej kategorii obliczana jest łączna suma
+  //       const sum = categoryTransactions.reduce( (acc, transaction) => acc + transaction.amount, 0);
+  //
+  //       // dodanie danych do wyświetlenia dla danej transakcji
+  //       categoryChart.push({
+  //         name: category.name,
+  //         color: category.color,
+  //         sum: sum,
+  //       });
+  //     }
+  //
+  //     console.log(categoryChart);
+  //
+  //   } else {
+  //
+  //     // dla danego konta
+  //
+  //     for(const category of categories) {
+  //       const categoryTransactions = this.transactionService.getTransactions().filter(
+  //         (transaction) =>
+  //           transaction.categoryId === category.id &&
+  //           transaction.type === transactionType &&
+  //           transaction.accountId === accId
+  //       );
+  //
+  //       const sum = categoryTransactions.reduce( (acc, transaction) => acc + transaction.amount, 0);
+  //
+  //       categoryChart.push({
+  //         name: category.name,
+  //         color: category.color,
+  //         sum: sum,
+  //       });
+  //     }
+  //
+  //     console.log(categoryChart);
+  //   }
+  //
+  //   // przypisanie nazw kategorii z categoryChart
+  //   this.dane.labels = categoryChart.map((summary) => summary.name);
+  //   // przypisanie sumy dla danej kategorii z categoryChart
+  //   this.dane.datasets[0].data = categoryChart.map((summary) => summary.sum);
+  //   // przypisanie kolorów kategorii z categoryChart
+  //   this.dane.datasets[0].backgroundColor = categoryChart.map( (summary) => summary.color);
+  //
+  //   // aktualizacja wykresu
+  //   if (this.categoryChartData) {
+  //     this.categoryChartData.update();
+  //   }
+  // }
 
   constructor(private transactionService: TransactionService, private categoryService: CategoryService, private accountService: AccountService, private appStateService: AppStateService) {
   }
@@ -227,16 +231,16 @@ export class LeftColumnComponent implements OnInit{
       this.appStateService.setSelectedAccount(account); // Prześlij obiekt do AppStateService
     }
 
-    this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
-    this.updateCategorySummary(this.selectedAccountId, this.selectedTransactionType);
+    // this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
+    // this.updateCategorySummary(this.selectedAccountId, this.selectedTransactionType);
   }
 
   onChangeTransactionType(value: 'expense' | 'income') {
     console.log("Było: ", this.selectedTransactionType);
     this.selectedTransactionType = value;
     console.log("Jest: ", this.selectedTransactionType);
-    this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
-    this.updateCategorySummary(this.selectedAccountId, this.selectedTransactionType);
+    // this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
+    // this.updateCategorySummary(this.selectedAccountId, this.selectedTransactionType);
   }
 
   onPeriodChange(period: "year" | "month" | "week" | "day") {
@@ -263,9 +267,9 @@ export class LeftColumnComponent implements OnInit{
         this.appStateService.setSelectedAccount(this.accountsList[0]);
 
         this.categoryChartData = new Chart('CategoryChart', this.config);
-    
-        this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
-        this.updateCategorySummary(this.selectedAccountId, this.selectedTransactionType);
+
+        // this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
+        // this.updateCategorySummary(this.selectedAccountId, this.selectedTransactionType);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -276,9 +280,9 @@ export class LeftColumnComponent implements OnInit{
   calculateTotalBalance(): void {
     const total = this.accountsList.reduce((accumulator, currentIndex) => accumulator + currentIndex.balance, 0);
     console.log('Total Balance:', total);
-  
+
     const accSum: Account = { id: 0, name: "Suma", balance: total };
-  
+
     // Dodanie konta "Suma" na początku listy kont
     this.accountsList.splice(0, 0, accSum);
   }
