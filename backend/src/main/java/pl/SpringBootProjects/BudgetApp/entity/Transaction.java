@@ -31,7 +31,7 @@ public class Transaction {
     @Column(name = "recurring")
     private boolean isRecurring;
 
-    @Column(name = "recurringPeriod")
+    @Column(name = "recurring_period")
     private String recurringPeriod;
 
     @Column(name = "type")
@@ -39,12 +39,12 @@ public class Transaction {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE,
                                                     CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "accountId")
+    @JoinColumn(name = "account_id")
     private Account account;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "categoryId")
+    @JoinColumn(name = "category_id")
     private Category category;
 
 }
