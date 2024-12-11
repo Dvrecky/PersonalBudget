@@ -66,9 +66,9 @@ export class AddTransactionComponent implements OnInit {
 
 
     this.transactionForm = this.fb.group({
-      type: ['Expense', Validators.required],
+      type: ['', Validators.required],
       accountId: ['', Validators.required],
-      amount: [0, [Validators.required, Validators.min(0.01)]],
+      amount: [0.01, [Validators.required, Validators.min(0.01)]],
       description: ['', [Validators.required, Validators.maxLength(20)]],
       categoryId: ['', Validators.required],
       date: ['', Validators.required],
@@ -104,6 +104,10 @@ export class AddTransactionComponent implements OnInit {
       this.transactionService.addTransaction(transactionData).subscribe(
         (response) => {
           console.log('Transaction created successfully:', response);
+
+          this.transactionForm.reset({
+            amount: 0.01,
+          });
 
         },
         (error) =>{

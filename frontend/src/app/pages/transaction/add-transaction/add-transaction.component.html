@@ -26,6 +26,13 @@
             step="0.01"
             formControlName="amount"
           />    <span matTextSuffix>PLN</span>
+
+
+          @if(transactionForm.get('amount')?.hasError('min')) {
+            <div>
+              Amount min is 0.
+            </div>
+          }
         </mat-form-field>
       </section>
     </div>
