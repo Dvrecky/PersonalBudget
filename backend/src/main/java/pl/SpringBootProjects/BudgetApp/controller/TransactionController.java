@@ -51,33 +51,20 @@ public class TransactionController {
         System.out.println(transactionDto.toString());
 
 
-        Transaction transaction = new Transaction();
         Optional<Account> account = accountServiceImpl.getAccountById(transactionDto.getAccountId());
         Optional<Category> category = categoryServiceImpl.getCategoryById(transactionDto.getCategoryId());
 
-        if(account.isPresent() && category.isPresent()) {
 
-            transaction.setAmount(transactionDto.getAmount());
-            transaction.setDate(transactionDto.getDate());
-            transaction.setCategory(category.get());
-            transaction.setAccount(account.get());
-            transaction.setDescription(transactionDto.getDescription());
-            transaction.setRecurring(transactionDto.isIsRecurring());
-            transaction.setRecurringPeriod(transactionDto.getRecurringPeriod());
-            transaction.setType(transactionDto.getType());
-
-        } else {
-            System.out.println("Account | Category not found");
-        }
-
-
-
-        if (transaction.getDate() == null) {
-            transaction.setDate(LocalDateTime.now());
-        }
+        Transaction transaction = new Transaction();
+        transaction.setAmount(transactionDto.getAmount());
+        transaction.setDate(transactionDto.getDate());
+        transaction.setCategory(category.orElse(null));
+        transaction.setAccount(account.orElse(null));
+        transaction.setRecurring(transactionDto.isIsRecurring());
+        transaction.setRecurringPeriod(transactionDto.getRecurringPeriod());
+        transaction.setType(transactionDto.getType());
 
         Transaction newTransaction = transactionService.addTransaction(transaction);
-
         return new ResponseEntity<>(newTransaction, HttpStatus.CREATED);
     }
 

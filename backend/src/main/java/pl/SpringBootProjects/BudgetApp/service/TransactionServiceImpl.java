@@ -22,6 +22,8 @@ public class TransactionServiceImpl {
         this.transactionRepository = transactionRepository;
     }
 
+
+
     public List<TransactionDto> getAllTransactions() {
         List<Transaction> transactions = transactionRepository.findAll();
 

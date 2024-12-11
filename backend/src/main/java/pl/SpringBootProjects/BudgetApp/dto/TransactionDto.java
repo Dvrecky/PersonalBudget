@@ -16,13 +16,13 @@ public class TransactionDto {
     private double amount;
     private LocalDateTime date;
     private String description;
-    private boolean isRecurring;
+    private boolean recurring;
     private String recurringPeriod;
     private String type;
     private int accountId;
     private int categoryId;
 
     public Boolean isIsRecurring() {
-        return isRecurring;
+        return recurring;
     }
 }
