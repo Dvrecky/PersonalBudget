@@ -23,7 +23,6 @@ export class AccountComponent implements OnInit{
 
   ngOnInit(): void {
 
-    // this.accountsList = this.accountService.getAccounts().filter( (account) => account.id !== 0 );
     this.loadAccounts();
     
     this.sum = this.accountsList.reduce( (acc, currentIndex) => acc + currentIndex.balance, 0 );
@@ -34,10 +33,16 @@ export class AccountComponent implements OnInit{
     this.accountService.getAccounts().subscribe(
       (response: Account[]) => {
         this.accountsList = response;
+        this.calculateSum(); // Oblicz sumę po załadowaniu danyc
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
     );
+  }
+
+  calculateSum(): void {
+    this.sum = this.accountsList.reduce((acc, currentIndex) => acc + currentIndex.balance, 0);
+    console.log("Parent: ", this.sum);
   }
 }

@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { CurrencyPipe } from '@angular/common';
+import { PlnPipe } from '../../../../pipes/pln.pipe';
 
 @Component({
   selector: 'app-account-summary',
   standalone: true,
-  imports: [CurrencyPipe],
+  imports: [PlnPipe],
   templateUrl: './account-summary.component.html',
   styleUrl: './account-summary.component.css'
 })

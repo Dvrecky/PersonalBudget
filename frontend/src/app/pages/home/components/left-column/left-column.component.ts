@@ -102,7 +102,9 @@ export class LeftColumnComponent implements OnInit{
         this.categorySummary.push({
           name: category.name,
           percentage: 0,
-          amount: sum
+          amount: sum,
+          iconPath: category.iconPath,
+          color: category.color
         })
       }
 
@@ -123,7 +125,9 @@ export class LeftColumnComponent implements OnInit{
         this.categorySummary.push({
           name: category.name,
           percentage: 0,
-          amount: sum
+          amount: sum,
+          iconPath: category.iconPath,
+          color: category.color
         })
       }
 

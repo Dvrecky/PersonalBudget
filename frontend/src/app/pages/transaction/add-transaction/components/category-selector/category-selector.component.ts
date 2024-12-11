@@ -14,7 +14,6 @@ export class CategorySelectorComponent{
   @Input() categories: Category[] = [];
   @Output() categoryChange = new EventEmitter();
 
-
   onCategoryChange(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     const selectedCategoryId = parseInt(inputElement.value, 10);
