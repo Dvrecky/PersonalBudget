@@ -21,9 +21,7 @@ public class TransactionServiceImpl {
         return transactionRepository.findAll();
     }
 
-    public void addTransaction(Transaction transaction) {
-        transactionRepository.save(transaction);
-    }
+    public Transaction addTransaction(Transaction transaction) { return transactionRepository.save(transaction);}
 
     public void deleteTransaction(Transaction transaction) {
         transactionRepository.delete(transaction);
