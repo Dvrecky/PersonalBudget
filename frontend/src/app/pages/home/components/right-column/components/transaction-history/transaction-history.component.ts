@@ -1,19 +1,20 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges,OnDestroy } from '@angular/core';
 import { Transaction } from '../../../../../../models/transaction.model';
-import { NgFor, CommonModule, DatePipe} from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NativeDateAdapter, MatNativeDateModule } from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {Subscription} from 'rxjs';
+import {Account} from '../../../../../../models/account.model';
+
 
 @Component({
   selector: 'app-transaction-history',
   standalone: true,
   providers: [NativeDateAdapter],
-  imports: [NgFor,CommonModule, MatListModule, DatePipe, MatFormFieldModule,
-    MatDatepickerModule, FormsModule, ReactiveFormsModule, MatNativeDateModule],
+  imports: [CommonModule, MatListModule, DatePipe, MatFormFieldModule, MatDatepickerModule, FormsModule, ReactiveFormsModule, MatNativeDateModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './transaction-history.component.html',
   styleUrl: './transaction-history.component.css'
@@ -21,6 +22,10 @@ import {Subscription} from 'rxjs';
 export class TransactionHistoryComponent implements OnChanges,OnDestroy {
 
   @Input() transactions: Transaction[] = [];
+  @Input() selectedAccount: Account | null = null;
+  @Input() accounts: Account[] = [];
+
+  selectedAccountName:string = '';
   filteredTransactions: Transaction[] = [];
   activeFilter: string = 'day';
   private rangeSubscription: Subscription | undefined;
@@ -32,6 +37,10 @@ export class TransactionHistoryComponent implements OnChanges,OnDestroy {
 
 
   ngOnChanges(): void {
+    if(this.selectedAccount) {
+      this.selectedAccountName = this.selectedAccount.name;
+    }
+
     this.filteredTransactions = [];
 
     //dodac oblsuge bledu
@@ -41,6 +50,7 @@ export class TransactionHistoryComponent implements OnChanges,OnDestroy {
 
     this.activeFilter = 'day';
     this.filteredTransactions = [...this.transactions];
+
     this.filterBy(this.activeFilter);
 
      this.range.valueChanges.subscribe(value => {
@@ -107,6 +117,12 @@ export class TransactionHistoryComponent implements OnChanges,OnDestroy {
           });
         break;
     }
+  }
+
+
+  getAccountName(accountId: number): string {
+    const account = this.accounts.find(acc => acc.id === accountId);
+    return account ? account.name : 'Nieznane konto';
   }
 
 }

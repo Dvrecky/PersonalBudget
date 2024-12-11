@@ -25,7 +25,7 @@ export class AccountBudgetComponent implements OnInit, OnChanges{
   @Input() accounts: Account[] = [];
   // wysyła wiadomośc do komponentu rodzica, że zmieniono typ konta
   @Output() accountChange = new EventEmitter<number>();
-  
+
   selectedAccountId: number = 0;
   sum: number = 0;
 
