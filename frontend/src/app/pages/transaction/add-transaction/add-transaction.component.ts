@@ -69,7 +69,7 @@ export class AddTransactionComponent implements OnInit {
       type: ['Expense', Validators.required],
       accountId: ['', Validators.required],
       amount: [0, [Validators.required, Validators.min(0.01)]],
-      description: "eee",
+      description: ['', [Validators.required, Validators.maxLength(20)]],
       categoryId: ['', Validators.required],
       date: ['', Validators.required],
       recurring: [false],

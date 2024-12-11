@@ -1,7 +1,7 @@
 <section class="add-transaction-container">
   <h2 class="add-transaction-header">Add Transaction</h2>
 
-  <form [formGroup]="transactionForm" (ngSubmit)="onTransactionConfirmed()">
+  <form class="add-transaction-form" [formGroup]="transactionForm" (ngSubmit)="onTransactionConfirmed()">
     <app-transaction-type (transactionTypeChange)="onTransactionTypeChange($event)"></app-transaction-type>
 
     <div class="amount-account-container">
@@ -30,10 +30,29 @@
       </section>
     </div>
 
+
+    <div class="description-container">
+      <mat-form-field class="description-form">
+        <mat-label>Description</mat-label>
+        <input
+          matInput
+          type="text"
+          class="example-right-align"
+          formControlName="description"
+        />
+
+        @if(transactionForm.get('description')?.hasError('maxlength')) {
+          <div>
+            Description cannot exceed 20 characters.
+          </div>
+        }
+
+      </mat-form-field>
+    </div>
+
     <app-category-selector [categories]="categories" (categoryChange)="onCategoryChange($event)"></app-category-selector>
 
-    <div class="amount-account-container">
-
+    <div class="date-container">
       <div class="date-selector-container">
         <mat-form-field>
           <mat-label>Choose a date</mat-label>
@@ -43,17 +62,14 @@
         </mat-form-field>
       </div>
 
-
       <app-recurring-payment (recurringChange)="onRecurringChange($event)"></app-recurring-payment>
     </div>
-
 
     <div class="submit-button-container">
       <button mat-fab class="submit-button">
         <mat-icon>add</mat-icon>
       </button>
     </div>
-
 
   </form>
 </section>
