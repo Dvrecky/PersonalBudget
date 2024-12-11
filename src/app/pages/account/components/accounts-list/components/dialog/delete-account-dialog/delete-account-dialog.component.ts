@@ -17,6 +17,5 @@ export class DeleteAccountDialogComponent {
 
   deleteAccount(accId: number) {
     this.accountService.deleteAccount(accId);
-    console.log(this.accountService.getAccounts());
   }
 }

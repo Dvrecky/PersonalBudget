@@ -16,12 +16,8 @@ export class AccountService {
 
   constructor(private http: HttpClient, private transactionService: TransactionService) { }
 
-  getThoseAccounts(): Observable<Account[]> {
+  getAccounts(): Observable<Account[]> {
     return this.http.get<Account[]>(this.apiUrl);
-  }
-
- getAccounts(): Account[] {
-    return this.accounts;
   }
 
   addAccount(account: CreateAccount): void {

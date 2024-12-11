@@ -19,6 +19,7 @@ import { Account } from '../../../models/account.model';
 import { Category } from '../../../models/category.model';
 import {TransactionService} from '../../../services/transaction.service';
 import {Transaction} from '../../../models/transaction.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-transaction',
@@ -58,7 +59,8 @@ export class AddTransactionComponent implements OnInit {
 
   ngOnInit() {
     this.categories = this.categoryService.getAllCategories();
-    this.accounts = this.accountService.getAccounts();
+    // this.accounts = this.accountService.getAccounts();
+    this.loadAccounts();
 
 
     this.transactionForm = this.fb.group({
@@ -108,5 +110,16 @@ export class AddTransactionComponent implements OnInit {
     } else {
       console.log('Form is invalid');
     }
+  }
+
+  loadAccounts(): void {
+    this.accountService.getAccounts().subscribe(
+      (response: Account[]) => {
+        this.accounts = response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
   }
 }

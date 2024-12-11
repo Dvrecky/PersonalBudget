@@ -268,7 +268,7 @@ export class LeftColumnComponent implements OnInit{
   // i za przekazanie ich do CategoryChartComponent, aby wyświetlić odpowiedni wykres
 
   loadAccounts(): void {
-    this.accountService.getThoseAccounts().subscribe(
+    this.accountService.getAccounts().subscribe(
       (response: Account[]) => {
         this.accountsList = response;
 
@@ -281,7 +281,6 @@ export class LeftColumnComponent implements OnInit{
     
         this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
         this.updateCategorySummary(this.selectedAccountId, this.selectedTransactionType);
-
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
