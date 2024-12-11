@@ -12,5 +12,4 @@ export class PlnPipe implements PipeTransform {
     }
     return `${value.toFixed(2).replace('.', ',')} zł`;
   }
-
 }

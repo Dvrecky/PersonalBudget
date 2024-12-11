@@ -6,6 +6,15 @@
                 <mat-form-field>
                     <mat-label>Account name</mat-label>
                     <input matInput formControlName = "name" placeholder="Account">
+                    @if(addAccountForm.get('name')?.hasError('required')) {
+                        <mat-error>This filed is required</mat-error> 
+                    }
+                    @if(addAccountForm.get('name')?.hasError('minlength')) {
+                        <mat-error>This field must be at least 3 characters long</mat-error> 
+                    }
+                    @if(addAccountForm.get('name')?.hasError('pattern')) {
+                        <mat-error>This field must contain a letter</mat-error> 
+                    }
                 </mat-form-field>
             </div>
 
@@ -13,6 +22,15 @@
                 <mat-form-field>
                     <mat-label>Balance</mat-label>
                     <input matInput formControlName="balance" placeholder="Initial account balance">
+                    @if(addAccountForm.get('balance')?.hasError('required')) {
+                        <mat-error>This filed is required</mat-error> 
+                    }
+                    @if(addAccountForm.get('balance')?.hasError('min')) {
+                        <mat-error>Balance cannot be negative</mat-error> 
+                    }
+                    @if(addAccountForm.get('balance')?.hasError('pattern')) {
+                        <mat-error>Balance must be a number</mat-error> 
+                    }
                 </mat-form-field>
             </div>
 
