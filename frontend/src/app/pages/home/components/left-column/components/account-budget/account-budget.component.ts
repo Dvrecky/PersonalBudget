@@ -4,11 +4,12 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import { CurrencyPipe } from '@angular/common';
 import { Input, Output } from '@angular/core';
+import { PlnPipe } from '../../../../../../pipes/pln.pipe';
 
 @Component({
   selector: 'app-account-budget',
   standalone: true,
-  imports: [MatFormFieldModule, MatSelectModule, CurrencyPipe],
+  imports: [MatFormFieldModule, MatSelectModule, CurrencyPipe, PlnPipe],
   templateUrl: './account-budget.component.html',
   styleUrl: './account-budget.component.css'
 })
