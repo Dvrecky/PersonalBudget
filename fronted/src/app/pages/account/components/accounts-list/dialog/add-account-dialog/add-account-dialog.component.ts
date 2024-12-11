@@ -16,6 +16,8 @@ import { inject } from '@angular/core';
 import { Account } from '../../../../../../models/account.model';
 import { AccountService } from '../../../../../../services/account.service';
 import { CreateAccount } from '../../../../../../models/createAccount.model';
+import { response } from 'express';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -46,7 +48,15 @@ export class AddAccountDialogComponent {
         name: this.addAccountForm.value.name!,
         balance: Number(this.addAccountForm.value.balance!)
       };
-      this.accountService.addAccount(newAccountData);
+
+      this.accountService.addAccount(newAccountData).subscribe(
+        (response: Account) => {
+          console.log(response);
+        },
+            (error: HttpErrorResponse) => {
+              alert(error.message)
+            }
+      )
     }
 
     this.closeDialog();
