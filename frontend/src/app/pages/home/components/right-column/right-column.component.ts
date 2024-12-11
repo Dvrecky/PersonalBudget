@@ -5,6 +5,7 @@ import { AppStateService } from '../../../../services/app-state.service';
 import { TransactionService } from '../../../../services/transaction.service';
 import { TransactionHistoryComponent } from "./components/transaction-history/transaction-history.component";
 import { FinancialAnalysisComponent} from "./components/financial-analysis/financial-analysis.component";
+import {AccountService} from '../../../../services/account.service';
 
 @Component({
   selector: 'app-right-column',
@@ -17,18 +18,26 @@ export class RightColumnComponent implements OnInit{
 
   transactions: Transaction[] = [];
   selectedAccount: Account | null = null;
+  accounts: Account[] = [];
 
-  constructor(private appStateService: AppStateService, private transactionService: TransactionService) {}
+  constructor(private appStateService: AppStateService, private transactionService: TransactionService, private accountService: AccountService) {}
 
   ngOnInit(): void {
       this.appStateService.selectedAccount$.subscribe(account => {
       this.selectedAccount = account;
 
       if(account) {
-        this.transactions = this.transactionService.getTransactionsByAccount(account);
+
+        if(account?.id === 0) { //account === suma
+          this.transactions = this.transactionService.getTransactions();
+        }
+        else {
+          this.transactions = this.transactionService.getTransactionsByAccount(account);
+        }
       } else {
         this.transactions = [];
       }
     })
+    this.accountService.getAccounts().subscribe(accounts => {this.accounts = accounts;});
   }
 }

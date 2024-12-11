@@ -18,22 +18,35 @@
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-date-range-picker #picker></mat-date-range-picker>
 
-      <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
-      <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+      @if (range.controls.start.hasError('matStartDateInvalid')) {
+        <mat-error>Invalid start date</mat-error>
+      }
+      @if (range.controls.end.hasError('matEndDateInvalid')) {
+        <mat-error>Invalid end date</mat-error>
+      }
     </mat-form-field>
 
   </div>
 
   <mat-nav-list class="transaction-container">
-    <mat-list-item *ngFor="let transaction of filteredTransactions">
-      <div class="transaction-item">
-        <span class="transaction-date">{{ transaction.date | date: 'dd-MM-yyyy' }}</span>
-        <span class="transaction-description">{{ transaction.description }}</span>
-        <span class="transaction-amount" [ngClass]="{ 'expense': transaction.type === 'expense', 'income': transaction.type === 'income' }">
-          {{ transaction.type === 'expense' ? '-' : '' }}{{ transaction.amount | number:'1.2-2'}} PLN
-        </span>
-      </div>
-    </mat-list-item>
+    @for (transaction of filteredTransactions; track transaction) {
+      <mat-list-item>
+        <div class="transaction-item">
+          <span class="transaction-date">{{ transaction.date | date: 'dd-MM-yyyy' }}</span>
+          <span class="transaction-description">{{ transaction.description }}</span>
+
+          @if (selectedAccountName === 'Suma') {
+          <span class="transaction-account">
+                {{ getAccountName(transaction.accountId)}}
+          </span>
+          }
+
+          <span class="transaction-amount" [ngClass]="{ 'expense': transaction.type === 'expense', 'income': transaction.type === 'income' }">
+            {{ transaction.type === 'expense' ? '-' : '' }}{{ transaction.amount | number:'1.2-2'}} PLN
+          </span>
+        </div>
+      </mat-list-item>
+    }
   </mat-nav-list>
 
 </div>
