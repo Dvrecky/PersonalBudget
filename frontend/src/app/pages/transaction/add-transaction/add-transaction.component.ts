@@ -62,7 +62,6 @@ export class AddTransactionComponent implements OnInit {
       this.categories = categories;
     })
 
-    // this.accounts = this.accountService.getAccounts();
     this.loadAccounts();
 
 
@@ -102,14 +101,19 @@ export class AddTransactionComponent implements OnInit {
       console.log('Transaction Form Data:', this.transactionForm.value);
 
 
-      // this.transactionService.addTransaction(transactionData).subscribe(
-      //   (response) => {
-      //     console.log('Transaction created successfully:', response);
-      //   },
-      //   (error) =>{
-      //     console.error('Error creating transaction:', error);
-      //   }
-      // )
+      this.transactionService.addTransaction(transactionData).subscribe(
+        (response) => {
+          console.log('Transaction created successfully:', response);
+          if (response) {
+            console.log('Full Response:', response);
+          } else {
+            console.log('Empty response received');
+          }
+        },
+        (error) =>{
+          console.error('Error creating transaction:', error);
+        }
+      )
     } else {
       console.log('Form is invalid');
     }

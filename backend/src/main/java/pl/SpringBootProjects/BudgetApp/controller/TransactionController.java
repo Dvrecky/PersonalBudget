@@ -3,12 +3,18 @@ package pl.SpringBootProjects.BudgetApp.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
+import pl.SpringBootProjects.BudgetApp.dto.TransactionDto;
+import pl.SpringBootProjects.BudgetApp.entity.Account;
+import pl.SpringBootProjects.BudgetApp.entity.Category;
 import pl.SpringBootProjects.BudgetApp.entity.Transaction;
+import pl.SpringBootProjects.BudgetApp.service.AccountServiceImpl;
+import pl.SpringBootProjects.BudgetApp.service.CategoryServiceImpl;
 import pl.SpringBootProjects.BudgetApp.service.TransactionServiceImpl;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/transactions")
@@ -16,29 +22,63 @@ public class TransactionController {
 
     @Autowired
     private final TransactionServiceImpl transactionService;
+    private final AccountServiceImpl accountServiceImpl;
+    private final CategoryServiceImpl categoryServiceImpl;
 
-    public TransactionController(TransactionServiceImpl transactionService) {
+    public TransactionController(TransactionServiceImpl transactionService, AccountServiceImpl accountServiceImpl, CategoryServiceImpl categoryServiceImpl) {
         this.transactionService = transactionService;
+        this.accountServiceImpl = accountServiceImpl;
+        this.categoryServiceImpl = categoryServiceImpl;
     }
 
     @GetMapping
-    public ResponseEntity<List<Transaction>> getTransactions() {
-        List<Transaction> transactions = transactionService.getAllTransactions();
+    public ResponseEntity<List<TransactionDto>> getTransactions() {
+        List<TransactionDto> transactions = transactionService.getAllTransactions();
 
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<Transaction>> getTransactionsByAccount(@PathVariable int id) {
-        List<Transaction> transactions = transactionService.getAllTransactions();
+    public ResponseEntity<List<TransactionDto>> getTransactionsByAccount(@PathVariable int id) {
+        List<TransactionDto> transactions = transactionService.getTransactionsByAccountId(id);
 
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 
+
     @PostMapping
-    public ResponseEntity<Transaction> addTransaction(Transaction transaction) {
+    public ResponseEntity<Transaction> addTransaction(@RequestBody TransactionDto transactionDto) {
+        System.out.println(transactionDto.toString());
+
+
+        Transaction transaction = new Transaction();
+        Optional<Account> account = accountServiceImpl.getAccountById(transactionDto.getAccountId());
+        Optional<Category> category = categoryServiceImpl.getCategoryById(transactionDto.getCategoryId());
+
+        if(account.isPresent() && category.isPresent()) {
+
+            transaction.setAmount(transactionDto.getAmount());
+            transaction.setDate(transactionDto.getDate());
+            transaction.setCategory(category.get());
+            transaction.setAccount(account.get());
+            transaction.setDescription(transactionDto.getDescription());
+            transaction.setRecurring(transactionDto.isIsRecurring());
+            transaction.setRecurringPeriod(transactionDto.getRecurringPeriod());
+            transaction.setType(transactionDto.getType());
+
+        } else {
+            System.out.println("Account | Category not found");
+        }
+
+
+
+        if (transaction.getDate() == null) {
+            transaction.setDate(LocalDateTime.now());
+        }
+
         Transaction newTransaction = transactionService.addTransaction(transaction);
 
         return new ResponseEntity<>(newTransaction, HttpStatus.CREATED);
     }
+
 }

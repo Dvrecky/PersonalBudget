@@ -17,20 +17,20 @@ export class TransactionService {
       map(transactions =>
         transactions.map(transaction => ({
           ...transaction,
-          date: new Date(transaction.date) // Konwersja LocalDateTime (string) na Date
+          date: new Date(transaction.date)
         }))
       )
     );
   }
 
-  // Pobieranie transakcji dla konkretnego konta i konwersja daty
+
   getTransactionsByAccount(account: Account): Observable<Transaction[]> {
     const url = `${this.apiUrl}/${account.id}`;
     return this.http.get<Transaction[]>(url).pipe(
       map(transactions =>
         transactions.map(transaction => ({
           ...transaction,
-          date: new Date(transaction.date) // Konwersja LocalDateTime (string) na Date
+          date: new Date(transaction.date)
         }))
       )
     );
@@ -50,4 +50,7 @@ export class TransactionService {
   // addTransaction(transactionData: Transaction)Observable<Transaction> {
   //   return this.http.post<Transaction>(this.apiUrl, transaction);
   // }
+  addTransaction(transactionData: Transaction) {
+    return this.http.post(this.apiUrl, transactionData);
+  }
 }

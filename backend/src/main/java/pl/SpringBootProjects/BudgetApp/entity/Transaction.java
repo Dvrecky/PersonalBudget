@@ -31,20 +31,31 @@ public class Transaction {
     @Column(name = "recurring")
     private boolean isRecurring;
 
-    @Column(name = "recurringPeriod")
+    @Column(name = "recurring_period")
     private String recurringPeriod;
 
     @Column(name = "type")
     private String type;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE,
-                                                    CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "accountId")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "account_id")
     private Account account;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE,
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "categoryId")
+    @JoinColumn(name = "category_id")
     private Category category;
 
+
+    public Transaction(double amount, LocalDateTime date, String description, boolean isRecurring, String recurringPeriod, String type, Account account, Category category) {
+        this.amount = amount;
+        this.date = date;
+        this.description = description;
+        this.isRecurring = isRecurring;
+        this.recurringPeriod = recurringPeriod;
+        this.type = type;
+        this.account = account;
+        this.category = category;
+    }
 }

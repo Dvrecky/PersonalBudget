@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import pl.SpringBootProjects.BudgetApp.entity.Category;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Long> {
+public interface CategoryRepository extends JpaRepository<Category, Integer> {
 }

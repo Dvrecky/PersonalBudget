@@ -27,7 +27,7 @@ public class Category {
     @Column(name = "color")
     private String color;
 
-    @Column(name = "iconPath")
+    @Column(name = "icon_path")
     private String iconPath;
 
     public Category(String name, String type, String color, String iconPath) {
