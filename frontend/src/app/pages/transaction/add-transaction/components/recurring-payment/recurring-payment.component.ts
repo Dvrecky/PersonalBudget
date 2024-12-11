@@ -11,10 +11,11 @@ import {DialogComponent} from './dialog/dialog.component';
   styleUrl: './recurring-payment.component.css'
 })
 export class RecurringPaymentComponent {
-  @Output() frequencyChange = new EventEmitter<string>();
+  @Output() recurringChange = new EventEmitter< {recurring: boolean, recurringPeriod: string}>();
 
   readonly dialog = inject(MatDialog);
   selectedFrequency: string = '';
+  isRecurring: boolean = false;
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
@@ -24,7 +25,11 @@ export class RecurringPaymentComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
         this.selectedFrequency = result;
-        this.frequencyChange.emit(this.selectedFrequency);
+        this.isRecurring = result !== '';
+        this.recurringChange.emit({
+          recurring: this.isRecurring,
+          recurringPeriod: this.selectedFrequency
+        });
       }
     });
   }

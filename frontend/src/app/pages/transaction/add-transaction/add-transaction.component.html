@@ -8,7 +8,7 @@
 
       <app-account-selector
         [accounts]="accounts"
-        [selectedAccountId]="transactionForm.get('account')?.value"
+        [selectedAccountId]="transactionForm.get('accountId')?.value"
         (accountChange)="onAccountSelected($event)">
       </app-account-selector>
 
@@ -44,7 +44,7 @@
       </div>
 
 
-      <app-recurring-payment (frequencyChange)="onRecurringChange($event)"></app-recurring-payment>
+      <app-recurring-payment (recurringChange)="onRecurringChange($event)"></app-recurring-payment>
     </div>
 
 

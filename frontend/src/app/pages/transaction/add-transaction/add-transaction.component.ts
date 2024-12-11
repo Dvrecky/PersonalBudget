@@ -66,34 +66,33 @@ export class AddTransactionComponent implements OnInit {
 
 
     this.transactionForm = this.fb.group({
-      transactionType: ['Expense', Validators.required],
-      account: ['', Validators.required],
+      type: ['Expense', Validators.required],
+      accountId: ['', Validators.required],
       amount: [0, [Validators.required, Validators.min(0.01)]],
       description: "eee",
-      category: ['', Validators.required],
+      categoryId: ['', Validators.required],
       date: ['', Validators.required],
       recurring: [false],
+      recurringPeriod: ['', []]
     });
   }
 
   onTransactionTypeChange($event: any) {
-    this.transactionForm.controls['transactionType'].setValue($event);
-    console.log($event);
+    this.transactionForm.controls['type'].setValue($event);
   }
 
   onAccountSelected(accountId: number | null): void {
-    this.transactionForm.get('account')?.setValue(accountId);
+    this.transactionForm.get('accountId')?.setValue(accountId);
   }
 
   onCategoryChange(categoryId: number | null): void {
-    this.transactionForm.controls['category'].setValue(categoryId);
-    console.log(categoryId);
+    this.transactionForm.controls['categoryId'].setValue(categoryId);
   }
 
+  onRecurringChange(data: { recurring: boolean, recurringPeriod: string }) {
+    this.transactionForm.controls['recurring'].setValue(data.recurring);
+    this.transactionForm.controls['recurringPeriod'].setValue(data.recurringPeriod);
 
-  onRecurringChange($event: any) {
-    this.transactionForm.controls['recurring'].setValue($event);
-    console.log($event);
   }
 
   onTransactionConfirmed() {
