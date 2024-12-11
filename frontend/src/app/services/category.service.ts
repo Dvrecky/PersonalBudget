@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Category } from '../models/category.model';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, firstValueFrom} from 'rxjs';
 import { map } from 'rxjs/operators';
 
 
@@ -30,6 +30,10 @@ export class CategoryService {
 
   getAllCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.apiUrl);
+  }
+
+  async getAllCategoriesAsync(): Promise<Category[]> {
+    return firstValueFrom(this.http.get<Category[]>(this.apiUrl));
   }
   
   getCategoriesByType(type: string): Observable<Category[]> {

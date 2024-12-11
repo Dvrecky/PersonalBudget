@@ -12,8 +12,6 @@ import { CategoryChart } from '../../../../models/categoryChart.model';
 import { CategoryService } from '../../../../services/category.service';
 import { Category } from '../../../../models/category.model';
 import { TransactionService } from '../../../../services/transaction.service';
-import { forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { Chart, registerables } from 'chart.js';
 import { CategoryChartDataStructure } from '../../../../models/CategoryChartDataStructure.model';
@@ -47,8 +45,6 @@ export class LeftColumnComponent implements OnInit{
   categoryChartData: any |undefined;
 
   categoryDataStructure: CategoryChartDataStructure | undefined;
-
-  categories: Category[] = [];
 
   // dane do wykresu
   dane = {
@@ -90,17 +86,25 @@ export class LeftColumnComponent implements OnInit{
     console.log(this.accountsList);
   }
 
-  updateCategorySummary(accId: number, transactionType: "expense" | "income") {
+
+  async updateCategorySummary(accId: number, transactionType: "expense" | "income") {
     this.categorySummary = [];
   
-    forkJoin({
-      categories: this.categoryService.getCategoriesByType(transactionType),
-      transactions: this.transactionService.getTransactions()
-    }).subscribe(({ categories, transactions }) => {
+    try {
+      // Pobierz kategorie i transakcje
+      const categories = await this.categoryService.getAllCategoriesAsync();
+      const transactions = await this.transactionService.getTransactionsAsync();
+      console.log(categories);
+      console.log(transactions)
+  
+      // Filtrowanie kategorii według typu transakcji
+      const filteredCategories = categories.filter(category => category.type === transactionType);
+  
       if (this.selectedAccountId === 0) {
-        for (const category of categories) {
+        // Dla wszystkich kont
+        for (const category of filteredCategories) {
           const categoryTransactions = transactions.filter(
-            (transaction) =>
+            transaction =>
               transaction.categoryId === category.id &&
               transaction.type === transactionType
           );
@@ -116,9 +120,10 @@ export class LeftColumnComponent implements OnInit{
           });
         }
       } else {
-        for (const category of categories) {
+        // Dla wybranego konta
+        for (const category of filteredCategories) {
           const categoryTransactions = transactions.filter(
-            (transaction) =>
+            transaction =>
               transaction.categoryId === category.id &&
               transaction.type === transactionType &&
               transaction.accountId === accId
@@ -137,74 +142,73 @@ export class LeftColumnComponent implements OnInit{
       }
   
       console.log(this.categorySummary);
-    });
+    } catch (error) {
+      console.error('Błąd podczas pobierania danych:', error);
+    }
   }
-
-onChartDataChange(accId: number, transactionType: 'expense' | 'income') {
-  const categoryChart: CategoryChart[] = [];
-
-  forkJoin({
-    categories: this.categoryService.getAllCategories(),
-    transactions: this.transactionService.getTransactions()
-  }).subscribe(({ categories, transactions }) => {
-    // Filtrowanie kategorii według typu transakcji
-    const filteredCategories = categories.filter(category => category.type === transactionType);
-
-    if (this.selectedAccountId === 0) {
-      // Dla wszystkich kont
-      for (const category of filteredCategories) {
-        const categoryTransactions = transactions.filter(
-          (transaction) =>
-            transaction.categoryId === category.id &&
-            transaction.type === transactionType
-        );
-
-        const sum = categoryTransactions.reduce((acc, transaction) => acc + transaction.amount, 0);
-
-        categoryChart.push({
-          name: category.name,
-          color: category.color,
-          sum: sum,
-        });
+  
+  
+  async onChartDataChange(accId: number, transactionType: 'expense' | 'income') {
+    const categoryChart: CategoryChart[] = [];
+  
+    try {
+      // Pobierz dane asynchronicznie
+      const categories = await this.categoryService.getAllCategoriesAsync();
+      const transactions = await this.transactionService.getTransactionsAsync();
+  
+      // Filtrowanie kategorii według typu transakcji
+      const filteredCategories = categories.filter(category => category.type === transactionType);
+  
+      if (this.selectedAccountId === 0) {
+        // Dla wszystkich kont
+        for (const category of filteredCategories) {
+          const categoryTransactions = transactions.filter(
+            (transaction) =>
+              transaction.categoryId === category.id &&
+              transaction.type === transactionType
+          );
+  
+          const sum = categoryTransactions.reduce((acc, transaction) => acc + transaction.amount, 0);
+  
+          categoryChart.push({
+            name: category.name,
+            color: category.color,
+            sum: sum,
+          });
+        }
+      } else {
+        // Dla wybranego konta
+        for (const category of filteredCategories) {
+          const categoryTransactions = transactions.filter(
+            (transaction) =>
+              transaction.categoryId === category.id &&
+              transaction.type === transactionType &&
+              transaction.accountId === accId
+          );
+  
+          const sum = categoryTransactions.reduce((acc, transaction) => acc + transaction.amount, 0);
+  
+          categoryChart.push({
+            name: category.name,
+            color: category.color,
+            sum: sum,
+          });
+        }
       }
-    } else {
-      // Dla wybranego konta
-      for (const category of filteredCategories) {
-        const categoryTransactions = transactions.filter(
-          (transaction) =>
-            transaction.categoryId === category.id &&
-            transaction.type === transactionType &&
-            transaction.accountId === accId
-        );
-
-        const sum = categoryTransactions.reduce((acc, transaction) => acc + transaction.amount, 0);
-
-        categoryChart.push({
-          name: category.name,
-          color: category.color,
-          sum: sum,
-        });
+  
+      // Aktualizacja danych wykresu
+      this.dane.labels = categoryChart.map((summary) => summary.name);
+      this.dane.datasets[0].data = categoryChart.map((summary) => summary.sum);
+      this.dane.datasets[0].backgroundColor = categoryChart.map((summary) => summary.color);
+  
+      if (this.categoryChartData) {
+        this.categoryChartData.update();
       }
+    } catch (error) {
+      console.error('Błąd podczas pobierania danych:', error);
     }
-
-    console.log(categoryChart);
-
-    // Aktualizacja danych wykresu
-    this.dane.labels = categoryChart.map((summary) => summary.name);
-    this.dane.datasets[0].data = categoryChart.map((summary) => summary.sum);
-    this.dane.datasets[0].backgroundColor = categoryChart.map((summary) => summary.color);
-
-    if (this.categoryChartData) {
-      this.categoryChartData.update();
-    }
-  });
-}
-
-
-
-
-
-
+  }
+  
   onAccountChange(accountId: number) {
     this.selectedAccountId = accountId;
     console.log("Parent: ", accountId);
@@ -214,16 +218,16 @@ onChartDataChange(accId: number, transactionType: 'expense' | 'income') {
       this.appStateService.setSelectedAccount(account); // Prześlij obiekt do AppStateService
     }
 
-    // this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
-    // this.updateCategorySummary(this.selectedAccountId, this.selectedTransactionType);
+    this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
+    this.updateCategorySummary(this.selectedAccountId, this.selectedTransactionType);
   }
 
   onChangeTransactionType(value: 'expense' | 'income') {
     console.log("Było: ", this.selectedTransactionType);
     this.selectedTransactionType = value;
     console.log("Jest: ", this.selectedTransactionType);
-    // this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
-    // this.updateCategorySummary(this.selectedAccountId, this.selectedTransactionType);
+    this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
+    this.updateCategorySummary(this.selectedAccountId, this.selectedTransactionType);
   }
 
   onPeriodChange(period: "year" | "month" | "week" | "day") {
@@ -251,8 +255,8 @@ onChartDataChange(accId: number, transactionType: 'expense' | 'income') {
 
         this.categoryChartData = new Chart('CategoryChart', this.config);
 
-        // this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
-        // this.updateCategorySummary(this.selectedAccountId, this.selectedTransactionType);
+        this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
+        this.updateCategorySummary(this.selectedAccountId, this.selectedTransactionType);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
