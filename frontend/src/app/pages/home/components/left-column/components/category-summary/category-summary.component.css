@@ -14,13 +14,30 @@
     border-bottom: 1px solid #ccc; /* linia oddzielająca kategorie */
 }
 
+.category-path {
+    width: 38px; /* Ustaw stałą szerokość i wysokość */
+    height: 38px;
+    border-radius: 50%; /* Aby uzyskać kształt koła */
+    display: flex;
+    justify-content: center; /* Wyśrodkowanie obrazka w kółku */
+    align-items: center;
+    overflow: hidden; /* Upewnij się, że obrazek nie wystaje */
+}
+
+
+.category-path{
+    flex: 0 0 auto;
+    margin-right: 10px;
+    text-align: left; 
+}
+
 .category-name {
-    flex: 1; /* Szerokość dynamiczna, aby zajmować więcej miejsca */
+    flex: 2; /* Szerokość dynamiczna, aby zajmować więcej miejsca */
     text-align: left;
 }
 
 .category-percentage {
-    flex: 0.5; /* Zajmuje mniej miejsca niż nazwa */
+    flex: 1; /* Zajmuje mniej miejsca niż nazwa */
     text-align: center;
 }
 
@@ -36,3 +53,4 @@ mat-list-item {
 mat-card-content {
     padding: 16px;
 }
+

@@ -15,13 +15,6 @@ import { PlnPipe } from '../../../../../../pipes/pln.pipe';
 })
 export class AccountBudgetComponent implements OnInit, OnChanges{
 
- ngOnChanges(changes: SimpleChanges): void {
-    if (changes['accounts'] && this.accounts.length > 0) {
-      // Aktualizacja sumy po otrzymaniu nowych danych
-      this.sum = this.accounts[0]?.balance || 0;
-    }
-  }
-
   // lista z kontami będzie przekazywana poprzez komponent rodzica
   @Input() accounts: Account[] = [];
   // wysyła wiadomośc do komponentu rodzica, że zmieniono typ konta
@@ -32,6 +25,13 @@ export class AccountBudgetComponent implements OnInit, OnChanges{
 
   ngOnInit(): void {
     this.sum = this.accounts[0].balance;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['accounts'] && this.accounts.length > 0) {
+      // Aktualizacja sumy po otrzymaniu nowych danych
+      this.sum = this.accounts[0]?.balance || 0;
+    }
   }
 
   onAccountChange(accountId: number): void {

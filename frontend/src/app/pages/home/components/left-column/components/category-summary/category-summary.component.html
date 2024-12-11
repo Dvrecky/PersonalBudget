@@ -6,14 +6,21 @@
                 @for (category of categorySummary; track category.name) {
                     <mat-list-item>
                         <div class="category-row">
-                            <span class="category-path"></span>
+                            <span class="category-path" 
+                                  [ngStyle]="{ 'background-color': category.color }">
+                                  <img [src]="category.iconPath" 
+                                       alt="{{category.name}} icon" 
+                                       width="20px" 
+                                       height="20px" />
+                            </span>
                             <span class="category-name">{{category.name}}</span>
-                            <span class="category-percentage">{{category.percentage}}%</span>
+                            <span class="category-percentage">{{category.percentage}}</span>
                             <span class="category-amount">{{category.amount}}</span>
                         </div>
                     </mat-list-item>
                 }
             </mat-list>
+            
            
         </mat-card-content>
     </mat-card>
