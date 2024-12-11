@@ -22,7 +22,4 @@ public class TransactionDto {
     private int accountId;
     private int categoryId;
 
-    public Boolean isIsRecurring() {
-        return recurring;
-    }
 }

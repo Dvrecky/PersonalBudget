@@ -47,7 +47,7 @@ public class TransactionController {
 
 
     @PostMapping
-    public ResponseEntity<Transaction> addTransaction(@RequestBody TransactionDto transactionDto) {
+    public ResponseEntity<TransactionDto> addTransaction(@RequestBody TransactionDto transactionDto) {
         System.out.println(transactionDto.toString());
 
 
@@ -60,12 +60,13 @@ public class TransactionController {
         transaction.setDate(transactionDto.getDate());
         transaction.setCategory(category.orElse(null));
         transaction.setAccount(account.orElse(null));
-        transaction.setRecurring(transactionDto.isIsRecurring());
+        transaction.setDescription(transactionDto.getDescription());
+        transaction.setRecurring(transactionDto.isRecurring());
         transaction.setRecurringPeriod(transactionDto.getRecurringPeriod());
         transaction.setType(transactionDto.getType());
 
-        Transaction newTransaction = transactionService.addTransaction(transaction);
-        return new ResponseEntity<>(newTransaction, HttpStatus.CREATED);
+        transactionService.addTransaction(transaction);
+        return new ResponseEntity<>(transactionDto, HttpStatus.CREATED);
     }
 
 }
