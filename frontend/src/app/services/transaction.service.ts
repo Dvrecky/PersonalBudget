@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Transaction } from '../models/transaction.model';
 import { Account } from '../models/account.model';
 import {HttpClient} from '@angular/common/http';
-import {map, Observable} from 'rxjs';
+import {map, Observable, firstValueFrom} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +21,10 @@ export class TransactionService {
         }))
       )
     );
+  }
+
+  async getTransactionsAsync(): Promise<Transaction[]> {
+    return firstValueFrom(this.http.get<Transaction[]>(this.apiUrl));
   }
 
 
