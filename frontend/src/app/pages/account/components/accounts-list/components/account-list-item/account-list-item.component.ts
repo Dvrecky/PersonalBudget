@@ -3,7 +3,7 @@ import { Account } from '../../../../../../models/account.model';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { CurrencyPipe } from '@angular/common';
+import { PlnPipe } from '../../../../../../pipes/pln.pipe';
 import {
   MatDialog,
   MatDialogActions,
@@ -18,7 +18,7 @@ import { DeleteAccountDialogComponent } from '../dialog/delete-account-dialog/de
 @Component({
   selector: 'app-account-list-item',
   standalone: true,
-  imports: [MatMenuModule, MatIconModule, MatButtonModule, CurrencyPipe],
+  imports: [MatMenuModule, MatIconModule, MatButtonModule, PlnPipe],
   templateUrl: './account-list-item.component.html',
   styleUrl: './account-list-item.component.css'
 })

@@ -79,27 +79,8 @@ export class LeftColumnComponent implements OnInit{
   };
 
   ngOnInit(): void {
-    // this.loadAccounts();
-    // this.accountsList = this.accountService.getAccounts();
     this.loadAccounts();
     console.log(this.accountsList);
-
-    // if (this.accountsList[0].id === 0) {
-    //   this.accountsList.splice(0, 1);
-    // }
-
-    // const total = this.accountsList.reduce( (accumulator, currentIndex) => (accumulator + currentIndex.balance) , 0);
-    // console.log(total);
-    // const accSum: Account = {id:0, name: "Suma", balance: total};
-
-    // this.accountsList.splice(0, 0, accSum);
-
-    // this.appStateService.setSelectedAccount(this.accountsList[0]);
-
-    // this.categoryChartData = new Chart('CategoryChart', this.config);
-
-    // this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
-    // this.updateCategorySummary(this.selectedAccountId, this.selectedTransactionType);
   }
 
   updateCategorySummary(accId: number, transactionType: "expense" | "income") {

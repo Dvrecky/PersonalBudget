@@ -25,10 +25,6 @@ export class AccountComponent implements OnInit{
 
     // this.accountsList = this.accountService.getAccounts().filter( (account) => account.id !== 0 );
     this.loadAccounts();
-
-    // lub
-    // const accounts = this.accountService.getAccounts().filter((acc) => acc.id === 0);
-    // ale może pojawić się problem, gdy najpierw nie załaduje się strona główna
     
     this.sum = this.accountsList.reduce( (acc, currentIndex) => acc + currentIndex.balance, 0 );
     console.log("Parent: ", this.sum);
