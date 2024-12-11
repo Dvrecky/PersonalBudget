@@ -23,6 +23,13 @@ export class TransactionService {
     );
   }
 
+  getTransactionsByType(type: string): Observable<Transaction[]> {
+    return this.getTransactions().pipe(
+      map(transactions => transactions.filter(transaction => transaction.type === type))
+    );
+  }
+  
+
   // Pobieranie transakcji dla konkretnego konta i konwersja daty
   getTransactionsByAccount(account: Account): Observable<Transaction[]> {
     const url = `${this.apiUrl}/${account.id}`;
