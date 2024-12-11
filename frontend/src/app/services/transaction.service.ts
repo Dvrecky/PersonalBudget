@@ -10,8 +10,7 @@ import {Observable} from 'rxjs';
 export class TransactionService {
   private readonly apiUrl = "http://localhost:8080/api/transactions";
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   // private transactions: Transaction[] = [
   //   { id: 1, amount: 1500, date: new Date(2024, 11, 25), description: "Wynagrodzenie za pracę", recurring: true, recurringPeriod: "monthly", type: "income", accountId: 1, categoryId: 1 },
