@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Category } from '../models/category.model';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
@@ -26,11 +28,17 @@ export class CategoryService {
   //   { id: 12, name: "Education", type: "expense", color: "#b63f66", iconPath: "/icons/categories/education.png" }
   // ];
 
-
   getAllCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.apiUrl);
   }
-
+  
+  getCategoriesByType(type: string): Observable<Category[]> {
+    return this.getAllCategories().pipe(
+      map(categories => categories.filter(category => category.type === type))
+    );
+  }
+  
+  
   // getCategoriesByTransactionId(value: number) {
   //   return this.categories.filter( (category) => category.id === value);
   // }
