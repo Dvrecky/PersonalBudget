@@ -86,7 +86,6 @@ export class LeftColumnComponent implements OnInit{
     console.log(this.accountsList);
   }
 
-
   async updateCategorySummary(accId: number, transactionType: "expense" | "income") {
     this.categorySummary = [];
   
