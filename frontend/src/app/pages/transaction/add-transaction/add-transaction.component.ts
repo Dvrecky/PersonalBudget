@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import { FormGroup, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 import {MatNativeDateModule, NativeDateAdapter} from '@angular/material/core';
@@ -20,6 +20,7 @@ import { Category } from '../../../models/category.model';
 import {TransactionService} from '../../../services/transaction.service';
 import {Transaction} from '../../../models/transaction.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-transaction',
@@ -50,6 +51,7 @@ export class AddTransactionComponent implements OnInit {
   amount: number = 0;
 
   constructor(
+              private router: Router,
               private categoryService: CategoryService,
               private accountService: AccountService,
               private transactionService: TransactionService,
@@ -106,7 +108,18 @@ export class AddTransactionComponent implements OnInit {
           console.log('Transaction created successfully:', response);
 
           this.transactionForm.reset({
+            type: 'Expense',
+            accountId: '',
             amount: 0.01,
+            description: '',
+            categoryId: '',
+            date: '',
+            recurring: false,
+            recurringPeriod: ''
+          });
+
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            this.router.navigate([this.router.url]);
           });
 
         },

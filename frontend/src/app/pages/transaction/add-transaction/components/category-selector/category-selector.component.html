@@ -3,8 +3,8 @@
   <form class="category-selector-form"(change)="onCategoryChange($event)">
     @for (category of categories; track category.id) {
       <label class="category">
-        <input type="radio" name="categories" [value]="category.id" />
-        <div class="category-content" [style.background-color]="category.color">
+        <input type="radio" name="categories" [value]="category.id"/>
+        <div class="category-content" [style.background-color]="category.color" >
           <img [src]="category.iconPath" width="35px" height="35px" />
           <span>{{category.name}}</span>
         </div>

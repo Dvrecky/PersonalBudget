@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { MatRadioModule} from '@angular/material/radio';
 import {Category} from '../../../../../models/category.model';
 import {FormsModule} from '@angular/forms';
@@ -10,9 +10,10 @@ import {FormsModule} from '@angular/forms';
   templateUrl: './category-selector.component.html',
   styleUrl: './category-selector.component.css'
 })
-export class CategorySelectorComponent{
+export class CategorySelectorComponent {
   @Input() categories: Category[] = [];
   @Output() categoryChange = new EventEmitter();
+
 
   onCategoryChange(event: Event): void {
     const inputElement = event.target as HTMLInputElement;

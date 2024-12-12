@@ -8,13 +8,16 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {Subscription} from 'rxjs';
 import {Account} from '../../../../../../models/account.model';
+import {MatIconModule} from "@angular/material/icon";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatButtonModule} from '@angular/material/button';
 
 
 @Component({
   selector: 'app-transaction-history',
   standalone: true,
   providers: [NativeDateAdapter],
-  imports: [CommonModule, MatListModule, DatePipe, MatFormFieldModule, MatDatepickerModule, FormsModule, ReactiveFormsModule, MatNativeDateModule],
+  imports: [CommonModule, MatListModule, DatePipe, MatFormFieldModule, MatDatepickerModule, FormsModule, ReactiveFormsModule, MatNativeDateModule, MatIconModule, MatMenuModule, MatButtonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './transaction-history.component.html',
   styleUrl: './transaction-history.component.css'
