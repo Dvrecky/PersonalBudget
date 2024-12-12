@@ -104,3 +104,8 @@ button.active {
 .transaction-amount.income {
   color: green;
 }
+
+.right{
+  display: flex;
+  align-items: center;
+}

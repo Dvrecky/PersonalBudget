@@ -12,13 +12,14 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatButtonModule} from '@angular/material/button';
 import {PlnPipe} from '../../../../../../pipes/pln.pipe';
+import {TransactionTypeClassDirective} from '../../../../../../transaction-type-class.directive';
 
 
 @Component({
   selector: 'app-transaction-history',
   standalone: true,
   providers: [NativeDateAdapter],
-  imports: [CommonModule, MatListModule, DatePipe, MatFormFieldModule, MatDatepickerModule, FormsModule, ReactiveFormsModule, MatNativeDateModule, MatIconModule, MatMenuModule, MatButtonModule, PlnPipe],
+  imports: [CommonModule, MatListModule, DatePipe, MatFormFieldModule, MatDatepickerModule, FormsModule, ReactiveFormsModule, MatNativeDateModule, MatIconModule, MatMenuModule, MatButtonModule, PlnPipe, TransactionTypeClassDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './transaction-history.component.html',
   styleUrl: './transaction-history.component.css'
@@ -28,6 +29,8 @@ export class TransactionHistoryComponent implements OnChanges,OnDestroy {
   @Input() transactions: Transaction[] = [];
   @Input() selectedAccount: Account | null = null;
   @Input() accounts: Account[] = [];
+
+
 
   selectedAccountName:string = '';
   filteredTransactions: Transaction[] = [];

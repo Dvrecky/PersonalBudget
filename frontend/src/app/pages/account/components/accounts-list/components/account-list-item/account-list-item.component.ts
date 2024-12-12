@@ -25,7 +25,6 @@ import { DeleteAccountDialogComponent } from '../dialog/delete-account-dialog/de
 export class AccountListItemComponent {
 
   readonly dialog = inject(MatDialog);
-
   @Input() account: Account | undefined;
 
   openDeleteAccountDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {

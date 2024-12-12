@@ -39,11 +39,36 @@
                 {{ getAccountName(transaction.accountId)}}
           </span>
           }
-          <span class="transaction-amount" [ngClass]="{ 'expense': transaction.type === 'expense', 'income': transaction.type === 'income' }">
-            {{ transaction.type === 'expense' ? '-' : '' }}{{ transaction.amount | pln}}
+
+          <span
+            class="transaction-amount"
+            appTransactionTypeClass
+            [transactionType]="transaction.type">
+             {{ transaction.type === 'expense' ? '-' : '' }}{{ transaction.amount | pln }}
           </span>
+
+
+<!--          <div class = "right">-->
+<!--            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">-->
+<!--              <mat-icon>more_vert</mat-icon>-->
+<!--            </button>-->
+
+<!--            <mat-menu #menu="matMenu">-->
+<!--              <button mat-menu-item >-->
+<!--                <mat-icon>delete</mat-icon>-->
+<!--                <span>Delete</span>-->
+<!--              </button>-->
+<!--              <button mat-menu-item>-->
+<!--                <mat-icon>update</mat-icon>-->
+<!--                <span>Update</span>-->
+<!--              </button>-->
+<!--            </mat-menu>-->
+<!--          </div>-->
+
         </div>
+
       </mat-list-item>
+
     }
   </mat-nav-list>
 
