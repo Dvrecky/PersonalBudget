@@ -57,7 +57,7 @@ public class TransactionController {
 
         Transaction transaction = new Transaction();
         transaction.setAmount(transactionDto.getAmount());
-        transaction.setDate(transactionDto.getDate());
+        transaction.setDate(transactionDto.getDate().plusDays(1));
         transaction.setCategory(category.orElse(null));
         transaction.setAccount(account.orElse(null));
         transaction.setDescription(transactionDto.getDescription());

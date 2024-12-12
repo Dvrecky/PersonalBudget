@@ -34,7 +34,6 @@ public class AccountServiceImpl {
         this.accountRepository.delete(account);
     }
 
-
     public Optional<Account> getAccountById(int accountId) {
         return accountRepository.findById(accountId);
     }

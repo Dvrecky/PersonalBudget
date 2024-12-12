@@ -7,14 +7,16 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {Chart, ChartConfiguration, registerables} from 'chart.js';
 import {Subscription} from 'rxjs';
+import {PlnPipe} from '../../../../../../pipes/pln.pipe';
+import {PercentagePipe} from '../../../../../../pipes/percentage.pipe';
 Chart.register(...registerables);
 
 @Component({
   selector: 'app-financial-analysis',
   standalone: true,
   providers: [NativeDateAdapter],
-  imports: [ CommonModule,MatFormFieldModule,
-    MatDatepickerModule, FormsModule, ReactiveFormsModule, MatNativeDateModule],
+  imports: [CommonModule, MatFormFieldModule,
+    MatDatepickerModule, FormsModule, ReactiveFormsModule, MatNativeDateModule, PlnPipe, PercentagePipe],
   templateUrl: './financial-analysis.component.html',
   styleUrl: './financial-analysis.component.css'
 })

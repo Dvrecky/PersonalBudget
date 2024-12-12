@@ -31,31 +31,31 @@
   <div class="financial-summary">
     <div class="summary-item">
       <span class="summary-title">Income</span>
-      <span class="summary-value income">+{{ income | number:'1.2-2'}} PLN</span>
+      <span class="summary-value income">+{{ income | pln}} </span>
     </div>
     <div class="summary-item">
       <span class="summary-title">Expense</span>
-      <span class="summary-value expense">-{{ expense | number:'1.2-2'}} PLN</span>
+      <span class="summary-value expense">-{{ expense | pln}} </span>
     </div>
     <div class="summary-item">
       <span class="summary-title">Average income</span>
-      <span class="summary-value average-income">{{ averageIncome | number:'1.2-2'}} PLN</span>
+      <span class="summary-value average-income">{{ averageIncome |pln}} </span>
     </div>
     <div class="summary-item">
       <span class="summary-title">Average expenses</span>
-      <span class="summary-value average-expenses">{{ averageExpenses | number:'1.2-2'}} PLN</span>
+      <span class="summary-value average-expenses">{{ averageExpenses | pln}} </span>
     </div>
     <div class="summary-item">
       <span class="summary-title">Balance Sheet</span>
-      <span class="summary-value balance">{{ balanceSheet | number:'1.2-2'}} PLN</span>
+      <span class="summary-value balance">{{ balanceSheet | pln}} </span>
     </div>
     <div class="summary-item">
       <span class="summary-title">Savings rate</span>
-      <span class="summary-value saving-rate">{{ savingsRate | number:'1.2-2'}} %</span>
+      <span class="summary-value saving-rate">{{ savingsRate | percentage}}</span>
     </div>
     <div class="summary-item">
       <span class="summary-title">Expenses rate</span>
-      <span class="summary-value expenses-rate">{{ expensesRate | number:'1.2-2'}} %</span>
+      <span class="summary-value expenses-rate">{{ expensesRate | percentage}} </span>
     </div>
   </div>
 

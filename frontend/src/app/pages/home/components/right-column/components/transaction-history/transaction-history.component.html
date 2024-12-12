@@ -39,9 +39,8 @@
                 {{ getAccountName(transaction.accountId)}}
           </span>
           }
-
           <span class="transaction-amount" [ngClass]="{ 'expense': transaction.type === 'expense', 'income': transaction.type === 'income' }">
-            {{ transaction.type === 'expense' ? '-' : '' }}{{ transaction.amount | number:'1.2-2'}} PLN
+            {{ transaction.type === 'expense' ? '-' : '' }}{{ transaction.amount | pln}}
           </span>
         </div>
       </mat-list-item>

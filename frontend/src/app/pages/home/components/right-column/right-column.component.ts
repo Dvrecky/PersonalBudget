@@ -20,12 +20,16 @@ export class RightColumnComponent implements OnInit{
   selectedAccount: Account | null = null;
   accounts: Account[] = [];
 
-  constructor(private appStateService: AppStateService, private transactionService: TransactionService, private accountService: AccountService) {}
+  constructor(
+    private appStateService: AppStateService,
+    private transactionService: TransactionService,
+    private accountService: AccountService
+  ) {}
 
   ngOnInit(): void {
       this.appStateService.selectedAccount$.subscribe(account => {
       this.selectedAccount = account;
-      console.log("elo" + this.selectedAccount?.name);
+
       if(account) {
 
         if(account?.id === 0) { //account === suma
