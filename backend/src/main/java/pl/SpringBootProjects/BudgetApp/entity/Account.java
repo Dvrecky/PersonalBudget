@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @NoArgsConstructor
 @Getter
 @Setter
@@ -30,4 +32,7 @@ public class Account {
         this.name = name;
         this.balance = balance;
     }
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<Transaction> transactionList;
 }

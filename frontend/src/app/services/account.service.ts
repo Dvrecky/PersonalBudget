@@ -20,29 +20,9 @@ export class AccountService {
     return this.http.get<Account[]>(this.apiUrl);
   }
 
-  // addAccount(account: CreateAccount): void {
-  //   const arrayLength = this.accounts.length;
-  //   const newAccId = this.accounts[arrayLength-1].id+1;
-  //   this.accounts.push({
-  //     id: newAccId,
-  //     ...account // operator spread, pozwala na skopiowanie wszystkich właściwości z obiekt account i wstawienie ich do nowego obiektu
-  //   });
-
-  //   console.log(this.accounts);
-  // }
-
   addAccount(accountData: CreateAccount): Observable<Account> {
     return this.http.post<Account>(this.apiUrl, accountData);
   }
-
-  // deleteAccount(accId: number): void {
-  //   const index = this.accounts.findIndex((acc)=> acc.id === accId);
-  //   if(index) {
-  //     this.accounts.splice(index,1);
-  //     this.transactionService.deleteTransactionForGivenAccount(accId);
-  //   }
-
-  // }
 
   deleteAccount(accId: number): Observable<void>{
     return this.http.delete<void>(`${this.apiUrl}/${accId}`);

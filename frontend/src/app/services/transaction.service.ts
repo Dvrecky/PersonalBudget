@@ -39,21 +39,7 @@ export class TransactionService {
       )
     );
   }
-
-  // deleteTransactionForGivenAccount(accId: number): void {
-  //   console.log(this.transactions);
-  //
-  //   for (let i = this.transactions.length - 1; i >= 0; i--) {
-  //     if (this.transactions[i].id === accId) {
-  //       this.transactions.splice(i, 1);
-  //     }
-  //   }
-  //   console.log(this.transactions);
-  // }
-
-  // addTransaction(transactionData: Transaction)Observable<Transaction> {
-  //   return this.http.post<Transaction>(this.apiUrl, transaction);
-  // }
+  
   addTransaction(transactionData: Transaction) {
     return this.http.post(this.apiUrl, transactionData);
   }
