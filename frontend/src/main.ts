@@ -18,6 +18,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { PercentagePipe } from './app/pipes/percentage.pipe';
+import {ReactiveFormsModule} from '@angular/forms';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -33,7 +34,7 @@ bootstrapApplication(AppComponent, {
       MatSelectModule,
       HttpClientModule,
       MatDialogModule,
-      PercentagePipe
+      PercentagePipe,
     )
   ]
 })

@@ -3,8 +3,8 @@
     <mat-card-content>
       <h2 class="transaction-type-title">Transaction type</h2>
 
-      <section class="transaction-type-checkboxs-section">
-        <mat-radio-group (change)="onTransactionTypeChange($event.value)">
+      <div class="transaction-type-checkboxs-section" [formGroup]="formGroup">
+        <mat-radio-group formControlName="type">
           <mat-radio-button class="transaction-type-checkboxs" value="expense">
             Expense
           </mat-radio-button>
@@ -12,7 +12,7 @@
             Income
           </mat-radio-button>
         </mat-radio-group>
-      </section>
+      </div>
     </mat-card-content>
   </mat-card>
 </section>

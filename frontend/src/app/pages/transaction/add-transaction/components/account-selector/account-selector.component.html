@@ -1,13 +1,13 @@
 <section class="account-container">
   <img src="/icons/bank.png" alt="Bank Icon" class="bank-icon" width="40px" height="40px">
 
-   <mat-form-field>
-        <mat-label>Account</mat-label>
-        <mat-select [value]="selectedAccountId" (selectionChange)="onAccountChange($event)">
-          @for(account of accounts; track account.id) {
-            <mat-option value='{{ account.id }}' >{{ account.name }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
+    <mat-form-field [formGroup]="formGroup">
+      <mat-label>Account</mat-label>
+      <mat-select formControlName="accountId" [value]="selectedAccountId">
+        @for(account of accounts; track account.id) {
+          <mat-option  value='{{ account.id }}' >{{ account.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
 </section>
 

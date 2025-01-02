@@ -11,6 +11,10 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatIconModule} from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
+
 
 import { AccountSelectorComponent } from "./components/account-selector/account-selector.component";
 import { CategorySelectorComponent } from "./components/category-selector/category-selector.component";
@@ -31,6 +35,8 @@ import {Router} from '@angular/router';
   selector: 'app-add-transaction',
   standalone: true,
   imports: [
+    MatFormFieldModule,
+    MatSelectModule,
     TransactionTypeComponent,
     AccountSelectorComponent,
     CategorySelectorComponent,
@@ -43,14 +49,14 @@ import {Router} from '@angular/router';
     MatDatepickerModule,
     MatInputModule,
     MatButtonModule,
-    MatDatepickerModule
+    MatDatepickerModule,
   ],
   providers: [NativeDateAdapter],
   templateUrl: './add-transaction.component.html',
   styleUrl: './add-transaction.component.css'
 })
 export class AddTransactionComponent implements OnInit {
-  transactionForm: FormGroup = new FormGroup({});
+  transactionForm!: FormGroup;
   categories: Category[] = [];
   accounts: Account[] = [];
   amount: number = 0;
@@ -71,37 +77,23 @@ export class AddTransactionComponent implements OnInit {
 
     this.loadAccounts();
 
-
     this.transactionForm = this.fb.group({
-      type: ['', Validators.required],
-      accountId: ['', Validators.required],
+      type: ['', [Validators.required]],
+      accountId: ['', [Validators.required]],
       amount: [0.01, [Validators.required, Validators.min(0.01)]],
       description: ['', [Validators.required, Validators.maxLength(20)]],
-      categoryId: ['', Validators.required],
+      categoryId: ['', [Validators.required]],
       date: ['', Validators.required],
       recurring: [false],
       recurringPeriod: ['', []]
     });
-  }
+
+    this.transactionForm.get('transactionType')?.valueChanges.subscribe(value => {
+      console.log('Transaction Type:', value);
+    });
+   }
 
 
-  onTransactionTypeChange($event: any) {
-    this.transactionForm.controls['type'].setValue($event);
-  }
-
-  onAccountSelected(accountId: number | null): void {
-    this.transactionForm.get('accountId')?.setValue(accountId);
-  }
-
-  onCategoryChange(categoryId: number | null): void {
-    this.transactionForm.controls['categoryId'].setValue(categoryId);
-  }
-
-  onRecurringChange(data: { recurring: boolean, recurringPeriod: string }) {
-    this.transactionForm.controls['recurring'].setValue(data.recurring);
-    this.transactionForm.controls['recurringPeriod'].setValue(data.recurringPeriod);
-
-  }
 
   onTransactionConfirmed() {
     if (this.transactionForm.valid) {
@@ -132,9 +124,9 @@ export class AddTransactionComponent implements OnInit {
             recurringPeriod: ''
           });
 
-          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-            this.router.navigate([this.router.url]);
-          });
+          // this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          //   this.router.navigate([this.router.url]);
+          // });
 
         },
         (error) =>{

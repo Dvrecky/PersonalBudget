@@ -2,14 +2,14 @@
   <h2 class="add-transaction-header">Add Transaction</h2>
 
   <form class="add-transaction-form" [formGroup]="transactionForm" (ngSubmit)="onTransactionConfirmed()">
-    <app-transaction-type (transactionTypeChange)="onTransactionTypeChange($event)"></app-transaction-type>
+    <app-transaction-type [formGroup]="transactionForm"></app-transaction-type>
 
     <div class="amount-account-container">
 
       <app-account-selector
         [accounts]="accounts"
         [selectedAccountId]="transactionForm.get('accountId')?.value"
-        (accountChange)="onAccountSelected($event)">
+        [formGroup]="transactionForm">
       </app-account-selector>
 
       <section class="amount-container">
@@ -62,7 +62,7 @@
       </mat-form-field>
     </div>
 
-    <app-category-selector [categories]="categories" (categoryChange)="onCategoryChange($event)" ></app-category-selector>
+    <app-category-selector [categories]="categories" [formGroup]="transactionForm" ></app-category-selector>
 
     <div class="date-container">
       <div class="date-selector-container">
@@ -74,7 +74,7 @@
         </mat-form-field>
       </div>
 
-      <app-recurring-payment (recurringChange)="onRecurringChange($event)"></app-recurring-payment>
+      <app-recurring-payment [formGroup]="transactionForm"></app-recurring-payment>
     </div>
 
     <div class="submit-button-container">
