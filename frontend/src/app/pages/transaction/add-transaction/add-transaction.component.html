@@ -53,6 +53,11 @@
             Description cannot exceed 20 characters.
           </div>
         }
+        @if(transactionForm.get('description')?.hasError('invalidChars') && transactionForm.get('description')?.touched) {
+          <div>
+            Description contains invalid characters. Only letters, numbers, and spaces are allowed.
+          </div>
+        }
 
       </mat-form-field>
     </div>

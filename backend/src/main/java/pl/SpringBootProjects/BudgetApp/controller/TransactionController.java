@@ -12,7 +12,9 @@ import pl.SpringBootProjects.BudgetApp.service.AccountServiceImpl;
 import pl.SpringBootProjects.BudgetApp.service.CategoryServiceImpl;
 import pl.SpringBootProjects.BudgetApp.service.TransactionServiceImpl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,7 +59,7 @@ public class TransactionController {
 
         Transaction transaction = new Transaction();
         transaction.setAmount(transactionDto.getAmount());
-        transaction.setDate(transactionDto.getDate().plusDays(1));
+        transaction.setDate(transactionDto.getDate());
         transaction.setCategory(category.orElse(null));
         transaction.setAccount(account.orElse(null));
         transaction.setDescription(transactionDto.getDescription());

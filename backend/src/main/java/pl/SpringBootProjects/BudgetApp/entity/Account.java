@@ -33,6 +33,6 @@ public class Account {
         this.balance = balance;
     }
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    private List<Transaction> transactionList;
+//    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+//    private List<Transaction> transactionList;
 }

@@ -1,5 +1,10 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
-import { FormGroup, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {
+  FormGroup,
+  Validators,
+  FormBuilder,
+  ReactiveFormsModule,
+} from '@angular/forms';
 
 import {MatNativeDateModule, NativeDateAdapter} from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
@@ -79,6 +84,7 @@ export class AddTransactionComponent implements OnInit {
     });
   }
 
+
   onTransactionTypeChange($event: any) {
     this.transactionForm.controls['type'].setValue($event);
   }
@@ -100,8 +106,16 @@ export class AddTransactionComponent implements OnInit {
   onTransactionConfirmed() {
     if (this.transactionForm.valid) {
       const transactionData: Transaction = this.transactionForm.value;
-      console.log('Transaction Form Data:', this.transactionForm.value);
 
+      const selectedDate = transactionData.date;
+      const utcDate = new Date(
+        Date.UTC(
+          selectedDate.getFullYear(),
+          selectedDate.getMonth(),
+          selectedDate.getDate()
+        )
+      );
+      transactionData.date = utcDate;
 
       this.transactionService.addTransaction(transactionData).subscribe(
         (response) => {
@@ -132,6 +146,7 @@ export class AddTransactionComponent implements OnInit {
     }
   }
 
+
   loadAccounts(): void {
     this.accountService.getAccounts().subscribe(
       (response: Account[]) => {
@@ -143,3 +158,5 @@ export class AddTransactionComponent implements OnInit {
     );
   }
 }
+
+
