@@ -20,7 +20,7 @@ export class RecurringPaymentComponent {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
-      data: { frequency: '' },
+      data: { frequency: this.selectedFrequency },
     });
 
     dialogRef.afterClosed().subscribe(result => {

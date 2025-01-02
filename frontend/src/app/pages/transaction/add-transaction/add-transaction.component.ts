@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {
   FormGroup,
   Validators,
@@ -14,8 +14,6 @@ import {MatIconModule} from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 
-
-
 import { AccountSelectorComponent } from "./components/account-selector/account-selector.component";
 import { CategorySelectorComponent } from "./components/category-selector/category-selector.component";
 import { RecurringPaymentComponent } from './components/recurring-payment/recurring-payment.component';
@@ -29,7 +27,7 @@ import { Category } from '../../../models/category.model';
 import {TransactionService} from '../../../services/transaction.service';
 import {Transaction} from '../../../models/transaction.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import {Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-add-transaction',
@@ -55,14 +53,16 @@ import {Router} from '@angular/router';
   templateUrl: './add-transaction.component.html',
   styleUrl: './add-transaction.component.css'
 })
+
 export class AddTransactionComponent implements OnInit {
   transactionForm!: FormGroup;
   categories: Category[] = [];
   accounts: Account[] = [];
   amount: number = 0;
 
+  @ViewChild(RecurringPaymentComponent) recurringPaymentComponent!: RecurringPaymentComponent;
+
   constructor(
-              private router: Router,
               private categoryService: CategoryService,
               private accountService: AccountService,
               private transactionService: TransactionService,
@@ -87,13 +87,7 @@ export class AddTransactionComponent implements OnInit {
       recurring: [false],
       recurringPeriod: ['', []]
     });
-
-    this.transactionForm.get('transactionType')?.valueChanges.subscribe(value => {
-      console.log('Transaction Type:', value);
-    });
    }
-
-
 
   onTransactionConfirmed() {
     if (this.transactionForm.valid) {
@@ -110,8 +104,7 @@ export class AddTransactionComponent implements OnInit {
       transactionData.date = utcDate;
 
       this.transactionService.addTransaction(transactionData).subscribe(
-        (response) => {
-          console.log('Transaction created successfully:', response);
+        () => {
 
           this.transactionForm.reset({
             type: 'Expense',
@@ -124,9 +117,12 @@ export class AddTransactionComponent implements OnInit {
             recurringPeriod: ''
           });
 
-          // this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          //   this.router.navigate([this.router.url]);
-          // });
+          this.recurringPaymentComponent.selectedFrequency = '';
+          this.recurringPaymentComponent.isRecurring = false;
+          this.recurringPaymentComponent.formGroup.patchValue({
+            recurring: false,
+            recurringPeriod: ''
+          });
 
         },
         (error) =>{
