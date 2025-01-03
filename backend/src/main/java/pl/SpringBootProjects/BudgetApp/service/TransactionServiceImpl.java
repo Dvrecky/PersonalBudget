@@ -1,24 +1,30 @@
 package pl.SpringBootProjects.BudgetApp.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import pl.SpringBootProjects.BudgetApp.dto.TransactionDto;
+import pl.SpringBootProjects.BudgetApp.entity.Account;
+import pl.SpringBootProjects.BudgetApp.entity.Category;
 import pl.SpringBootProjects.BudgetApp.entity.Transaction;
 import pl.SpringBootProjects.BudgetApp.repository.TransactionRepository;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class TransactionServiceImpl {
 
-    @Autowired
     private final TransactionRepository transactionRepository;
+    private final CategoryServiceImpl categoryService;
+    private final AccountServiceImpl accountService;
 
-
-    public TransactionServiceImpl(TransactionRepository transactionRepository) {
+    public TransactionServiceImpl(TransactionRepository transactionRepository, CategoryServiceImpl categoryService, AccountServiceImpl accountService) {
         this.transactionRepository = transactionRepository;
+
+        this.categoryService = categoryService;
+        this.accountService = accountService;
     }
 
     public List<TransactionDto> getAllTransactions() {
@@ -38,12 +44,50 @@ public class TransactionServiceImpl {
     }
 
 
-    public Transaction addTransaction(Transaction transaction) {
-        return transactionRepository.save(transaction);}
+    public TransactionDto addTransaction(Transaction transaction) {
+        transactionRepository.save(transaction);
+        return convertToDto(transaction);
+    }
 
     public void deleteTransaction(int transactoinId) {
-        Transaction transaction = transactionRepository.findById(transactoinId).orElseThrow();
+        Transaction transaction = transactionRepository.findById(transactoinId)
+                .orElseThrow(() -> new EntityNotFoundException("Transaction not found with id " + transactoinId));
+
         transactionRepository.delete(transaction);
+    }
+
+    public TransactionDto updateTransaction(int transactoinId, TransactionDto transactionToUpdate) {
+        Transaction transaction = transactionRepository.findById(transactoinId)
+                .orElseThrow(() -> new EntityNotFoundException("Transaction not found with id " + transactoinId));
+
+
+            if(!transactionToUpdate.getType().equals(transaction.getType())) {
+                transaction.setType(transactionToUpdate.getType());
+            }
+            if(!Objects.equals(transactionToUpdate.getDescription(), transaction.getDescription())) {
+                transaction.setDescription(transactionToUpdate.getDescription());
+            }
+            if(transactionToUpdate.getAmount() != transaction.getAmount()) {
+                transaction.setAmount(transactionToUpdate.getAmount());
+            }
+            if(transactionToUpdate.getCategoryId() != transaction.getCategory().getId()) {
+                Category category = categoryService.getCategoryById(transactionToUpdate.getCategoryId()).
+                        orElseThrow(() -> new EntityNotFoundException("Category not found with id " + transactionToUpdate.getCategoryId()));
+
+                transaction.setCategory(category);
+            }
+            if(transactionToUpdate.getAccountId() != transaction.getAccount().getId()) {
+                Account account = accountService.getAccountById(transactionToUpdate.getAccountId()).
+                        orElseThrow(() -> new EntityNotFoundException("Account not found with id " + transactionToUpdate.getAccountId()));
+
+                transaction.setAccount(account);
+            }
+            if(!Objects.equals(transactionToUpdate.getDate(), transaction.getDate())) {
+                transaction.setDate(transactionToUpdate.getDate());
+            }
+
+            addTransaction(transaction);
+            return convertToDto(transaction);
     }
 
     private TransactionDto convertToDto(Transaction transaction) {
@@ -60,9 +104,19 @@ public class TransactionServiceImpl {
         );
     }
 
-    public TransactionDto getTransactionsById(int id) {
-        Transaction transaction = transactionRepository.findById(id).orElseThrow();
+    public Transaction convertToEntity(TransactionDto transactionDto) {
+        Optional<Account> account = accountService.getAccountById(transactionDto.getAccountId());
+        Optional<Category> category = categoryService.getCategoryById(transactionDto.getCategoryId());
 
-        return convertToDto(transaction);
+        return new Transaction(
+                transactionDto.getAmount(),
+                transactionDto.getDate(),
+                transactionDto.getDescription(),
+                transactionDto.isRecurring(),
+                transactionDto.getRecurringPeriod(),
+                transactionDto.getType(),
+                account.get(),
+                category.get()
+        );
     }
 }
