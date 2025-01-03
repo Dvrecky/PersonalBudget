@@ -1,0 +1,55 @@
+<div class="update-transaction-form-container">
+  <h2 mat-dialog-title>Update Transaction</h2>
+  <mat-dialog-content>
+
+    <mat-form-field>
+      <mat-label>Type</mat-label>
+      <mat-select [(ngModel)]="updatedTransaction.type" >
+        <mat-option value="expense">Expense</mat-option>
+        <mat-option value="income">Income</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Account</mat-label>
+      <mat-select [(ngModel)]="updatedTransaction.accountId">
+        @for(account of data.accounts; track account.id) {
+          <mat-option [value]="account.id">{{ account.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Amount</mat-label>
+      <input matInput type="number" [(ngModel)]="updatedTransaction.amount" class="example-right-align" placeholder="0" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <input matInput [(ngModel)]="updatedTransaction.description">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Category</mat-label>
+      <mat-select [(ngModel)]="updatedTransaction.categoryId">
+        @for(category of data.categories; track category.id) {
+          <mat-option [value]="category.id">{{ category.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="updatedTransaction.date">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close (click)="updateTransaction()">Yes</button>
+    <button mat-button mat-dialog-close cdkFocusInitial (click)="dialogRef.close()">Cancel</button>
+  </mat-dialog-actions>
+</div>

@@ -21,8 +21,6 @@ public class TransactionServiceImpl {
         this.transactionRepository = transactionRepository;
     }
 
-
-
     public List<TransactionDto> getAllTransactions() {
         List<Transaction> transactions = transactionRepository.findAll();
 
@@ -60,5 +58,11 @@ public class TransactionServiceImpl {
                 transaction.getAccount().getId(),
                 transaction.getCategory().getId()
         );
+    }
+
+    public TransactionDto getTransactionsById(int id) {
+        Transaction transaction = transactionRepository.findById(id).orElseThrow();
+
+        return convertToDto(transaction);
     }
 }

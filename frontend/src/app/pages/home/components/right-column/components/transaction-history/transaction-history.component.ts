@@ -24,6 +24,9 @@ import {PlnPipe} from '../../../../../../pipes/pln.pipe';
 import {TransactionTypeClassDirective} from '../../../../../../transaction-type-class.directive';
 import {MatDialog} from '@angular/material/dialog';
 import {DeleteTransactionDialogComponent} from './delete-transaction-dialog/delete-transaction-dialog.component';
+import {UpdateTransactionDialogComponent} from './update-transaction-dialog/update-transaction-dialog.component';
+import {Category} from '../../../../../../models/category.model';
+import {CategoryService} from '../../../../../../services/category.service';
 
 
 @Component({
@@ -45,6 +48,7 @@ export class TransactionHistoryComponent implements OnChanges,OnDestroy {
   selectedAccountName:string = '';
   filteredTransactions: Transaction[] = [];
   activeFilter: string = 'day';
+  private categories: Category[] = [];
   private rangeSubscription: Subscription | undefined;
 
   readonly range = new FormGroup({
@@ -54,18 +58,41 @@ export class TransactionHistoryComponent implements OnChanges,OnDestroy {
 
   readonly dialog = inject(MatDialog);
 
+  constructor(private categoryService: CategoryService,) {
+  }
+
   openDeleteTransactionDialog(enterAnimationDuration: string, exitAnimationDuration: string, transactionId: number ) {
+    const transaction = this.transactions.find((t) => t.id === transactionId);
      const dialogRef =  this.dialog.open(DeleteTransactionDialogComponent, {
       autoFocus: false,
       width: '300px',
       enterAnimationDuration,
       exitAnimationDuration,
-      data: transactionId
+      data: transaction
     })
 
     dialogRef.afterClosed().subscribe((result: string | undefined) => {
-      console.log('Dialog result:', result);
       if (result === 'deleted') {
+        this.refreshTransactions();
+      }
+    });
+  }
+
+  openUpdateTransactionDialog(enterAnimationDuration: string, exitAnimationDuration: string, transactionId: number) {
+    const transaction = this.transactions.find((t) => t.id === transactionId);
+    const accounts = this.accounts;
+    const categories = this.categories;
+
+    const dialogRef =  this.dialog.open(UpdateTransactionDialogComponent, {
+      autoFocus: false,
+      width: '500px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: {transaction, accounts, categories}
+    })
+
+    dialogRef.afterClosed().subscribe((result: string | undefined) => {
+      if (result === 'updated') {
         this.refreshTransactions();
       }
     });
@@ -79,6 +106,10 @@ export class TransactionHistoryComponent implements OnChanges,OnDestroy {
     if(this.selectedAccount) {
       this.selectedAccountName = this.selectedAccount.name;
     }
+
+    this.categoryService.getAllCategories().subscribe(categories => {
+      this.categories = categories
+    })
 
     this.filteredTransactions = [];
 
@@ -162,6 +193,5 @@ export class TransactionHistoryComponent implements OnChanges,OnDestroy {
     const account = this.accounts.find(acc => acc.id === accountId);
     return account ? account.name : 'Nieznane konto';
   }
-
 
 }

@@ -13,6 +13,7 @@ import pl.SpringBootProjects.BudgetApp.service.CategoryServiceImpl;
 import pl.SpringBootProjects.BudgetApp.service.TransactionServiceImpl;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -23,6 +24,8 @@ public class TransactionController {
     private final TransactionServiceImpl transactionService;
     private final AccountServiceImpl accountServiceImpl;
     private final CategoryServiceImpl categoryServiceImpl;
+    @Autowired
+    private TransactionServiceImpl transactionServiceImpl;
 
     public TransactionController(TransactionServiceImpl transactionService, AccountServiceImpl accountServiceImpl, CategoryServiceImpl categoryServiceImpl) {
         this.transactionService = transactionService;
@@ -72,6 +75,52 @@ public class TransactionController {
     public ResponseEntity delete(@PathVariable int id) {
         transactionService.deleteTransaction(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity update(@PathVariable int id, @RequestBody TransactionDto updatedTransactionDto) {
+        System.out.println(updatedTransactionDto.toString());
+        TransactionDto transactionDto = transactionService.getTransactionsById(id);
+
+        if(transactionDto != null) {
+            if(!updatedTransactionDto.getType().equals(transactionDto.getType())) {
+                transactionDto.setType(updatedTransactionDto.getType());
+            }
+            if(!Objects.equals(updatedTransactionDto.getDescription(), transactionDto.getDescription())) {
+                transactionDto.setDescription(updatedTransactionDto.getDescription());
+            }
+            if(updatedTransactionDto.getAmount() != transactionDto.getAmount()) {
+                transactionDto.setAmount(updatedTransactionDto.getAmount());
+            }
+            if(updatedTransactionDto.getCategoryId() != transactionDto.getCategoryId()) {
+                transactionDto.setCategoryId(updatedTransactionDto.getCategoryId());
+            }
+            if(updatedTransactionDto.getAccountId() != transactionDto.getAccountId()) {
+                transactionDto.setAccountId(updatedTransactionDto.getAccountId());
+            }
+            if(!Objects.equals(updatedTransactionDto.getDate(), transactionDto.getDate())) {
+                transactionDto.setDate(updatedTransactionDto.getDate());
+            }
+
+
+            Optional<Account> account = accountServiceImpl.getAccountById(transactionDto.getAccountId());
+            Optional<Category> category = categoryServiceImpl.getCategoryById(transactionDto.getCategoryId());
+            Transaction transaction = new Transaction();
+            transaction.setId(transactionDto.getId());
+            transaction.setAmount(transactionDto.getAmount());
+            transaction.setDate(transactionDto.getDate());
+            transaction.setCategory(category.orElse(null));
+            transaction.setAccount(account.orElse(null));
+            transaction.setDescription(transactionDto.getDescription());
+            transaction.setRecurring(transactionDto.isRecurring());
+            transaction.setRecurringPeriod(transactionDto.getRecurringPeriod());
+            transaction.setType(transactionDto.getType());
+
+            System.out.println(transaction);
+            transactionServiceImpl.addTransaction(transaction);
+        }
+
+        return new ResponseEntity<>(transactionDto, HttpStatus.OK);
     }
 
 }

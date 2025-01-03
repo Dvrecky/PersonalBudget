@@ -9,24 +9,26 @@ import {
 } from "@angular/material/dialog";
 import {TransactionService} from '../../../../../../../services/transaction.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-delete-transaction-dialog',
   standalone: true,
-    imports: [
-        MatButton,
-        MatDialogActions,
-        MatDialogClose,
-        MatDialogContent,
-        MatDialogTitle
-    ],
+  imports: [
+    MatButton,
+    MatDialogActions,
+    MatDialogClose,
+    MatDialogContent,
+    MatDialogTitle,
+    DatePipe
+  ],
   templateUrl: './delete-transaction-dialog.component.html',
   styleUrl: './delete-transaction-dialog.component.css'
 })
 export class DeleteTransactionDialogComponent {
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: number,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private transactionService: TransactionService,
     protected dialogRef: MatDialogRef<DeleteTransactionDialogComponent>
   ) {}

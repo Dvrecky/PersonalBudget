@@ -1,8 +1,12 @@
-<h2 mat-dialog-title>Delete Transaction</h2>
-<mat-dialog-content>
-
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button mat-dialog-close (click)="deleteTransaction(data)">Yes</button>
-  <button mat-button mat-dialog-close cdkFocusInitial (click)="dialogRef.close()">Cancel</button>
-</mat-dialog-actions>
+<div class="delete-transaction-dialog">
+  <h2 mat-dialog-title>Delete Transaction</h2>
+  <mat-dialog-content>
+    <p>Description: {{ data.description }}</p>
+    <p>Amount: {{ data.amount }}</p>
+    <p>Date: {{ data.date | date:'shortDate' }}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close (click)="deleteTransaction(data.id)">Yes</button>
+    <button mat-button mat-dialog-close cdkFocusInitial (click)="dialogRef.close()">Cancel</button>
+  </mat-dialog-actions>
+</div>
