@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges,OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output
+} from '@angular/core';
 import { Transaction } from '../../../../../../models/transaction.model';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
@@ -13,6 +22,8 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatButtonModule} from '@angular/material/button';
 import {PlnPipe} from '../../../../../../pipes/pln.pipe';
 import {TransactionTypeClassDirective} from '../../../../../../transaction-type-class.directive';
+import {MatDialog} from '@angular/material/dialog';
+import {DeleteTransactionDialogComponent} from './delete-transaction-dialog/delete-transaction-dialog.component';
 
 
 @Component({
@@ -29,8 +40,7 @@ export class TransactionHistoryComponent implements OnChanges,OnDestroy {
   @Input() transactions: Transaction[] = [];
   @Input() selectedAccount: Account | null = null;
   @Input() accounts: Account[] = [];
-
-
+  @Output() deleteTransaction = new EventEmitter<number>();
 
   selectedAccountName:string = '';
   filteredTransactions: Transaction[] = [];
@@ -42,6 +52,28 @@ export class TransactionHistoryComponent implements OnChanges,OnDestroy {
       end: new FormControl<Date | null>(null),
   });
 
+  readonly dialog = inject(MatDialog);
+
+  openDeleteTransactionDialog(enterAnimationDuration: string, exitAnimationDuration: string, transactionId: number ) {
+     const dialogRef =  this.dialog.open(DeleteTransactionDialogComponent, {
+      autoFocus: false,
+      width: '300px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: transactionId
+    })
+
+    dialogRef.afterClosed().subscribe((result: string | undefined) => {
+      console.log('Dialog result:', result);
+      if (result === 'deleted') {
+        this.refreshTransactions();
+      }
+    });
+  }
+
+  private refreshTransactions() {
+    this.deleteTransaction.emit();
+  }
 
   ngOnChanges(): void {
     if(this.selectedAccount) {
@@ -130,5 +162,6 @@ export class TransactionHistoryComponent implements OnChanges,OnDestroy {
     const account = this.accounts.find(acc => acc.id === accountId);
     return account ? account.name : 'Nieznane konto';
   }
+
 
 }

@@ -1,5 +1,5 @@
 <div class="right-column-container">
-  <app-transaction-history [transactions]="transactions" [accounts]="accounts" [selectedAccount]="selectedAccount"></app-transaction-history>
+  <app-transaction-history [transactions]="transactions" [accounts]="accounts" [selectedAccount]="selectedAccount" (deleteTransaction)="handleTransactionDeletion()">></app-transaction-history>
   <app-financial-analysis  [transactions]="transactions"></app-financial-analysis>
 </div>
 

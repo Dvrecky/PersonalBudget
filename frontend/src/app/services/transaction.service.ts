@@ -39,8 +39,12 @@ export class TransactionService {
       )
     );
   }
-  
+
   addTransaction(transactionData: Transaction) {
     return this.http.post(this.apiUrl, transactionData);
+  }
+
+  delete(accountId: Number) {
+    return this.http.delete<void>(this.apiUrl + "/" + accountId);
   }
 }

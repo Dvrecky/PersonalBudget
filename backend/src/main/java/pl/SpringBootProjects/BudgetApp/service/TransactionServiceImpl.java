@@ -1,10 +1,9 @@
 package pl.SpringBootProjects.BudgetApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.SpringBootProjects.BudgetApp.dto.TransactionDto;
-import pl.SpringBootProjects.BudgetApp.entity.Account;
-import pl.SpringBootProjects.BudgetApp.entity.Category;
 import pl.SpringBootProjects.BudgetApp.entity.Transaction;
 import pl.SpringBootProjects.BudgetApp.repository.TransactionRepository;
 
@@ -42,15 +41,16 @@ public class TransactionServiceImpl {
 
 
     public Transaction addTransaction(Transaction transaction) {
-
         return transactionRepository.save(transaction);}
 
-    public void deleteTransaction(Transaction transaction) {
+    public void deleteTransaction(int transactoinId) {
+        Transaction transaction = transactionRepository.findById(transactoinId).orElseThrow();
         transactionRepository.delete(transaction);
     }
 
     private TransactionDto convertToDto(Transaction transaction) {
         return new TransactionDto(
+                transaction.getId(),
                 transaction.getAmount(),
                 transaction.getDate(),
                 transaction.getDescription(),

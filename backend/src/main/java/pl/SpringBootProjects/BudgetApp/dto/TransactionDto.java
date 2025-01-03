@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @ToString
 public class TransactionDto {
 
+    private int id;
     private double amount;
     private LocalDateTime date;
     private String description;

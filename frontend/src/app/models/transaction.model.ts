@@ -1,4 +1,3 @@
-import {ReccuringPeriod} from './reccuringPeriod.model';
 
 export interface Transaction {
     id: number;

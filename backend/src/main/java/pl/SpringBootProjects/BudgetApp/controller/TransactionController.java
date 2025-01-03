@@ -68,4 +68,10 @@ public class TransactionController {
         return new ResponseEntity<>(transactionDto, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable int id) {
+        transactionService.deleteTransaction(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }

@@ -48,4 +48,20 @@ export class RightColumnComponent implements OnInit{
     })
     this.accountService.getAccounts().subscribe(accounts => {this.accounts = accounts;});
   }
+
+  handleTransactionDeletion() {
+    if (this.selectedAccount) {
+      if (this.selectedAccount.id === 0) {
+        this.transactionService.getTransactions().subscribe(transactions => {
+          this.transactions = transactions;
+        });
+      } else {
+        this.transactionService.getTransactionsByAccount(this.selectedAccount).subscribe(transactions => {
+          this.transactions = transactions;
+        });
+      }
+    } else {
+      this.transactions = [];
+    }
+  }
 }

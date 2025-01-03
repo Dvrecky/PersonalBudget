@@ -72,6 +72,7 @@ button.active {
   display: flex;
   justify-content: space-between;
   padding: 8px;
+  align-items: center;
 }
 
 
@@ -81,7 +82,7 @@ button.active {
 }
 
 .transaction-description {
-  flex: 2;
+  flex: 1;
   font-weight: 500;
 }
 
@@ -95,6 +96,10 @@ button.active {
   text-align: right;
   font-weight: bold;
   color: #3f51b5;
+}
+
+.update-transaction-button-container{
+  margin-left: 40px;
 }
 
 .transaction-amount.expense {
