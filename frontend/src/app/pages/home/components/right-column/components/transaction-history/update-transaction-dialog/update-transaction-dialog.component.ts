@@ -14,7 +14,7 @@ import {Transaction} from '../../../../../../../models/transaction.model';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {HttpErrorResponse} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
 
 @Component({
@@ -32,43 +32,80 @@ import {MatButton} from '@angular/material/button';
     MatInputModule,
     MatDatepickerModule,
     FormsModule,
-    MatButton
+    MatButton,
+    ReactiveFormsModule
   ],
   templateUrl: './update-transaction-dialog.component.html',
   styleUrl: './update-transaction-dialog.component.css'
 })
 export class UpdateTransactionDialogComponent {
   transaction: Transaction;
-  updatedTransaction: Transaction;
+  updateTransactionForm!: FormGroup;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private transactionService: TransactionService,
     protected dialogRef: MatDialogRef<UpdateTransactionDialogComponent>,
+    private fb: FormBuilder
   ) {
     this.transaction = data.transaction;
-    this.updatedTransaction = {...this.transaction};
+
+    this.updateTransactionForm = this.fb.group({
+      type: [this.transaction.type],
+      accountId: [this.transaction.accountId],
+      amount: [this.transaction.amount, Validators.min(0.01)],
+      description: [this.transaction.description, [Validators.minLength(3), Validators.maxLength(20), Validators.pattern('^[a-zA-z0-9 ]+$')]],
+      categoryId: [this.transaction.categoryId],
+      date: [this.transaction.date],
+    })
   }
 
-  updateTransaction() {
+  // updateTransaction() {
+  //
+  //   const selectedDate = this.updatedTransaction.date;
+  //   const utcDate = new Date(Date.UTC(
+  //       selectedDate.getFullYear(),
+  //       selectedDate.getMonth(),
+  //       selectedDate.getDate(),
+  //     )
+  //   );
+  //   this.updatedTransaction.date = utcDate;
+  //   console.log(this.updatedTransaction);
+  //
+  //   this.transactionService.update(this.updatedTransaction).subscribe(() => {
+  //       this.dialogRef.close('updated');
+  //     },
+  //     (error: HttpErrorResponse) => {
+  //       alert(error.message),
+  //         this.dialogRef.close();
+  //     }
+  //   );
+  // }
 
-    const selectedDate = this.updatedTransaction.date;
-    const utcDate = new Date(Date.UTC(
-        selectedDate.getFullYear(),
-        selectedDate.getMonth(),
-        selectedDate.getDate(),
-      )
-    );
-    this.updatedTransaction.date = utcDate;
-    console.log(this.updatedTransaction);
 
-    this.transactionService.update(this.updatedTransaction).subscribe(() => {
-        this.dialogRef.close('updated');
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message),
-          this.dialogRef.close();
-      }
-    );
+  onTransactionUpdateConfirm() {
+    if (this.updateTransactionForm.valid) {
+      const updatedTransactionData: Transaction = this.updateTransactionForm.value;
+      console.log(updatedTransactionData);
+
+      const selectedDate = updatedTransactionData.date;
+      const utcDate = new Date(
+        Date.UTC(
+          selectedDate.getFullYear(),
+          selectedDate.getMonth(),
+          selectedDate.getDate()
+        )
+      );
+      updatedTransactionData.date = utcDate;
+
+      this.transactionService.update(this.transaction.id, updatedTransactionData).subscribe(() => {
+          this.dialogRef.close('updated');
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message),
+            this.dialogRef.close();
+        }
+      );
+    }
   }
 }

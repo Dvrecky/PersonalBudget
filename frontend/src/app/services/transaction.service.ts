@@ -48,7 +48,7 @@ export class TransactionService {
     return this.http.delete<void>(this.apiUrl + "/" + accountId);
   }
 
-  update(updatedTransaction: Transaction) {
-    return this.http.patch(this.apiUrl + "/" + updatedTransaction.id, updatedTransaction);
+  update(transactionId: number, updatedTransaction: Transaction) {
+    return this.http.patch(this.apiUrl + "/" + transactionId, updatedTransaction);
   }
 }
