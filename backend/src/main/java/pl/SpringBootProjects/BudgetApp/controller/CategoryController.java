@@ -1,9 +1,9 @@
 package pl.SpringBootProjects.BudgetApp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import pl.SpringBootProjects.BudgetApp.entity.Category;
 import pl.SpringBootProjects.BudgetApp.service.CategoryServiceImpl;
 
@@ -23,5 +23,12 @@ public class CategoryController {
     @GetMapping
     public List<Category> getCategories() {
         return categoryService.getAllCategories();
+    }
+
+    @PostMapping
+    public ResponseEntity<Category> addCategory(@RequestBody Category category) {
+        Category savedCategory = categoryService.save(category);
+        System.out.println(savedCategory);
+        return new ResponseEntity<>(savedCategory, HttpStatus.CREATED);
     }
 }

@@ -2,7 +2,6 @@
   <h2 mat-dialog-title>Update Transaction</h2>
   <form class="updateTransactionForm" [formGroup]="updateTransactionForm" (ngSubmit)="onTransactionUpdateConfirm()" >
   <mat-dialog-content>
-
       <mat-form-field>
         <mat-label>Type</mat-label>
         <mat-select formControlName="type" >
@@ -76,7 +75,6 @@
 
   </mat-dialog-content>
   <mat-dialog-actions>
-<!--    <button mat-button mat-dialog-close type="submit" (click)="updateTransaction()">Update</button>-->
     <button mat-button mat-dialog-close type="submit" [disabled]="!updateTransactionForm.valid">Update</button>
     <button mat-button mat-dialog-close cdkFocusInitial (click)="dialogRef.close()">Cancel</button>
   </mat-dialog-actions>

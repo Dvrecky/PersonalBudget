@@ -21,10 +21,14 @@ export class CategoryService {
   async getAllCategoriesAsync(): Promise<Category[]> {
     return firstValueFrom(this.http.get<Category[]>(this.apiUrl));
   }
-  
+
   getCategoriesByType(type: string): Observable<Category[]> {
     return this.getAllCategories().pipe(
       map(categories => categories.filter(category => category.type === type))
     );
+  }
+
+  addCategory(category: Category) {
+    return this.http.post(this.apiUrl, category);
   }
 }

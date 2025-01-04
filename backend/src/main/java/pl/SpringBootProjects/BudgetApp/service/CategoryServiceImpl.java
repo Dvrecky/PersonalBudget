@@ -1,6 +1,7 @@
 package pl.SpringBootProjects.BudgetApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.SpringBootProjects.BudgetApp.entity.Category;
 import pl.SpringBootProjects.BudgetApp.repository.CategoryRepository;
@@ -24,5 +25,9 @@ public class CategoryServiceImpl {
 
     public Optional<Category> getCategoryById(int categoryId) {
        return categoryRepository.findById(categoryId);
+    }
+
+    public Category save(Category category) {
+        return categoryRepository.save(category);
     }
 }

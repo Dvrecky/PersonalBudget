@@ -1,0 +1,40 @@
+<div class="add-category-dialog">
+  <h2 mat-dialog-title>Add Category</h2>
+  <form class="add-category-form" [formGroup]="addCategoryForm" (ngSubmit)="onAddCategoryConfirm()">
+    <mat-dialog-content>
+
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="type" >
+          <mat-option value="expense">Expense</mat-option>
+          <mat-option value="income">Income</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Color</mat-label>
+        <input matInput formControlName="color" type="color">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Icon</mat-label>
+        <mat-select formControlName="iconPath" >
+<!--          @for(account of data.accounts; track account.id) {-->
+<!--            <mat-option  [value]="account.id">{{ account.name }}</mat-option>-->
+<!--          }-->
+        </mat-select>
+      </mat-form-field>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+      <button mat-button mat-dialog-close type="submit" [disabled]="!addCategoryForm.valid">Add</button>
+      <button mat-button mat-dialog-close cdkFocusInitial (click)="dialogRef.close()">Cancel</button>
+    </mat-dialog-actions>
+  </form>
+</div>
