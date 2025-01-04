@@ -62,13 +62,16 @@ export class TransactionHistoryComponent implements OnChanges,OnDestroy {
   }
 
   openDeleteTransactionDialog(enterAnimationDuration: string, exitAnimationDuration: string, transactionId: number ) {
-    const transaction = this.transactions.find((t) => t.id === transactionId);
+     const transaction = this.transactions.find((t) => t.id === transactionId);
+     const accountName = this.accounts.find((t) => t.id === transaction?.accountId)?.name;
+     const categoryName = this.categories.find((t) => t.id === transaction?.categoryId)?.name;
+
      const dialogRef =  this.dialog.open(DeleteTransactionDialogComponent, {
       autoFocus: false,
       width: '300px',
       enterAnimationDuration,
       exitAnimationDuration,
-      data: transaction
+      data: {transaction, accountName, categoryName}
     })
 
     dialogRef.afterClosed().subscribe((result: string | undefined) => {

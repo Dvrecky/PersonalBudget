@@ -60,29 +60,6 @@ export class UpdateTransactionDialogComponent {
     })
   }
 
-  // updateTransaction() {
-  //
-  //   const selectedDate = this.updatedTransaction.date;
-  //   const utcDate = new Date(Date.UTC(
-  //       selectedDate.getFullYear(),
-  //       selectedDate.getMonth(),
-  //       selectedDate.getDate(),
-  //     )
-  //   );
-  //   this.updatedTransaction.date = utcDate;
-  //   console.log(this.updatedTransaction);
-  //
-  //   this.transactionService.update(this.updatedTransaction).subscribe(() => {
-  //       this.dialogRef.close('updated');
-  //     },
-  //     (error: HttpErrorResponse) => {
-  //       alert(error.message),
-  //         this.dialogRef.close();
-  //     }
-  //   );
-  // }
-
-
   onTransactionUpdateConfirm() {
     if (this.updateTransactionForm.valid) {
       const updatedTransactionData: Transaction = this.updateTransactionForm.value;
