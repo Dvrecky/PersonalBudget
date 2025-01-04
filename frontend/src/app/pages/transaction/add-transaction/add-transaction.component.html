@@ -48,16 +48,24 @@
           formControlName="description"
         />
 
-        @if(transactionForm.get('description')?.hasError('maxlength')) {
-          <div>
-            Description cannot exceed 20 characters.
-          </div>
+        @if(transactionForm.get('description')?.invalid && transactionForm.get('description')?.touched) {
+          @if(transactionForm.get('description')?.hasError('maxlength')) {
+            <div>
+              Description cannot exceed 20 characters.
+            </div>
+          }
+          @if(transactionForm.get('description')?.hasError('pattern')) {
+            <div>
+              Description contains invalid characters. Only letters, numbers, and spaces are allowed.
+            </div>
+          }
+          @if(transactionForm.get('description')?.hasError('minlength')) {
+            <div>
+              Description cannot contain less than 3 chars.
+            </div>
+          }
         }
-        @if(transactionForm.get('description')?.hasError('invalidChars') && transactionForm.get('description')?.touched) {
-          <div>
-            Description contains invalid characters. Only letters, numbers, and spaces are allowed.
-          </div>
-        }
+
 
       </mat-form-field>
     </div>
