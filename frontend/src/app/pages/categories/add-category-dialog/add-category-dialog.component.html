@@ -6,6 +6,25 @@
       <mat-form-field>
         <mat-label>Name</mat-label>
         <input matInput formControlName="name">
+
+        @if(addCategoryForm.get('name')?.invalid && addCategoryForm.get('name')?.touched) {
+          @if(addCategoryForm.get('name')?.hasError('minlength')) {
+            <div>
+              Name cannot contain less than 3 chars.
+            </div>
+          }
+          @if(addCategoryForm.get('name')?.hasError('maxlength')) {
+            <div>
+              Name cannot exceed 20 characters.
+            </div>
+          }
+          @if(addCategoryForm.get('name')?.hasError('pattern')) {
+            <div>
+              Name  contains invalid characters. Only letters, numbers, and spaces are allowed.
+            </div>
+          }
+
+        }
       </mat-form-field>
 
       <mat-form-field>
@@ -24,9 +43,11 @@
       <mat-form-field>
         <mat-label>Icon</mat-label>
         <mat-select formControlName="iconPath" >
-<!--          @for(account of data.accounts; track account.id) {-->
-<!--            <mat-option  [value]="account.id">{{ account.name }}</mat-option>-->
-<!--          }-->
+          @for(iconPath of iconPaths; track iconPath) {
+            <mat-option [value]="iconPath">
+              <img [src]="iconPath" width="35px" height="35px" />
+            </mat-option>
+          }
         </mat-select>
       </mat-form-field>
 

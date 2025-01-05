@@ -38,6 +38,7 @@ export class AddCategoryDialogComponent {
 
   addCategoryForm!: FormGroup;
   dialogRef: any;
+  iconPaths: string[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -47,11 +48,34 @@ export class AddCategoryDialogComponent {
   {
     this.dialogRef = dialogRef;
     this.addCategoryForm = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15), Validators.pattern('^[a-zA-z0-9 ]+$')]],
       type: ['', Validators.required],
       color: ['', Validators.required],
       iconPath: ['/icons/categories/others.png']
-    })
+    });
+    this.iconPaths = [
+      '/icons/categories/others.png',
+      '/icons/categories/clothes.png',
+      '/icons/categories/coffee.png',
+      '/icons/categories/education.png',
+      '/icons/categories/family.png',
+      '/icons/categories/finance.png',
+      '/icons/categories/gift-box.png',
+      '/icons/categories/groceries.png',
+      '/icons/categories/health.png',
+      '/icons/categories/hobby.png',
+      '/icons/categories/restaurant.png',
+      '/icons/categories/transport.png',
+      '/icons/categories/vacation.png',
+      '/icons/categories/utilities.png',
+      '/icons/categories/saving.png',
+      '/icons/categories/subscribe.png',
+      '/icons/categories/pet.png',
+      '/icons/categories/fast-food.png',
+      '/icons/categories/car.png',
+      '/icons/categories/book.png',
+      '/icons/categories/beauty.png',
+    ];
   }
 
   onAddCategoryConfirm() {

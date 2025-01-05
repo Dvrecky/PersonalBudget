@@ -48,7 +48,7 @@ export class CategoriesComponent implements OnInit {
   openAddNewCategoryDialog(enterAnimationDuration: string, exitAnimationDuration: string) {
       this.dialog.open(AddCategoryDialogComponent, {
         autoFocus: false,
-        width: '300px',
+        width: '500px',
         enterAnimationDuration,
         exitAnimationDuration,
       })
