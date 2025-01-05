@@ -81,8 +81,6 @@ export class AddCategoryDialogComponent {
   onAddCategoryConfirm() {
 
     if(this.addCategoryForm.valid) {
-      console.log(this.addCategoryForm.value);
-
       this.categoryService.addCategory(this.addCategoryForm.value).subscribe(() => {
 
         this.addCategoryForm.reset({
@@ -91,8 +89,9 @@ export class AddCategoryDialogComponent {
           color: [''],
           iconPath: ['/icons/categories/others.png'],
         })
-        },
 
+          this.dialogRef.close('added')
+        },
         (error) =>{
           console.error('Error creating category:', error);
         }

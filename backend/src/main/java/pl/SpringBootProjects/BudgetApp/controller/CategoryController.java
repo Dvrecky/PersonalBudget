@@ -31,4 +31,11 @@ public class CategoryController {
         System.out.println(savedCategory);
         return new ResponseEntity<>(savedCategory, HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Category> deleteCategory(@PathVariable int id) {
+        categoryService.delete(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

@@ -1,0 +1,15 @@
+<div class="delete-category-dialog">
+  <h2 mat-dialog-title>Delete Category</h2>
+  <mat-dialog-content>
+    <p>Name: {{ data.name }}</p>
+    <p>Type: {{ data.type }}</p>
+    <div class="category-content" [style.background-color]="data.color">
+      <img [src]="data.iconPath" width="45px" height="45px" />
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close (click)="deleteCategory(data.id)">Yes</button>
+    <button mat-button mat-dialog-close cdkFocusInitial (click)="dialogRef.close()">Cancel</button>
+  </mat-dialog-actions>
+</div>
+

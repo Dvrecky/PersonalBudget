@@ -7,6 +7,7 @@ import {MatFabButton, MatIconButton} from '@angular/material/button';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {MatDialog} from '@angular/material/dialog';
 import {AddCategoryDialogComponent} from './add-category-dialog/add-category-dialog.component';
+import {DeleteCategoryDialogComponent} from './delete-category-dialog/delete-category-dialog.component';
 
 @Component({
   selector: 'app-categories',
@@ -32,13 +33,24 @@ export class CategoriesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.categoryService.getAllCategories().subscribe(categories => {
-      this.categories = categories
-    });
+   this.loadCategories()
   }
 
-  openDeleteCategorynDialog(enterAnimationDuration: string, exitAnimationDuration: string, id: number) {
+  openDeleteCategorynDialog(enterAnimationDuration: string, exitAnimationDuration: string, categoryId: number) {
+    const categoryToDelete= this.categories.find(c => c.id === categoryId);
+    const dialogRef = this.dialog.open(DeleteCategoryDialogComponent, {
+      autoFocus: false,
+      width: '300px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: categoryToDelete
+    })
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == 'delete') {
+        this.loadCategories();
+      }
+    })
   }
 
   openUpdateCateogryDialog(enterAnimationDuration: string, exitAnimationDuration: string, id: number) {
@@ -46,11 +58,23 @@ export class CategoriesComponent implements OnInit {
   }
 
   openAddNewCategoryDialog(enterAnimationDuration: string, exitAnimationDuration: string) {
-      this.dialog.open(AddCategoryDialogComponent, {
+      const dialogRef = this.dialog.open(AddCategoryDialogComponent, {
         autoFocus: false,
         width: '500px',
         enterAnimationDuration,
         exitAnimationDuration,
       })
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == 'added') {
+        this.loadCategories();
+      }
+    })
+  }
+
+  private loadCategories() {
+    this.categoryService.getAllCategories().subscribe(categories => {
+      this.categories = categories
+    });
   }
 }

@@ -30,4 +30,8 @@ public class CategoryServiceImpl {
     public Category save(Category category) {
         return categoryRepository.save(category);
     }
+
+    public void delete(int id) {
+        categoryRepository.deleteById(id);
+    }
 }
