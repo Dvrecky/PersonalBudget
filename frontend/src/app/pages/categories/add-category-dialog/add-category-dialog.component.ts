@@ -51,7 +51,7 @@ export class AddCategoryDialogComponent {
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15), Validators.pattern('^[a-zA-z0-9 ]+$')]],
       type: ['', Validators.required],
       color: ['', Validators.required],
-      iconPath: ['/icons/categories/others.png']
+      iconPath: ['', Validators.required]
     });
     this.iconPaths = [
       '/icons/categories/others.png',
@@ -87,7 +87,7 @@ export class AddCategoryDialogComponent {
           name: '',
           type: [''],
           color: [''],
-          iconPath: ['/icons/categories/others.png'],
+          iconPath: [''],
         })
 
           this.dialogRef.close('added')

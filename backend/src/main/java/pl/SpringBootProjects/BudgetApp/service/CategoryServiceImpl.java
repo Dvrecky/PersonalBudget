@@ -34,4 +34,26 @@ public class CategoryServiceImpl {
     public void delete(int id) {
         categoryRepository.deleteById(id);
     }
+
+    public Category update(int id, Category categoryToUpdate) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+
+
+        if (!categoryToUpdate.getName().equals(category.getName())) {
+            category.setName(categoryToUpdate.getName());
+        }
+        if (!categoryToUpdate.getType().equals(category.getType())) {
+            category.setType(categoryToUpdate.getType());
+        }
+        if (!categoryToUpdate.getColor().equals(category.getColor())) {
+            category.setColor(categoryToUpdate.getColor());
+        }
+        if (!categoryToUpdate.getIconPath().equals(category.getIconPath())) {
+            category.setIconPath(categoryToUpdate.getIconPath());
+        }
+
+        save(category);
+        return category;
+    }
 }

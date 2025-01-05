@@ -1,0 +1,19 @@
+.update-category-dialog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+mat-form-field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+mat-dialog-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

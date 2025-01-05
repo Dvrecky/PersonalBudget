@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
+import { Component, Inject} from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -83,6 +83,9 @@ export class UpdateTransactionDialogComponent {
             this.dialogRef.close();
         }
       );
+    }
+    else {
+      console.error("Invalid from")
     }
   }
 }

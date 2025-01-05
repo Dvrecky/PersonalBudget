@@ -8,6 +8,10 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {MatDialog} from '@angular/material/dialog';
 import {AddCategoryDialogComponent} from './add-category-dialog/add-category-dialog.component';
 import {DeleteCategoryDialogComponent} from './delete-category-dialog/delete-category-dialog.component';
+import {
+  UpdateTransactionDialogComponent
+} from '../home/components/right-column/components/transaction-history/update-transaction-dialog/update-transaction-dialog.component';
+import {UpdateCategoryDialogComponent} from './update-category-dialog/update-category-dialog.component';
 
 @Component({
   selector: 'app-categories',
@@ -53,8 +57,23 @@ export class CategoriesComponent implements OnInit {
     })
   }
 
-  openUpdateCateogryDialog(enterAnimationDuration: string, exitAnimationDuration: string, id: number) {
+  openUpdateCateogryDialog(enterAnimationDuration: string, exitAnimationDuration: string, categoryId: number) {
+      const categoryToUpdate= this.categories.find(c => c.id === categoryId);
+      const iconPaths = this.categories.map(c => c.iconPath)
 
+      const dialogRef = this.dialog.open(UpdateCategoryDialogComponent, {
+        autoFocus: false,
+        width: '500px',
+        enterAnimationDuration,
+        exitAnimationDuration,
+        data: {categoryToUpdate, iconPaths}
+      })
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result == 'update') {
+          this.loadCategories();
+        }
+      })
   }
 
   openAddNewCategoryDialog(enterAnimationDuration: string, exitAnimationDuration: string) {

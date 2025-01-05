@@ -1,0 +1,67 @@
+<div class="update-category-dialog">
+  <h2 mat-dialog-title>Update Category</h2>
+  <form class="updateTransactionForm" [formGroup]="updateCategoryForm" (ngSubmit)="onCategoryUpdateConfirm()" >
+    <mat-dialog-content>
+
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name">
+
+        @if(updateCategoryForm.get('name')?.invalid && updateCategoryForm.get('name')?.touched) {
+          @if(updateCategoryForm.get('name')?.hasError('maxlength')) {
+            <div>
+              Description cannot exceed 20 characters.
+            </div>
+          }
+          @if(updateCategoryForm.get('name')?.hasError('pattern')) {
+            <div>
+              Description contains invalid characters. Only letters, numbers, and spaces are allowed.
+            </div>
+          }
+          @if(updateCategoryForm.get('name')?.hasError('minlength')) {
+            <div>
+              Description cannot contain less than 3 chars.
+            </div>
+          }
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="type" >
+          <mat-option value="expense">Expense</mat-option>
+          <mat-option value="income">Income</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Color</mat-label>
+        <input matInput formControlName="color" type="color">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="iconPath" >
+          @for(iconPath of data.iconPaths; track $index) {
+            <mat-option [value]="iconPath">
+              <img [src]="iconPath" width="35px" height="35px" />
+            </mat-option>
+          }
+
+          <mat-select-trigger>
+            @if (selectedIconPath) {
+              <img [src]="selectedIconPath" width="35px" height="35px"/>
+            }
+          </mat-select-trigger>
+
+        </mat-select>
+      </mat-form-field>
+
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button mat-dialog-close type="submit" [disabled]="!updateCategoryForm.dirty || !updateCategoryForm.valid">Update</button>
+      <button mat-button mat-dialog-close cdkFocusInitial (click)="dialogRef.close()">Cancel</button>
+    </mat-dialog-actions>
+  </form>
+</div>
+

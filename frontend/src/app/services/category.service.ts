@@ -35,4 +35,8 @@ export class CategoryService {
   delete(categoryId: number) {
     return this.http.delete(this.apiUrl + `/${categoryId}`);
   }
+
+  update(categoryId: number, updatedCategory: Category) {
+    return this.http.patch(this.apiUrl + `/${categoryId}`, updatedCategory);
+  }
 }
