@@ -2,13 +2,15 @@
 <div class="categories-container">
   <form class="category-selector-form" [formGroup]="formGroup">
     @for (category of categories; track category.id) {
-      <label class="category">
-        <input type="radio" formControlName="categoryId" [value]="category.id"/>
-        <div class="category-content" [style.background-color]="category.color" >
-          <img [src]="category.iconPath" width="35px" height="35px" />
-          <span>{{category.name}}</span>
-        </div>
-      </label>
+      @if(category.type === formGroup.get('type')?.value) {
+        <label class="category">
+          <input type="radio" formControlName="categoryId" [value]="category.id"/>
+          <div class="category-content" [style.background-color]="category.color" >
+            <img [src]="category.iconPath" width="35px" height="35px" />
+            <span>{{category.name}}</span>
+          </div>
+        </label>
+      }
     }
   </form>
 </div>

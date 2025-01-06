@@ -78,7 +78,7 @@ export class AddTransactionComponent implements OnInit {
     this.loadAccounts();
 
     this.transactionForm = this.fb.group({
-      type: ['', [Validators.required]],
+      type: ['expense', [Validators.required]],
       accountId: ['', [Validators.required]],
       amount: [0.01, [Validators.required, Validators.min(0.01)]],
       description: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20), Validators.pattern('^[a-zA-z0-9 ]+$')]],
@@ -107,7 +107,7 @@ export class AddTransactionComponent implements OnInit {
         () => {
 
           this.transactionForm.reset({
-            type: 'Expense',
+            type: 'expense',
             accountId: '',
             amount: 0.01,
             description: '',
