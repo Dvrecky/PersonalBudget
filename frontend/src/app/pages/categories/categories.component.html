@@ -1,32 +1,53 @@
-<section class="categories-container">
+<section class="categories-page-container">
   <h2 class="categories-header">Categories</h2>
+
+<div class="categories-container">
+
+  <mat-card>
+    <mat-card-content>
+      <h2 class="transaction-type-title">Category type</h2>
+
+      <div class="transaction-type-checkboxs-section" >
+        <mat-radio-group [(ngModel)]="categoriesType">
+          <mat-radio-button class="transaction-type-checkboxs" value="expense">
+            Expense
+          </mat-radio-button>
+          <mat-radio-button class="transaction-type-checkboxs" value="income">
+            Income
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </mat-card-content>
+  </mat-card>
 
   <mat-list class="categories-list">
     @for(category of categories; track category.id) {
-      <div class="item-list">
-        <div class="category-content" [style.background-color]="category.color">
-          <img [src]="category.iconPath" width="65px" height="65px" />
-        </div>
+      @if (category.type === categoriesType) {
+        <div class="item-list">
+          <div class="category-content" [style.background-color]="category.color">
+            <img [src]="category.iconPath" width="65px" height="65px" />
+          </div>
 
-        <span class="category-name">{{ category.name }}</span>
+          <span class="category-name">{{ category.name }}</span>
 
-        <div class="update-transaction-button-container">
-          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="openDeleteCategorynDialog('250ms', '250ms', category.id)">
-              <mat-icon>delete</mat-icon>
-              <span>Delete</span>
+          <div class="update-transaction-button-container">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon>more_vert</mat-icon>
             </button>
-            <button mat-menu-item (click)="openUpdateCateogryDialog('250ms', '250ms', category.id)">
-              <mat-icon>update</mat-icon>
-              <span>Update</span>
-            </button>
-          </mat-menu>
+
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="openDeleteCategorynDialog('250ms', '250ms', category.id)">
+                <mat-icon>delete</mat-icon>
+                <span>Delete</span>
+              </button>
+              <button mat-menu-item (click)="openUpdateCateogryDialog('250ms', '250ms', category.id)">
+                <mat-icon>update</mat-icon>
+                <span>Update</span>
+              </button>
+            </mat-menu>
+          </div>
         </div>
-      </div>
+      }
     }
   </mat-list>
 
@@ -35,5 +56,7 @@
       <mat-icon>add</mat-icon>
     </button>
   </div>
+
+</div>
 </section>
 

@@ -8,36 +8,44 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {MatDialog} from '@angular/material/dialog';
 import {AddCategoryDialogComponent} from './add-category-dialog/add-category-dialog.component';
 import {DeleteCategoryDialogComponent} from './delete-category-dialog/delete-category-dialog.component';
-import {
-  UpdateTransactionDialogComponent
-} from '../home/components/right-column/components/transaction-history/update-transaction-dialog/update-transaction-dialog.component';
 import {UpdateCategoryDialogComponent} from './update-category-dialog/update-category-dialog.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatCard, MatCardContent} from "@angular/material/card";
+import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [
-    MatListModule,
-    MatIcon,
-    MatIconButton,
-    MatMenu,
-    MatMenuItem,
-    MatMenuTrigger,
-    MatFabButton,
-  ],
+    imports: [
+        MatListModule,
+        MatIcon,
+        MatIconButton,
+        MatMenu,
+        MatMenuItem,
+        MatMenuTrigger,
+        MatFabButton,
+        FormsModule,
+        MatCard,
+        MatCardContent,
+        MatRadioButton,
+        MatRadioGroup,
+        ReactiveFormsModule,
+    ],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css'
 })
 export class CategoriesComponent implements OnInit {
   categories!: Category[];
+  categoriesType: string;
 
   readonly dialog = inject(MatDialog);
 
   constructor(private categoryService: CategoryService) {
+    this.categoriesType = 'expense'
   }
 
   ngOnInit() {
-   this.loadCategories()
+   this.loadCategories();
   }
 
   openDeleteCategorynDialog(enterAnimationDuration: string, exitAnimationDuration: string, categoryId: number) {
