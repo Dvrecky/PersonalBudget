@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {
+  MAT_DIALOG_DATA,
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
@@ -9,7 +10,7 @@ import {
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatOption} from '@angular/material/core';
-import {MatSelect} from '@angular/material/select';
+import {MatSelect, MatSelectTrigger} from '@angular/material/select';
 import {MatInput} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 import {CategoryService} from '../../../services/category.service';
@@ -29,18 +30,21 @@ import {CategoryService} from '../../../services/category.service';
     ReactiveFormsModule,
     MatInput,
     MatButton,
-    MatDialogClose
+    MatDialogClose,
+    MatSelectTrigger
   ],
   templateUrl: './add-category-dialog.component.html',
   styleUrl: './add-category-dialog.component.css'
 })
-export class AddCategoryDialogComponent {
+export class AddCategoryDialogComponent implements OnInit {
 
   addCategoryForm!: FormGroup;
   dialogRef: any;
   iconPaths: string[] = [];
+  selectedIconPath: string = '';
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     dialogRef: MatDialogRef<AddCategoryDialogComponent>,
     private categoryService: CategoryService
@@ -49,10 +53,13 @@ export class AddCategoryDialogComponent {
     this.dialogRef = dialogRef;
     this.addCategoryForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15), Validators.pattern('^[a-zA-z0-9 ]+$')]],
-      type: ['', Validators.required],
+      type: [this.data, Validators.required],
       color: ['', Validators.required],
       iconPath: ['', Validators.required]
-    });
+    }
+  );
+    this.selectedIconPath = this.addCategoryForm.get('iconPath')?.value || '';
+
     this.iconPaths = [
       '/icons/categories/others.png',
       '/icons/categories/clothes.png',
@@ -78,8 +85,13 @@ export class AddCategoryDialogComponent {
     ];
   }
 
-  onAddCategoryConfirm() {
+  ngOnInit() {
+    this.addCategoryForm.get('iconPath')?.valueChanges.subscribe(value => {
+      this.selectedIconPath = value;
+    });
+  }
 
+  onAddCategoryConfirm() {
     if(this.addCategoryForm.valid) {
       this.categoryService.addCategory(this.addCategoryForm.value).subscribe(() => {
 

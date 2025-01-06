@@ -61,7 +61,6 @@ export class UpdateCategoryDialogComponent implements OnInit {
   onCategoryUpdateConfirm() {
     if(this.updateCategoryForm.valid) {
       const updatedCategory = this.updateCategoryForm.value;
-      console.log(updatedCategory);
       this.categoryService.update(this.category.id, updatedCategory).subscribe(() => {
         this.dialogRef.close('update');
       },

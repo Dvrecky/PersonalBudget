@@ -1,5 +1,4 @@
 import {Component, Inject} from '@angular/core';
-import {DatePipe} from '@angular/common';
 import {MatButton} from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
@@ -8,7 +7,6 @@ import {
   MatDialogContent, MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import {Category} from '../../../models/category.model';
 import {CategoryService} from '../../../services/category.service';
 import {HttpErrorResponse} from '@angular/common/http';
 
@@ -16,7 +14,6 @@ import {HttpErrorResponse} from '@angular/common/http';
   selector: 'app-delete-category-dialog',
   standalone: true,
   imports: [
-    DatePipe,
     MatButton,
     MatDialogActions,
     MatDialogClose,

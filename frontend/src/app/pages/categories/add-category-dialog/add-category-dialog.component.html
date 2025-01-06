@@ -43,11 +43,18 @@
       <mat-form-field>
         <mat-label>Icon</mat-label>
         <mat-select formControlName="iconPath" >
-          @for(iconPath of iconPaths; track iconPath) {
+          @for(iconPath of iconPaths; track $index) {
             <mat-option [value]="iconPath">
               <img [src]="iconPath" width="35px" height="35px" />
             </mat-option>
           }
+
+          <mat-select-trigger>
+            @if (selectedIconPath) {
+              <img [src]="selectedIconPath" width="35px" height="35px"/>
+            }
+          </mat-select-trigger>
+
         </mat-select>
       </mat-form-field>
 

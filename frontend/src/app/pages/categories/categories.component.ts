@@ -84,12 +84,14 @@ export class CategoriesComponent implements OnInit {
       })
   }
 
-  openAddNewCategoryDialog(enterAnimationDuration: string, exitAnimationDuration: string) {
+  openAddNewCategoryDialog(enterAnimationDuration: string, exitAnimationDuration: string, categoriesType: string) {
+    console.log(categoriesType)
       const dialogRef = this.dialog.open(AddCategoryDialogComponent, {
         autoFocus: false,
         width: '500px',
         enterAnimationDuration,
         exitAnimationDuration,
+        data: categoriesType
       })
 
     dialogRef.afterClosed().subscribe(result => {
