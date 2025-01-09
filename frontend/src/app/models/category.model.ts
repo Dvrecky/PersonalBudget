@@ -4,4 +4,5 @@ export interface Category {
     type: "income" | "expense";
     color: string;
     iconPath: string;
+    isDefault: boolean;
 }

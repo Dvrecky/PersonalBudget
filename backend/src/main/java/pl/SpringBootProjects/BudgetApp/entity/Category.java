@@ -28,12 +28,14 @@ public class Category {
     @Column(name = "icon_path")
     private String iconPath;
 
+    @Column(name = "is_default")
+    private Boolean isDefault = false;
+
     public Category(String name, String type, String color, String iconPath) {
         this.name = name;
         this.type = type;
         this.color = color;
         this.iconPath = iconPath;
     }
-
 
 }

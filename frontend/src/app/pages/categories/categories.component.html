@@ -28,24 +28,29 @@
             <img [src]="category.iconPath" width="65px" height="65px" />
           </div>
 
-          <span class="category-name">{{ category.name }}</span>
 
-          <div class="update-transaction-button-container">
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
+            <span class="category-name" [ngClass]="{'default-category': category.isDefault}">{{ category.name }}</span>
 
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="openDeleteCategorynDialog('250ms', '250ms', category.id)">
-                <mat-icon>delete</mat-icon>
-                <span>Delete</span>
+
+          @if (!category.isDefault) {
+            <div class="update-transaction-button-container">
+
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
               </button>
-              <button mat-menu-item (click)="openUpdateCateogryDialog('250ms', '250ms', category.id)">
-                <mat-icon>update</mat-icon>
-                <span>Update</span>
-              </button>
-            </mat-menu>
-          </div>
+
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="openDeleteCategorynDialog('250ms', '250ms', category.id)">
+                  <mat-icon>delete</mat-icon>
+                  <span>Delete</span>
+                </button>
+                <button mat-menu-item (click)="openUpdateCateogryDialog('250ms', '250ms', category.id)">
+                  <mat-icon>update</mat-icon>
+                  <span>Update</span>
+                </button>
+              </mat-menu>
+            </div>
+          }
         </div>
       }
     }

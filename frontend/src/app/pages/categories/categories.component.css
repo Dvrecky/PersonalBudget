@@ -36,22 +36,6 @@ mat-list {
   margin-top: 20px;
 }
 
-.item-list {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 60px;
-}
-
-.category-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  overflow: hidden;
-}
 
 .category-content img {
   max-width: 100%;
@@ -60,7 +44,8 @@ mat-list {
 }
 
 .category-name {
-  flex: none;
+  display: flex;
+  justify-content: center;
   width: 200px;
   text-align: left;
   overflow: hidden;
@@ -91,4 +76,44 @@ mat-card-content {
   align-items: center;
   flex-direction: column;
   margin-bottom: 20px;
+}
+
+
+.item-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+  height: 80px;
+  width: 100%;
+}
+
+.update-transaction-button-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-grow: 1;  /* Rozciągnij przycisk do prawej strony */
+}
+
+.category-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.default-category {
+  display: flex;
+  justify-content: center;
+  width: 200px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: bold;
+  font-size: 20px;
+  margin-right: 200px;
 }

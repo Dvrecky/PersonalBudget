@@ -12,25 +12,27 @@ import {UpdateCategoryDialogComponent} from './update-category-dialog/update-cat
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
+import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-    imports: [
-        MatListModule,
-        MatIcon,
-        MatIconButton,
-        MatMenu,
-        MatMenuItem,
-        MatMenuTrigger,
-        MatFabButton,
-        FormsModule,
-        MatCard,
-        MatCardContent,
-        MatRadioButton,
-        MatRadioGroup,
-        ReactiveFormsModule,
-    ],
+  imports: [
+    MatListModule,
+    MatIcon,
+    MatIconButton,
+    MatMenu,
+    MatMenuItem,
+    MatMenuTrigger,
+    MatFabButton,
+    FormsModule,
+    MatCard,
+    MatCardContent,
+    MatRadioButton,
+    MatRadioGroup,
+    ReactiveFormsModule,
+    NgClass,
+  ],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css'
 })
