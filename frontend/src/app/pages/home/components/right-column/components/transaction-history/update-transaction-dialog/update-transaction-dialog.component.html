@@ -4,7 +4,7 @@
   <mat-dialog-content>
       <mat-form-field>
         <mat-label>Type</mat-label>
-        <mat-select formControlName="type" >
+        <mat-select formControlName="type" [(ngModel)]="categoriesType">
           <mat-option value="expense">Expense</mat-option>
           <mat-option value="income">Income</mat-option>
         </mat-select>
@@ -59,7 +59,9 @@
         <mat-label>Category</mat-label>
         <mat-select formControlName="categoryId">
           @for(category of data.categories; track category.id) {
-            <mat-option [value]="category.id">{{ category.name }}</mat-option>
+            @if(category.type === categoriesType) {
+              <mat-option [value]="category.id">{{ category.name }}</mat-option>
+            }
           }
         </mat-select>
       </mat-form-field>

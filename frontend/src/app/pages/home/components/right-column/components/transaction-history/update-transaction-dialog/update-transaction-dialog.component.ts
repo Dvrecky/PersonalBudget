@@ -41,6 +41,7 @@ import {MatButton} from '@angular/material/button';
 export class UpdateTransactionDialogComponent {
   transaction: Transaction;
   updateTransactionForm!: FormGroup;
+  categoriesType: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -57,7 +58,9 @@ export class UpdateTransactionDialogComponent {
       description: [this.transaction.description, [Validators.minLength(3), Validators.maxLength(20), Validators.pattern('^[a-zA-z0-9 ]+$')]],
       categoryId: [this.transaction.categoryId],
       date: [this.transaction.date],
-    })
+    });
+
+    this.categoriesType = this.transaction.type;
   }
 
   onTransactionUpdateConfirm() {
