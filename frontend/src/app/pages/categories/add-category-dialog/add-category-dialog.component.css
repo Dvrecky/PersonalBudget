@@ -18,3 +18,10 @@ mat-dialog-content{
   align-items: center;
   justify-content: center;
 }
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

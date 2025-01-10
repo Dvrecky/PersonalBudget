@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, inject, OnInit, ViewChild} from '@angular/core';
 import {
   FormGroup,
   Validators,
@@ -27,6 +27,7 @@ import { Category } from '../../../models/category.model';
 import {TransactionService} from '../../../services/transaction.service';
 import {Transaction} from '../../../models/transaction.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -59,6 +60,7 @@ export class AddTransactionComponent implements OnInit {
   categories: Category[] = [];
   accounts: Account[] = [];
   amount: number = 0;
+  private _snackBar = inject(MatSnackBar);
 
   @ViewChild(RecurringPaymentComponent) recurringPaymentComponent!: RecurringPaymentComponent;
 
@@ -89,6 +91,10 @@ export class AddTransactionComponent implements OnInit {
     });
    }
 
+  openSnackBar() {
+    this._snackBar.open("Transactin added sucessfully!");
+  }
+
   onTransactionConfirmed() {
     if (this.transactionForm.valid) {
       const transactionData: Transaction = this.transactionForm.value;
@@ -105,6 +111,8 @@ export class AddTransactionComponent implements OnInit {
 
       this.transactionService.addTransaction(transactionData).subscribe(
         () => {
+
+          this.openSnackBar();
 
           this.transactionForm.reset({
             type: 'expense',

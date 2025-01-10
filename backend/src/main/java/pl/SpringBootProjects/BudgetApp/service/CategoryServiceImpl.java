@@ -33,6 +33,7 @@ public class CategoryServiceImpl {
     }
 
     public Category save(Category category) {
+        category.setIsDefault(false);
         return categoryRepository.save(category);
     }
 
@@ -40,7 +41,7 @@ public class CategoryServiceImpl {
         Optional<Category> categoryToDelete = categoryRepository.findById(id);
 
         if(categoryToDelete.isPresent()) {
-            if(categoryToDelete.get().getIsDefault()) {
+            if(categoryToDelete.get().getIsDefault()){
                 throw new IllegalArgumentException("Default category cannot be deleted");
             }
 
