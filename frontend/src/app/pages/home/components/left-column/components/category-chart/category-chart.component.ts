@@ -20,7 +20,9 @@ Chart.register(...registerables);
 export class CategoryChartComponent{
 
   // gotowe dane do wyświetlenia wykresu, będą przekazywane z rodzica
-  @Input() categoryChartData: undefined;
+  @Input() categoryChartData: any;
+
+  @Input() hasDataToDisplay: boolean = true;
   // służy do emitowania zdarzenia do rodzica, informując go o zmianie okresu według, którego ma być wyświetlany wykres
   // @Output() periodChange = new EventEmitter<"year" | "month" | "week" | "day">();
 

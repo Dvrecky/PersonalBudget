@@ -1,21 +1,18 @@
 <div class="container">
     <mat-card appearance="outlined">
-        <!-- <mat-card-header>
-            <mat-card-actions>
-                <mat-button-toggle-group name="fontStyle" aria-label="Font Style" (change)="onPeriodChange($event.value)">
-                    <mat-button-toggle value="year">Year</mat-button-toggle>
-                    <mat-button-toggle value="month">Month</mat-button-toggle>
-                    <mat-button-toggle value="week">Week</mat-button-toggle>
-                    <mat-button-toggle value="day">Day</mat-button-toggle>
-                  </mat-button-toggle-group>                  
-            </mat-card-actions>
-        </mat-card-header> -->
 
-        <mat-card-content>
+        @if(!hasDataToDisplay) {
 
-            <canvas id="CategoryChart"> {{ categoryChartData }}</canvas>
-        
-        </mat-card-content>
+            <div class="no-data-message">
+                <p>Brak danych do wyświetlenia.</p>
+            </div>
+        } @else {
+            <mat-card-content>
+
+                <canvas id="CategoryChart"> {{ categoryChartData }}</canvas>
+            
+            </mat-card-content>
+        }
 
         <mat-card-actions>
             <div class="button">

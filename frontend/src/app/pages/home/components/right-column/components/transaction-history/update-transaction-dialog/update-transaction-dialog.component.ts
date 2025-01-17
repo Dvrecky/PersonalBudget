@@ -12,17 +12,17 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {Transaction} from '../../../../../../../models/transaction.model';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {provideNativeDateAdapter} from '@angular/material/core';
+import {NativeDateAdapter} from '@angular/material/core';
 import {HttpErrorResponse} from '@angular/common/http';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-update-transaction-dialog',
   standalone: true,
-  providers: [provideNativeDateAdapter()],
+  providers: [NativeDateAdapter],
   imports: [
-    MatButton,
+    MatButtonModule,
     MatDialogActions,
     MatDialogClose,
     MatDialogContent,
@@ -32,7 +32,6 @@ import {MatButton} from '@angular/material/button';
     MatInputModule,
     MatDatepickerModule,
     FormsModule,
-    MatButton,
     ReactiveFormsModule
   ],
   templateUrl: './update-transaction-dialog.component.html',

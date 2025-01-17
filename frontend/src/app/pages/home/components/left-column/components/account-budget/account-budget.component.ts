@@ -5,6 +5,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { CurrencyPipe } from '@angular/common';
 import { Input, Output } from '@angular/core';
 import { PlnPipe } from '../../../../../../pipes/pln.pipe';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-account-budget',
@@ -30,14 +31,17 @@ export class AccountBudgetComponent implements OnInit, OnChanges{
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['accounts'] && this.accounts.length > 0) {
       // Aktualizacja sumy po otrzymaniu nowych danych
-      this.sum = this.accounts[0]?.balance || 0;
+      // this.sum = this.accounts[0]?.balance || 0;
+      const account = this.accounts.find( (acc) => acc.id === this.selectedAccountId);
+      this.sum = (account === undefined) ? 0 : account.balance;
     }
   }
 
   onAccountChange(accountId: number): void {
     console.log('Selected Account ID:', accountId);
     this.selectedAccountId = accountId;
-    this.sum = this.accounts[this.selectedAccountId].balance;
+    const account = this.accounts.find( (acc) => acc.id === this.selectedAccountId);
+    this.sum = (account === undefined) ? 0 : account.balance;
     this.accountChange.emit(accountId);
   }
 }

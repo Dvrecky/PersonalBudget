@@ -1,6 +1,7 @@
 package pl.SpringBootProjects.BudgetApp.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,7 @@ public class Account {
         this.balance = balance;
     }
 
-//    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-//    private List<Transaction> transactionList;
+    @JsonIgnore
+    @OneToMany(mappedBy = "account", cascade = CascadeType.REMOVE)
+    private List<Transaction> transactionList;
 }
