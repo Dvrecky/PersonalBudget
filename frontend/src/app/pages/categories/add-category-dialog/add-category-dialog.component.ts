@@ -8,11 +8,11 @@ import {
   MatDialogTitle
 } from '@angular/material/dialog';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatFormField, MatFormFieldModule, MatLabel} from '@angular/material/form-field';
 import {MatOption} from '@angular/material/core';
-import {MatSelect, MatSelectTrigger} from '@angular/material/select';
-import {MatInput} from '@angular/material/input';
-import {MatButton} from '@angular/material/button';
+import {MatSelect, MatSelectModule, MatSelectTrigger} from '@angular/material/select';
+import {MatInput, MatInputModule} from '@angular/material/input';
+import {MatButton, MatButtonModule} from '@angular/material/button';
 import {CategoryService} from '../../../services/category.service';
 
 @Component({
@@ -23,15 +23,12 @@ import {CategoryService} from '../../../services/category.service';
     MatDialogActions,
     MatDialogTitle,
     FormsModule,
-    MatFormField,
-    MatLabel,
-    MatOption,
-    MatSelect,
+    MatFormFieldModule,
     ReactiveFormsModule,
-    MatInput,
-    MatButton,
+    MatInputModule,
+    MatButtonModule,
     MatDialogClose,
-    MatSelectTrigger
+    MatSelectModule
   ],
   templateUrl: './add-category-dialog.component.html',
   styleUrl: './add-category-dialog.component.css'

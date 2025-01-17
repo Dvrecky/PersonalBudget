@@ -7,13 +7,13 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {CategoryService} from '../../../services/category.service';
 import {Category} from '../../../models/category.model';
 import {HttpErrorResponse} from '@angular/common/http';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-update-category-dialog',
   standalone: true,
   imports: [
-    MatButton,
+    MatButtonModule,
     MatSelectModule,
     MatInputModule,
     MatFormFieldModule,

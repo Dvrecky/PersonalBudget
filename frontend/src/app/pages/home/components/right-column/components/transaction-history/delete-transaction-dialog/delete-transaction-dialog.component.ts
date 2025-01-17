@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {MatButton} from "@angular/material/button";
+import {MatButton, MatButtonModule} from "@angular/material/button";
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -15,7 +15,6 @@ import {DatePipe} from '@angular/common';
   selector: 'app-delete-transaction-dialog',
   standalone: true,
   imports: [
-    MatButton,
     MatDialogActions,
     MatDialogClose,
     MatDialogContent,

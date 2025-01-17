@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatButtonModule} from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -14,7 +14,7 @@ import {HttpErrorResponse} from '@angular/common/http';
   selector: 'app-delete-category-dialog',
   standalone: true,
   imports: [
-    MatButton,
+    MatButtonModule,
     MatDialogActions,
     MatDialogClose,
     MatDialogContent,

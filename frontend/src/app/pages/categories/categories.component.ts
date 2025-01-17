@@ -2,35 +2,31 @@ import {Component, inject, OnInit} from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import {CategoryService} from '../../services/category.service';
 import {Category} from '../../models/category.model';
-import {MatIcon} from '@angular/material/icon';
-import {MatFabButton, MatIconButton} from '@angular/material/button';
-import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {MatIcon, MatIconModule} from '@angular/material/icon';
+import {MatButtonModule, MatFabButton, MatIconButton} from '@angular/material/button';
+import {MatMenu, MatMenuItem, MatMenuModule, MatMenuTrigger} from '@angular/material/menu';
 import {MatDialog} from '@angular/material/dialog';
 import {AddCategoryDialogComponent} from './add-category-dialog/add-category-dialog.component';
 import {DeleteCategoryDialogComponent} from './delete-category-dialog/delete-category-dialog.component';
 import {UpdateCategoryDialogComponent} from './update-category-dialog/update-category-dialog.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatCard, MatCardContent} from "@angular/material/card";
+import {MatCard, MatCardContent, MatCardModule} from "@angular/material/card";
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 import {NgClass} from '@angular/common';
+import {MatRadioModule} from '@angular/material/radio';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
   imports: [
     MatListModule,
-    MatIcon,
-    MatIconButton,
-    MatMenu,
-    MatMenuItem,
-    MatMenuTrigger,
-    MatFabButton,
+    MatIconModule,
+    MatMenuModule,
     FormsModule,
-    MatCard,
-    MatCardContent,
-    MatRadioButton,
-    MatRadioGroup,
+    MatRadioModule,
+    MatCardModule,
     ReactiveFormsModule,
+    MatButtonModule,
     NgClass,
   ],
   templateUrl: './categories.component.html',

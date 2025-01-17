@@ -27,6 +27,7 @@ bootstrapApplication(AppComponent, {
       MatSidenavModule,
       MatToolbarModule,
       MatListModule,
+      MatFormFieldModule,
       MatIconModule,
       MatButtonModule,
       BrowserAnimationsModule,

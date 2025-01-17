@@ -154,6 +154,8 @@ export class LeftColumnComponent implements OnInit{
     } catch (error) {
       console.error('Błąd podczas pobierania danych:', error);
     }
+
+    this.categorySummary = this.categorySummary.filter( (summ) => summ.amount !== 0);
   }
   
   
@@ -216,6 +218,8 @@ export class LeftColumnComponent implements OnInit{
     } catch (error) {
       console.error('Błąd podczas pobierania danych:', error);
     }
+
+
   }
   
   onAccountChange(accountId: number) {
