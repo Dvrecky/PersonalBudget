@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { AccountBudgetComponent } from "./components/account-budget/account-budget.component";
 import { Account } from '../../../../models/account.model';
 import { AccountService } from '../../../../services/account.service';
@@ -14,9 +14,9 @@ import { Category } from '../../../../models/category.model';
 import { TransactionService } from '../../../../services/transaction.service';
 
 import { Chart, registerables } from 'chart.js';
-import { CategoryChartDataStructure } from '../../../../models/CategoryChartDataStructure.model';
 import { CategorySummaryComponent } from './components/category-summary/category-summary.component';
 import { CategorySummary } from '../../../../models/categorySummary.model';
+import { CategoryChartData } from '../../../../models/CategoryChartData.model';
 
 Chart.register(...registerables);
 
@@ -44,33 +44,29 @@ export class LeftColumnComponent implements OnInit{
   // zmienna reprezentująca wykres
   categoryChartData: any |undefined;
 
-  categoryDataStructure: CategoryChartDataStructure | undefined;
+  hasDataToDisplay: boolean = true; // Domyślnie zakładamy, że są dane
 
   // dane do wykresu
-  dane = {
-    // nazwy kategorii
-    // categoryNames
-    labels:
-    [
-      'Red',
-      'Blue',
-      'Yellow'
+  dane: {
+    labels: string[];
+    datasets: {
+      label: string;
+      data: number[];
+      backgroundColor: string[];
+      hoverOffset: number;
+    }[];
+  } = {
+    labels: [], // Inicjalizacja jako pusta tablica stringów
+    datasets: [
+      {
+        label: 'Category chart',
+        data: [], // Inicjalizacja jako pusta tablica liczb
+        backgroundColor: [], // Inicjalizacja jako pusta tablica stringów
+        hoverOffset: 4,
+      },
     ],
-    datasets: [{
-      label: 'My First Dataset',
-      // cała kwota dla danej kategorii
-      // amount
-      data: [300, 50, 100, 10, 20, 14],
-      // kolory kategorii
-      // categoryColors
-      backgroundColor: [
-        'rgb(255, 99, 132)',
-        'rgb(54, 162, 235)',
-        'rgb(255, 205, 86)'
-      ],
-      hoverOffset: 4
-    }]
   };
+  
 
   // konfiguracja wykresu (wykorzystuje dane)
   config: any = {
@@ -158,7 +154,6 @@ export class LeftColumnComponent implements OnInit{
     this.categorySummary = this.categorySummary.filter( (summ) => summ.amount !== 0);
   }
   
-  
   async onChartDataChange(accId: number, transactionType: 'expense' | 'income') {
     const categoryChart: CategoryChart[] = [];
   
@@ -211,15 +206,21 @@ export class LeftColumnComponent implements OnInit{
       this.dane.labels = categoryChart.map((summary) => summary.name);
       this.dane.datasets[0].data = categoryChart.map((summary) => summary.sum);
       this.dane.datasets[0].backgroundColor = categoryChart.map((summary) => summary.color);
-  
+
+      this.hasDataToDisplay = this.dane.datasets[0].data.some((value) => value > 0)
+
       if (this.categoryChartData) {
-        this.categoryChartData.update();
+        this.categoryChartData.destroy();  // Zniszczenie starego wykresu, jeśli istnieje
       }
+      this.categoryChartData = new Chart('CategoryChart', this.config);  // Ponowne utworzenie wykresu
+      
+      console.log('Dane do wykresu:', this.dane);
+      console.log('HasDataToDisplay:', this.hasDataToDisplay);
+
     } catch (error) {
       console.error('Błąd podczas pobierania danych:', error);
+      this.hasDataToDisplay = false; // Jeśli wystąpił błąd, zakładamy brak danych
     }
-
-
   }
   
   onAccountChange(accountId: number) {

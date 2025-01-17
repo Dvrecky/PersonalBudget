@@ -1,14 +1,18 @@
 <div class="container">
     <mat-card appearance="outlined">
 
-        <!-- @if(categoryChartData.length !== 0) {
+        @if(!hasDataToDisplay) {
 
-        } -->
-        <mat-card-content>
+            <div class="no-data-message">
+                <p>Brak danych do wyświetlenia.</p>
+            </div>
+        } @else {
+            <mat-card-content>
 
-            <canvas id="CategoryChart"> {{ categoryChartData }}</canvas>
-        
-        </mat-card-content>
+                <canvas id="CategoryChart"> {{ categoryChartData }}</canvas>
+            
+            </mat-card-content>
+        }
 
         <mat-card-actions>
             <div class="button">
