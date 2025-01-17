@@ -23,13 +23,13 @@ export class TransactionService {
     );
   }
 
-  async getTransactionsAsync(): Promise<Transaction[]> {
+    async getTransactionsAsync(): Promise<Transaction[]> {
     return firstValueFrom(this.http.get<Transaction[]>(this.apiUrl));
   }
 
 
   getTransactionsByAccount(account: Account): Observable<Transaction[]> {
-    const url = `${this.apiUrl}/${account.id}`;
+    const url =`${this.apiUrl}/${account.id}`;
     return this.http.get<Transaction[]>(url).pipe(
       map(transactions =>
         transactions.map(transaction => ({

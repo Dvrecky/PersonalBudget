@@ -86,6 +86,13 @@ public class TransactionServiceImpl {
                 transaction.setDate(transactionToUpdate.getDate());
             }
 
+            if(!Objects.equals(transactionToUpdate.isRecurring(), transaction.isRecurring())) {
+                transaction.setRecurring(transactionToUpdate.isRecurring());
+            }
+            if(!Objects.equals(transactionToUpdate.getRecurringPeriod(), transaction.getRecurringPeriod())) {
+                transaction.setRecurringPeriod(transactionToUpdate.getRecurringPeriod());
+            }
+
             addTransaction(transaction);
             return convertToDto(transaction);
     }

@@ -54,7 +54,7 @@ export class FinancialAnalysisComponent implements OnChanges, OnDestroy  {
    if (!this.chart) {
      this.chart = new Chart("FinancialAnalysisChart", this.config);
    }
-   this.activeFilter = 'day';
+
    this.filteredTransactions = [...this.transactions];
    this.filterBy(this.activeFilter);
 
@@ -173,8 +173,8 @@ export class FinancialAnalysisComponent implements OnChanges, OnDestroy  {
       .filter(transaction => transaction.type === "expense")
       .reduce((total, transaction) => total + transaction.amount, 0);
 
-    let expenseCounter = 0;
-    let incomeCounter = 0;
+    let expenseCounter = 1;
+    let incomeCounter = 1;
 
     this.filteredTransactions.forEach(transaction => {
       if (transaction.type === "expense") {

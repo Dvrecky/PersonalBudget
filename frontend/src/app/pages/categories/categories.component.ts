@@ -2,16 +2,15 @@ import {Component, inject, OnInit} from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import {CategoryService} from '../../services/category.service';
 import {Category} from '../../models/category.model';
-import {MatIcon, MatIconModule} from '@angular/material/icon';
-import {MatButtonModule, MatFabButton, MatIconButton} from '@angular/material/button';
-import {MatMenu, MatMenuItem, MatMenuModule, MatMenuTrigger} from '@angular/material/menu';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatMenuModule} from '@angular/material/menu';
 import {MatDialog} from '@angular/material/dialog';
 import {AddCategoryDialogComponent} from './add-category-dialog/add-category-dialog.component';
 import {DeleteCategoryDialogComponent} from './delete-category-dialog/delete-category-dialog.component';
 import {UpdateCategoryDialogComponent} from './update-category-dialog/update-category-dialog.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatCard, MatCardContent, MatCardModule} from "@angular/material/card";
-import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
+import {MatCardModule} from "@angular/material/card";
 import {NgClass} from '@angular/common';
 import {MatRadioModule} from '@angular/material/radio';
 
@@ -65,7 +64,7 @@ export class CategoriesComponent implements OnInit {
 
   openUpdateCateogryDialog(enterAnimationDuration: string, exitAnimationDuration: string, categoryId: number) {
       const categoryToUpdate= this.categories.find(c => c.id === categoryId);
-      const iconPaths = this.categories.map(c => c.iconPath)
+      const iconPaths =[...new Set(this.categories.map(c => c.iconPath))];
 
       const dialogRef = this.dialog.open(UpdateCategoryDialogComponent, {
         autoFocus: false,

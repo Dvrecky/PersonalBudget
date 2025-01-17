@@ -12,7 +12,7 @@ import { Transaction } from '../../../../../../models/transaction.model';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { NativeDateAdapter, MatNativeDateModule } from '@angular/material/core';
+import {NativeDateAdapter, MatNativeDateModule, provideNativeDateAdapter} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {Subscription} from 'rxjs';
@@ -32,7 +32,7 @@ import {CategoryService} from '../../../../../../services/category.service';
 @Component({
   selector: 'app-transaction-history',
   standalone: true,
-  providers: [NativeDateAdapter],
+  providers: [NativeDateAdapter, provideNativeDateAdapter()],
   imports: [CommonModule, MatListModule, DatePipe, MatFormFieldModule, MatDatepickerModule, FormsModule, ReactiveFormsModule, MatNativeDateModule, MatIconModule, MatMenuModule, MatButtonModule, PlnPipe, TransactionTypeClassDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './transaction-history.component.html',
@@ -116,12 +116,6 @@ export class TransactionHistoryComponent implements OnChanges,OnDestroy {
 
     this.filteredTransactions = [];
 
-    //dodac oblsuge bledu
-    // if (!this.transactions || this.transactions.length === 0) {
-    //   return;
-    // }
-
-    this.activeFilter = 'day';
     this.filteredTransactions = [...this.transactions];
 
     this.filterBy(this.activeFilter);

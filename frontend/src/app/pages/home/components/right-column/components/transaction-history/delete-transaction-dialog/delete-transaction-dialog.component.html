@@ -8,7 +8,7 @@
     <p>Date: {{ data.date | date:'shortDate' }}</p>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-button mat-dialog-close (click)="deleteTransaction(data.id)">Yes</button>
+    <button mat-button mat-dialog-close (click)="deleteTransaction(data.transaction.id)">Yes</button>
     <button mat-button mat-dialog-close cdkFocusInitial (click)="dialogRef.close()">Cancel</button>
   </mat-dialog-actions>
 </div>

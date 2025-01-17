@@ -1,0 +1,33 @@
+<div class="update-recurring-dialog">
+  <h2 mat-dialog-title>Update Recurring</h2>
+
+  <form class="update-recurring-form" [formGroup]="updateRecurringPaymentDialogData" (ngSubmit)="onTransactionUpdateConfirm()">
+    <mat-dialog-content>
+
+    <mat-form-field>
+      <mat-label>Recurring</mat-label>
+      <mat-select formControlName="recurring">
+        <mat-option value="true">Yes</mat-option>
+        <mat-option value="false">No</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    @if (isRecurring) {
+      <mat-form-field>
+        <mat-label>Recurring Period</mat-label>
+        <mat-select formControlName="recurringPeriod" >
+          <mat-option value="weekly">Weekly</mat-option>
+          <mat-option value="monthly">Monthly</mat-option>
+          <mat-option value="annually">Annually</mat-option>
+        </mat-select>
+      </mat-form-field>
+    }
+
+
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button mat-dialog-close type="submit" [disabled]="!updateRecurringPaymentDialogData.dirty || !updateRecurringPaymentDialogData.valid">Update</button>
+      <button mat-button mat-dialog-close cdkFocusInitial type="button" (click)="dialogRef.close()">Cancel</button>
+    </mat-dialog-actions>
+  </form>
+</div>
