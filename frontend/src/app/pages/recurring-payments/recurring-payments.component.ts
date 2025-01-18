@@ -1,14 +1,16 @@
 import {Component, inject, OnInit} from '@angular/core';
 import { Transaction} from '../../models/transaction.model';
 import {TransactionService} from '../../services/transaction.service';
-import {MatCard, MatCardContent} from '@angular/material/card';
+import {MatCard, MatCardContent, MatCardModule} from '@angular/material/card';
 import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
 import {FormsModule} from '@angular/forms';
 import {DatePipe} from '@angular/common';
-import {MatIcon} from '@angular/material/icon';
-import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {MatIcon, MatIconModule} from '@angular/material/icon';
+import {MatMenu, MatMenuItem, MatMenuModule, MatMenuTrigger} from '@angular/material/menu';
 import {MatIconButton} from '@angular/material/button';
 import {MatDialog} from '@angular/material/dialog';
+import {MatRadioModule} from '@angular/material/radio';
+
 import {
   UpdateRecurringPaymentDialogComponent
 } from './update-recurring-payment-dialog/update-recurring-payment-dialog.component';
@@ -17,17 +19,12 @@ import {
   selector: 'app-recurring-payments',
   standalone: true,
   imports: [
-    MatCard,
-    MatCardContent,
-    MatRadioButton,
-    MatRadioGroup,
+    MatCardModule,
     FormsModule,
     DatePipe,
-    MatIcon,
-    MatMenu,
-    MatMenuItem,
-    MatIconButton,
-    MatMenuTrigger
+    MatIconModule,
+    MatMenuModule,
+    MatRadioModule
   ],
   templateUrl: './recurring-payments.component.html',
   styleUrl: './recurring-payments.component.css'

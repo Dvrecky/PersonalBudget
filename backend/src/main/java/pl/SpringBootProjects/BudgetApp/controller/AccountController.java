@@ -27,6 +27,13 @@ public class AccountController {
         return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 
+    @PutMapping
+    public ResponseEntity<Account> updateAccount(@RequestBody Account account) {
+        Account updatedAccount = accountService.updateAccount(account);
+
+        return ResponseEntity.ok(updatedAccount);
+    }
+
     @PostMapping
     public ResponseEntity<Account> addAccount(@RequestBody Account account) {
 

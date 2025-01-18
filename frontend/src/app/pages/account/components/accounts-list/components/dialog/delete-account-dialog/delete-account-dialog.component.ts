@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { Account } from '../../../../../../../models/account.model';
 import { AccountService } from '../../../../../../../services/account.service';
@@ -15,12 +15,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class DeleteAccountDialogComponent {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Account, private accountService: AccountService){}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Account, private accountService: AccountService, private dialogRef: MatDialogRef<DeleteAccountDialogComponent>){}
 
   deleteAccount(accId: number): void {
     this.accountService.deleteAccount(accId).subscribe(
       (response: void) => {
         console.log(response)
+        this.dialogRef.close('deleted');
       },
           (error: HttpErrorResponse) => {
             alert(error.message);

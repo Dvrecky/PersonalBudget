@@ -12,7 +12,7 @@ import { Transaction } from '../../../../../../models/transaction.model';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NativeDateAdapter, MatNativeDateModule, provideNativeDateAdapter} from '@angular/material/core';
+import {NativeDateAdapter, MatNativeDateModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {Subscription} from 'rxjs';
@@ -32,7 +32,7 @@ import {CategoryService} from '../../../../../../services/category.service';
 @Component({
   selector: 'app-transaction-history',
   standalone: true,
-  providers: [NativeDateAdapter, provideNativeDateAdapter()],
+  providers: [NativeDateAdapter],
   imports: [CommonModule, MatListModule, DatePipe, MatFormFieldModule, MatDatepickerModule, FormsModule, ReactiveFormsModule, MatNativeDateModule, MatIconModule, MatMenuModule, MatButtonModule, PlnPipe, TransactionTypeClassDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './transaction-history.component.html',

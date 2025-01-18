@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, Output, EventEmitter } from '@angular/core';
 import { Account } from '../../../../../../models/account.model';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,6 +13,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { DeleteAccountDialogComponent } from '../dialog/delete-account-dialog/delete-account-dialog.component';
+import { UpdateAccountDialogComponent } from '../dialog/update-account-dialog/update-account-dialog.component';
 
 
 @Component({
@@ -25,16 +26,43 @@ import { DeleteAccountDialogComponent } from '../dialog/delete-account-dialog/de
 export class AccountListItemComponent {
 
   readonly dialog = inject(MatDialog);
-  @Input() account: Account | undefined;
+  @Input() account: Account | any;
+  @Output() accountDeleted = new EventEmitter<number>(); // Nowy EventEmitter
+  @Output() accountUpdated = new EventEmitter<Account>(); // Emitowanie obiektu Account
 
   openDeleteAccountDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(DeleteAccountDialogComponent, {
+    const dialogRef = this.dialog.open(DeleteAccountDialogComponent, {
       autoFocus: false,
       width: '400px',
       enterAnimationDuration,
       exitAnimationDuration,
       data: this.account
-    })
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'deleted' && this.account) {
+        this.accountDeleted.emit(this.account.id); // Emituj zdarzenie usunięcia
+      }
+    });
   }
 
+  openUpdateAccountDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    if (this.account) {
+      const dialogRef = this.dialog.open(UpdateAccountDialogComponent, {
+        autoFocus: false,
+        width: '400px',
+        enterAnimationDuration,
+        exitAnimationDuration,
+        data: this.account
+      });
+  
+      dialogRef.afterClosed().subscribe((updatedAccount: Account | null) => {
+        if (updatedAccount) {
+          // Emitowanie zaktualizowanego konta
+          this.accountUpdated.emit(updatedAccount);
+        }
+      });
+    }
+  }
+  
 }

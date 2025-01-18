@@ -40,9 +40,7 @@ export class AddAccountDialogComponent {
   });
 
   handleSubmit(): void {
-    console.log(`Acccount name: ${this.addAccountForm.value.name}, Initial balance: ${this.addAccountForm.value.balance}`);
-    
-    if(this.addAccountForm.valid) {
+    if (this.addAccountForm.valid) {
       const newAccountData: CreateAccount = {
         name: this.addAccountForm.value.name!,
         balance: Number(this.addAccountForm.value.balance!)
@@ -51,17 +49,18 @@ export class AddAccountDialogComponent {
       this.accountService.addAccount(newAccountData).subscribe(
         (response: Account) => {
           console.log(response);
+          this.dialogRef.close(response); // Zwróć nowo utworzone konto jako wynik zamknięcia
         },
-            (error: HttpErrorResponse) => {
-              alert(error.message)
-            }
-      )
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+    } else {
+      alert('Formularz jest nieprawidłowy!');
     }
-
-    this.closeDialog();
   }
 
   closeDialog(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(null); // Zamknij dialog bez wyniku
   }
 }

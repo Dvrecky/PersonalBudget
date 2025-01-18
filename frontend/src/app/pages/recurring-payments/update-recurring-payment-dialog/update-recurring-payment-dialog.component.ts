@@ -11,23 +11,22 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {Transaction} from '../../../models/transaction.model';
 import {HttpErrorResponse} from '@angular/common/http';
 import {TransactionService} from '../../../services/transaction.service';
-import {MatFormField, MatLabel} from '@angular/material/form-field';
-import {MatOption} from '@angular/material/core';
-import {MatSelect} from '@angular/material/select';
-import {MatButton} from '@angular/material/button';
+import {MatFormField, MatFormFieldModule, MatLabel} from '@angular/material/form-field';
+import {MatOption, MatOptionModule} from '@angular/material/core';
+import {MatSelect, MatSelectModule} from '@angular/material/select';
+import {MatButton, MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-update-recurring-payment-dialog',
   standalone: true,
   imports: [
-    MatFormField,
-    MatLabel,
-    MatOption,
-    MatSelect,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatSelectModule,
     ReactiveFormsModule,
     MatDialogContent,
     MatDialogTitle,
-    MatButton,
+    MatButtonModule,
     MatDialogActions
   ],
   templateUrl: './update-recurring-payment-dialog.component.html',

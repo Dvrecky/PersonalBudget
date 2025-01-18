@@ -23,6 +23,10 @@ public class AccountServiceImpl {
         return this.accountRepository.findAll();
     }
 
+    public Account updateAccount(Account account){
+        return accountRepository.save(account);
+    }
+
     public Account addAccount(Account account) {
         return this.accountRepository.save(account);
     }

@@ -2,7 +2,7 @@
     <mat-card-content>
            <mat-list>
                 @for( acc of accountsList; track acc.name) {
-                    <mat-list-item><app-account-list-item [account]="acc"></app-account-list-item></mat-list-item>                    
+                    <mat-list-item><app-account-list-item [account]="acc" (accountDeleted)="onAccountDeleted($event)" (accountUpdated)="onAccountUpdated($event)"></app-account-list-item></mat-list-item>                    
                 }
            </mat-list> 
     </mat-card-content>
