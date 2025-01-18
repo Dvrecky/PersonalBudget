@@ -49,6 +49,8 @@ public class Transaction {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @Column(name = "last_processed_date")
+    private LocalDateTime lastProcessedDate;
 
     public Transaction(double amount, LocalDateTime date, String description, boolean isRecurring, String recurringPeriod, String type, Account account, Category category) {
         this.amount = amount;

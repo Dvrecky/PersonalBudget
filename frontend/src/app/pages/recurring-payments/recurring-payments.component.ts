@@ -1,13 +1,11 @@
 import {Component, inject, OnInit} from '@angular/core';
 import { Transaction} from '../../models/transaction.model';
 import {TransactionService} from '../../services/transaction.service';
-import {MatCard, MatCardContent, MatCardModule} from '@angular/material/card';
-import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
+import { MatCardModule} from '@angular/material/card';
 import {FormsModule} from '@angular/forms';
 import {DatePipe} from '@angular/common';
-import {MatIcon, MatIconModule} from '@angular/material/icon';
-import {MatMenu, MatMenuItem, MatMenuModule, MatMenuTrigger} from '@angular/material/menu';
-import {MatIconButton} from '@angular/material/button';
+import { MatIconModule} from '@angular/material/icon';
+import { MatMenuModule, } from '@angular/material/menu';
 import {MatDialog} from '@angular/material/dialog';
 import {MatRadioModule} from '@angular/material/radio';
 

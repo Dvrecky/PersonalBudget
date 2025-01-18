@@ -1,6 +1,7 @@
 package pl.SpringBootProjects.BudgetApp.service;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import pl.SpringBootProjects.BudgetApp.dto.TransactionDto;
 import pl.SpringBootProjects.BudgetApp.entity.Account;
@@ -8,6 +9,8 @@ import pl.SpringBootProjects.BudgetApp.entity.Category;
 import pl.SpringBootProjects.BudgetApp.entity.Transaction;
 import pl.SpringBootProjects.BudgetApp.repository.TransactionRepository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -125,5 +128,52 @@ public class TransactionServiceImpl {
                 account.get(),
                 category.get()
         );
+    }
+
+    @Transactional
+    public void proccessRecurringPayment() {
+        List<Transaction> transactions = transactionRepository.findRecurringTransactionToProcess();
+        LocalDate now = LocalDate.now();
+
+        if(!transactions.isEmpty()) {
+            for(Transaction transaction : transactions) {
+                LocalDateTime recurringDate;
+
+                if(transaction.getLastProcessedDate() == null) {
+                    recurringDate = transaction.getDate();
+                } else {
+                    recurringDate = transaction.getLastProcessedDate();
+                }
+
+
+                if(transaction.getRecurringPeriod().equalsIgnoreCase("weekly")) {
+                    recurringDate = recurringDate.plusWeeks(1);
+                }
+                else if (transaction.getRecurringPeriod().equalsIgnoreCase("monthly")) {
+                    recurringDate = recurringDate.plusMonths(1);
+                }
+                else if (transaction.getRecurringPeriod().equalsIgnoreCase("annually")) {
+                    recurringDate = recurringDate.plusYears(1);
+                }
+
+                if(recurringDate.toLocalDate().equals(now)) {
+
+                    Transaction newTransaction = new Transaction();
+                    newTransaction.setAccount(transaction.getAccount());
+                    newTransaction.setType(transaction.getType());
+                    newTransaction.setAmount(transaction.getAmount());
+                    newTransaction.setDescription(transaction.getDescription());
+                    newTransaction.setRecurring(false);
+                    newTransaction.setRecurringPeriod(null);
+                    newTransaction.setCategory(transaction.getCategory());
+                    newTransaction.setDate(recurringDate);
+
+                    transactionRepository.save(newTransaction);
+
+                    transaction.setLastProcessedDate(recurringDate);
+                    transactionRepository.save(transaction);
+                }
+            }
+        }
     }
 }
