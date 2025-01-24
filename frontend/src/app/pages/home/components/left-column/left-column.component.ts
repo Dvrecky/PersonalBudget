@@ -152,6 +152,7 @@ export class LeftColumnComponent implements OnInit{
     }
 
     this.categorySummary = this.categorySummary.filter( (summ) => summ.amount !== 0);
+    this.categorySummary = this.categorySummary.sort( (a,b) => a.amount - b.amount);
   }
   
   async onChartDataChange(accId: number, transactionType: 'expense' | 'income') {

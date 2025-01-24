@@ -12,7 +12,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {Transaction} from '../../../../../../../models/transaction.model';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {NativeDateAdapter, provideNativeDateAdapter} from '@angular/material/core';
+import {NativeDateAdapter} from '@angular/material/core';
 import {HttpErrorResponse} from '@angular/common/http';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { MatButtonModule} from '@angular/material/button';
@@ -20,7 +20,7 @@ import { MatButtonModule} from '@angular/material/button';
 @Component({
   selector: 'app-update-transaction-dialog',
   standalone: true,
-  providers: [NativeDateAdapter, provideNativeDateAdapter()],
+  providers: [NativeDateAdapter, NativeDateAdapter],
   imports: [
     MatButtonModule,
     MatDialogActions,
