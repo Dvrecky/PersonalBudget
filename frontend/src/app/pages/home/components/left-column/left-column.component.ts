@@ -66,7 +66,7 @@ export class LeftColumnComponent implements OnInit{
       },
     ],
   };
-  
+
 
   // konfiguracja wykresu (wykorzystuje dane)
   config: any = {
@@ -79,28 +79,25 @@ export class LeftColumnComponent implements OnInit{
 
   ngOnInit(): void {
     this.loadAccounts();
-    console.log(this.accountsList);
   }
 
   async updateCategorySummary(accId: number, transactionType: "expense" | "income") {
     this.categorySummary = [];
-  
+
     try {
       // Pobierz kategorie i transakcje
       const categories = await this.categoryService.getAllCategoriesAsync();
       const transactions = await this.transactionService.getTransactionsAsync();
-      console.log(categories);
-      console.log(transactions);
-  
+
       // Filtrowanie kategorii według typu transakcji
       const filteredCategories = categories.filter(category => category.type === transactionType);
-  
+
       if (this.selectedAccountId === 0) {
 
         const totalAmount = transactions
                 .filter(transaction => transaction.type === transactionType)
                 .reduce((sum, transaction) => sum + transaction.amount, 0);
-        
+
         // Dla wszystkich kont
         for (const category of filteredCategories) {
           const categoryTransactions = transactions.filter(
@@ -108,9 +105,9 @@ export class LeftColumnComponent implements OnInit{
               transaction.categoryId === category.id &&
               transaction.type === transactionType
           );
-  
+
           const sum = categoryTransactions.reduce((acc, transaction) => acc + transaction.amount, 0);
-  
+
           this.categorySummary.push({
             name: category.name,
             percentage: totalAmount > 0 ? (sum / totalAmount) * 100 : 0,
@@ -133,9 +130,9 @@ export class LeftColumnComponent implements OnInit{
               transaction.type === transactionType &&
               transaction.accountId === accId
           );
-  
+
           const sum = categoryTransactions.reduce((acc, transaction) => acc + transaction.amount, 0);
-  
+
           this.categorySummary.push({
             name: category.name,
             percentage: totalAmount > 0 ? (sum / totalAmount) * 100 : 0,
@@ -145,26 +142,25 @@ export class LeftColumnComponent implements OnInit{
           });
         }
       }
-  
-      console.log(this.categorySummary);
+
     } catch (error) {
       console.error('Błąd podczas pobierania danych:', error);
     }
 
     this.categorySummary = this.categorySummary.filter( (summ) => summ.amount !== 0);
   }
-  
+
   async onChartDataChange(accId: number, transactionType: 'expense' | 'income') {
     const categoryChart: CategoryChart[] = [];
-  
+
     try {
       // Pobierz dane asynchronicznie
       const categories = await this.categoryService.getAllCategoriesAsync();
       const transactions = await this.transactionService.getTransactionsAsync();
-  
+
       // Filtrowanie kategorii według typu transakcji
       const filteredCategories = categories.filter(category => category.type === transactionType);
-  
+
       if (this.selectedAccountId === 0) {
         // Dla wszystkich kont
         for (const category of filteredCategories) {
@@ -173,9 +169,9 @@ export class LeftColumnComponent implements OnInit{
               transaction.categoryId === category.id &&
               transaction.type === transactionType
           );
-  
+
           const sum = categoryTransactions.reduce((acc, transaction) => acc + transaction.amount, 0);
-  
+
           categoryChart.push({
             name: category.name,
             color: category.color,
@@ -191,9 +187,9 @@ export class LeftColumnComponent implements OnInit{
               transaction.type === transactionType &&
               transaction.accountId === accId
           );
-  
+
           const sum = categoryTransactions.reduce((acc, transaction) => acc + transaction.amount, 0);
-  
+
           categoryChart.push({
             name: category.name,
             color: category.color,
@@ -201,7 +197,7 @@ export class LeftColumnComponent implements OnInit{
           });
         }
       }
-  
+
       // Aktualizacja danych wykresu
       this.dane.labels = categoryChart.map((summary) => summary.name);
       this.dane.datasets[0].data = categoryChart.map((summary) => summary.sum);
@@ -213,19 +209,17 @@ export class LeftColumnComponent implements OnInit{
         this.categoryChartData.destroy();  // Zniszczenie starego wykresu, jeśli istnieje
       }
       this.categoryChartData = new Chart('CategoryChart', this.config);  // Ponowne utworzenie wykresu
-      
-      console.log('Dane do wykresu:', this.dane);
-      console.log('HasDataToDisplay:', this.hasDataToDisplay);
+
 
     } catch (error) {
       console.error('Błąd podczas pobierania danych:', error);
       this.hasDataToDisplay = false; // Jeśli wystąpił błąd, zakładamy brak danych
     }
   }
-  
+
   onAccountChange(accountId: number) {
     this.selectedAccountId = accountId;
-    console.log("Parent: ", accountId);
+
     const account = this.accountsList.find(acc => acc.id === accountId);
 
     if (account) {
@@ -237,15 +231,15 @@ export class LeftColumnComponent implements OnInit{
   }
 
   onChangeTransactionType(value: 'expense' | 'income') {
-    console.log("Było: ", this.selectedTransactionType);
+
     this.selectedTransactionType = value;
-    console.log("Jest: ", this.selectedTransactionType);
+
     this.onChartDataChange(this.selectedAccountId, this.selectedTransactionType);
     this.updateCategorySummary(this.selectedAccountId, this.selectedTransactionType);
   }
 
   onPeriodChange(period: "year" | "month" | "week" | "day") {
-      console.log(period);
+
       this.updateDataChart(period, this.selectedAccountId);
   }
 
@@ -280,7 +274,6 @@ export class LeftColumnComponent implements OnInit{
 
   calculateTotalBalance(): void {
     const total = this.accountsList.reduce((accumulator, currentIndex) => accumulator + currentIndex.balance, 0);
-    console.log('Total Balance:', total);
 
     const accSum: Account = { id: 0, name: "Suma", balance: total };
 
