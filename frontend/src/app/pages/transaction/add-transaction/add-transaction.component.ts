@@ -92,7 +92,7 @@ export class AddTransactionComponent implements OnInit {
    }
 
   openSnackBar() {
-    this._snackBar.open("Transactin added sucessfully!");
+    this._snackBar.open("Transactin added sucessfully!", "OK", {duration: 3000});
   }
 
   onTransactionConfirmed() {

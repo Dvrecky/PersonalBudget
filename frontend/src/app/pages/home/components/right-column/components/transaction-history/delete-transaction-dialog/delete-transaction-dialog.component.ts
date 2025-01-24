@@ -19,7 +19,8 @@ import {DatePipe} from '@angular/common';
     MatDialogClose,
     MatDialogContent,
     MatDialogTitle,
-    DatePipe
+    DatePipe,
+    MatButton
   ],
   templateUrl: './delete-transaction-dialog.component.html',
   styleUrl: './delete-transaction-dialog.component.css'
